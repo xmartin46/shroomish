@@ -7,8 +7,17 @@
 
 import scrapy
 
+class MushroomItem(scrapy.Item):
+    name_latin = scrapy.Field()
+    name_eng = scrapy.Field()
+    desc = scrapy.Field()
+    url = scrapy.Field()
+    edibility = scrapy.Field()
+    img_urls = scrapy.Field()
 
-class ScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ImageItem(scrapy.Item):
+    name_latin = scrapy.Field()
+    name_img = scrapy.Field()
+    img_url = scrapy.Field()
+    file_path = scrapy.Field()
+
