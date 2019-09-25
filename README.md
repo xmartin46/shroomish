@@ -60,4 +60,16 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+To get information from Mushroom World:
+```bash
+cd scraper
+scrapy crawl mushroom_scraper
+```
 
+Also, in order to increase our dataset (139 classes of mushrooms) we will use google images to scrape more images. 
+
+To get images from Google Images:
+```bash
+python google_images.py
+```
+You will find a folder called downloads with subfolders(one for each class) with the images inside. 
