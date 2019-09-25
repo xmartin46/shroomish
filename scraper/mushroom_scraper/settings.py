@@ -65,7 +65,7 @@ DOWNLOAD_DELAY = 5
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'mushroom_scraper.pipelines.MWScraperImagePipeline': 1,
+    'mushroom_scraper.pipelines.MushroomScraperImagePipeline': 1,
     'mushroom_scraper.pipelines.JsonWriterPipeline': 2,
 }
 

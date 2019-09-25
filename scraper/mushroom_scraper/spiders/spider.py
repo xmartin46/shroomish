@@ -3,7 +3,7 @@ import scrapy
 
 from mushroom_scraper.items import ImageItem, MushroomItem
 
-class MWScraper(scrapy.Spider):
+class MushroomScraper(scrapy.Spider):
     name = 'mushroom_scraper'
     start_urls = ['http://www.mushroom.world/mushrooms/namelist']
 

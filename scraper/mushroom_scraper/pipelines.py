@@ -11,7 +11,7 @@ from scrapy.pipelines.images import ImagesPipeline
 from scrapy.exceptions import DropItem
 from mushroom_scraper.items import ImageItem, MushroomItem
   
-class MWScraperImagePipeline(ImagesPipeline):
+class MushroomScraperImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
         if isinstance(item, ImageItem):
             yield scrapy.Request(item['img_url'], meta={'image_name': item['name_img']})
