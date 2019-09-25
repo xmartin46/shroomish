@@ -4,7 +4,7 @@
 Our aim is to be able to make a website that will help people to collect mushrooms securely and easily. It will have information about the most common mushrooms, where they can be found, and a way to classify them properly.
 
 ### Technologies
-- React
+- React. Check https://github.com/facebook/create-react-app
 - Node js (however we are considering using Django)
 - Keras (for the classifier) 
 - Docker (maybe)
@@ -66,10 +66,16 @@ cd scraper
 scrapy crawl mushroom_scraper
 ```
 
-Also, in order to increase our dataset (139 classes of mushrooms) we will use google images to scrape more images. 
+Also, in order to increase our dataset (139 classes of mushrooms) we will use google images to scrape more images (this must be done afterwards the Mushroom World scraping).
 
 To get images from Google Images:
 ```bash
 python google_images.py
 ```
-You will find a folder called downloads with subfolders(one for each class) with the images inside. 
+You will find a folder called downloads with subfolders(one for each class) with the images inside. Also there will be a dataset folder with all the images merged with the class in their name.
+
+## Classifier
+
+We do not have GPU power enough to train a model locally so we will use **Google Colab**. Our main idea is to use Keras as a framework and fine-tune a ResNet50 that was trained with Imagenet weights. Here you can see our model architecture:
+
+![](docs/images/classifier.png) 
