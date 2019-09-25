@@ -9,7 +9,7 @@ import json
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.exceptions import DropItem
-from mw_scraper.items import ImageItem, MushroomItem
+from mushroom_scraper.items import ImageItem, MushroomItem
   
 class MWScraperImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):

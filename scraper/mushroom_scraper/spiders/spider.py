@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-from mw_scraper.items import ImageItem, MushroomItem
+from mushroom_scraper.items import ImageItem, MushroomItem
 
 class MWScraper(scrapy.Spider):
-    name = 'mw_scraper'
+    name = 'mushroom_scraper'
     start_urls = ['http://www.mushroom.world/mushrooms/namelist']
 
     def parse(self, response):
