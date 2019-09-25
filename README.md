@@ -46,3 +46,18 @@ Our aim is to be able to make a website that will help people to collect mushroo
 
 Since our aim is to make something useful and easy to use, we will focus our project mainly in **UX** and **functionality**.
 
+
+# Dataset
+
+### Scraper
+We will use the website [Mushroom World](http://www.mushroom.world/home/index) to get the information and the photos of our mushroom dataset. 
+
+First set an environment and install all the requirements. 
+
+```bash
+python3 -m virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+
