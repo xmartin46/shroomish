@@ -49,6 +49,8 @@ Since our aim is to make something useful and easy to use, we will focus our pro
 ## Frontend 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+** Remember to use README react generator: https://github.com/kefranabg/readme-md-generator**
+
 ### Available Scripts
 
 In the project directory, you can run:
