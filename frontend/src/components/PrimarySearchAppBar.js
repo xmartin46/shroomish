@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import Slide from '@material-ui/core/Slide';
 
 
-function HideOnScroll(props) {
+/*function HideOnScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -32,7 +32,7 @@ function HideOnScroll(props) {
     </Slide>
   );
 }
-
+*/
 
 const useStyles = makeStyles(theme => ({
   grow: {
