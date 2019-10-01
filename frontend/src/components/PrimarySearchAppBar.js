@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import List from '@material-ui/core/List';
 import Menu from '@material-ui/core/Menu';
@@ -21,13 +20,10 @@ import StorageIcon from '@material-ui/icons/Storage';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Slide from '@material-ui/core/Slide';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import theme from './theme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 /*function HideOnScroll(props) {
   const { children, window } = props;
@@ -124,9 +120,6 @@ root: {
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   hide: {
     display: 'none',
   },
@@ -166,7 +159,7 @@ root: {
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-	const theme = useTheme();
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -241,13 +234,14 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
+<MuiThemeProvider theme={theme}>
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
             edge="start"
 	  onClick={handleDrawerOpen}
-            className={classes.menuButton, open && classes.hide}
+            className={classes.menuButton && open && classes.hide}
             color="inherit"
             aria-label="open drawer"
           >
@@ -322,5 +316,6 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {renderMenu}
     </div>
+	    </MuiThemeProvider>
   );
 }
