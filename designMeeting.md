@@ -1,5 +1,4 @@
 # Design Report
-
 > Xavier Martín Ballesteros, Ricardo Milos, Adrià Cabeza Sant'Anna
 
 ## Main functionality of the service
@@ -28,11 +27,11 @@ Hence, our site will be divided between a gallery containing mushrooms where the
 
 ### Scenarios
 - Marie (16): has a homework about mushrooms, and needs information about some types of mushrooms => she uses the app, finds the mushroom type she wants and reads information about that mushroom.
-- Marie (16): has gone to a trip with their parents and have founded some mushrooms => she identifies them and, if eatable, takes them
+- Marie (16): has gone to a trip with their parents and have founded some mushrooms => she identifies them and, if edible, takes them
 - Manolo (45): has been researching about 1 specific type of mushroom but needs more instances of that mushroom => he uses the app, sees the heat map of the mushroom and goes for them
 - David (30): he has just seen one type of mushroom he has not seen ever => he uses the app to first identify the mushroom and then read all the information about it
 - David (30):
-- Claire (35): she has gone to a trip in the forest and suddenly has found some mushrooms, and does not know whether taking them or not because she does not know if they are eatable or not => she uses the app to identify the mushrooms and know if they are eatable or not
+- Claire (35): she has gone to a trip in the forest and suddenly has found some mushrooms, and does not know whether taking them or not because she does not know if they are edible or not => she uses the app to identify the mushrooms and know if they are edible or not
 - Nathan (45): he needs more mushrooms of one type because they run out of them => he uses the map to look for the heat map of that mushroom
 - Nathan (45): he wants to sell more mushrooms => uses the app so that all the clients of our app know where each mushroom can be bought
 - Rose (60): needs to know if she can buy a mushroom nearby her house or if any company can bring it to her house => uses the app to know which companies sell that mushroom
@@ -128,9 +127,11 @@ Moreover, they can use the classifier/identifier. Then , they will take a photo,
 If the user wants to know where is one specific type of mushroom, he will go to the map page. Then he will select the mushroom he want. This will create a request to the database, which will give all the locations where it has been founded recently (max time not accorded yet). Later, it will create a heat map of that locations and will show them in the map.
 
 
-### project plan draft (project structure, tasks divided among group members, time to be used, preliminary schedule)
-
+### Project plan draft (project structure, tasks divided among group members, time to be used, preliminary schedule)
 
 
 ## Focus area
-Since our aim is to make something useful and easy to use, we will focus our project mainly in UX and functionality.
+
+Since our aim is to make something useful, we will focus our project mainly in functionality. We need to focus on that because the main attraction of our website, besides of the mushroom gallery and its information is the ability to tell you the type of mushroom and whether a mushroom is edible or not.
+
+Also, we have never done something similar as the idea stated so we will need more effort and time to develop it. 
