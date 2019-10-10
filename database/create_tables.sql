@@ -11,6 +11,7 @@ CREATE TABLE "Users" (
 
 CREATE TABLE "Mushroom" (
 	"id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
 	"description" VARCHAR(255) NOT NULL,
 	"edible" BOOLEAN NOT NULL,
 	CONSTRAINT "Mushroom_pk" PRIMARY KEY ("id")
@@ -22,7 +23,7 @@ CREATE TABLE "Mushroom" (
 
 CREATE TABLE "LatLngList" (
 	"LatLng" VARCHAR(255) NOT NULL,
-	"id" integer NOT NULL,
+	"id" VARCHAR(255) NOT NULL,
 	CONSTRAINT "LatLngList_pk" PRIMARY KEY ("LatLng")
 ) WITH (
   OIDS=FALSE
@@ -32,7 +33,7 @@ CREATE TABLE "LatLngList" (
 
 CREATE TABLE "photoList" (
 	"PhotoURL" serial(255) NOT NULL,
-	"id" serial NOT NULL,
+	"id" serial(255) NOT NULL,
 	CONSTRAINT "photoList_pk" PRIMARY KEY ("PhotoURL")
 ) WITH (
   OIDS=FALSE
@@ -41,8 +42,8 @@ CREATE TABLE "photoList" (
 
 
 CREATE TABLE "Password" (
-	"password" VARCHAR(255) NOT NULL,
-	"id" integer NOT NULL
+	"password" BINARY NOT NULL,
+	"id" BINARY NOT NULL
 ) WITH (
   OIDS=FALSE
 );
@@ -56,4 +57,3 @@ ALTER TABLE "LatLngList" ADD CONSTRAINT "LatLngList_fk0" FOREIGN KEY ("id") REFE
 ALTER TABLE "photoList" ADD CONSTRAINT "photoList_fk0" FOREIGN KEY ("id") REFERENCES "Mushroom"("id");
 
 ALTER TABLE "Password" ADD CONSTRAINT "Password_fk0" FOREIGN KEY ("id") REFERENCES "Users"("id");
-
