@@ -1,4 +1,68 @@
 CREATE TABLE "Users" (
+	"id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL,
+	"email" VARCHAR(255) NOT NULL UNIQUE,
+	CONSTRAINT "Users_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Mushroom" (
+	"id" serial NOT NULL,
+	"name" VARCHAR(255) NOT NULL UNIQUE,
+	"description" VARCHAR(255) NOT NULL,
+	"edible" BOOLEAN NOT NULL,
+	CONSTRAINT "Mushroom_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "LatLngList" (
+	"id" serial NOT NULL,
+	"id_mushroom" integer NOT NULL,
+	"LatLng" VARCHAR(255) NOT NULL,
+	CONSTRAINT "LatLngList_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "photoList" (
+	"id" serial NOT NULL,
+	"id_mushroom" integer NOT NULL,
+	"PhotoURL" VARCHAR(255) NOT NULL,
+	CONSTRAINT "photoList_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "Password" (
+	"id" serial NOT NULL,
+	"id_user" integer NOT NULL,
+	"password" VARCHAR(255) NOT NULL,
+	CONSTRAINT "Password_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+
+ALTER TABLE "LatLngList" ADD CONSTRAINT "LatLngList_fk0" FOREIGN KEY ("id_mushroom") REFERENCES "Mushroom"("id");
+
+ALTER TABLE "photoList" ADD CONSTRAINT "photoList_fk0" FOREIGN KEY ("id_mushroom") REFERENCES "Mushroom"("id");
+
+ALTER TABLE "Password" ADD CONSTRAINT "Password_fk0" FOREIGN KEY ("id_user") REFERENCES "Users"("id");
+
+/*CREATE TABLE "Users" (
 	"id" serial,
 	"name" VARCHAR(255),
 	"email" VARCHAR(255) NOT NULL,
@@ -56,4 +120,4 @@ ALTER TABLE "LatLngList" ADD CONSTRAINT "LatLngList_fk0" FOREIGN KEY ("id") REFE
 
 ALTER TABLE "photoList" ADD CONSTRAINT "photoList_fk0" FOREIGN KEY ("id") REFERENCES "Mushroom"("id");
 
-ALTER TABLE "Password" ADD CONSTRAINT "Password_fk0" FOREIGN KEY ("id") REFERENCES "Users"("id");
+ALTER TABLE "Password" ADD CONSTRAINT "Password_fk0" FOREIGN KEY ("id") REFERENCES "Users"("id");*/
