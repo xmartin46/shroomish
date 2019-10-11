@@ -305,12 +305,21 @@ export default function PrimarySearchAppBar() {
         </div>
         <Divider />
         <List>
-          {['Home', 'Mushroom Gallery', 'Classifier'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <StorageIcon/> : <InsertPhotoIcon/> }</ListItemIcon>
-              <ListItemText primary={text} />
+        <ListItem button component="a" href="/" key="Home">
+              <ListItemIcon> <HomeIcon/> </ListItemIcon>
+              <ListItemText primary="Home"/>
             </ListItem>
-          ))}
+
+            <ListItem button component="a" href="/classify" key="Classifier">
+              <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+              <ListItemText primary="Classifier" />
+            </ListItem>
+
+            <ListItem button component="a" href="/gallery" key="Mushroom Gallery">
+              <ListItemIcon> <StorageIcon/></ListItemIcon>
+              <ListItemText primary="Mushroom Gallery" />
+            </ListItem>
+
         </List>
         </Drawer>
       {renderMobileMenu}

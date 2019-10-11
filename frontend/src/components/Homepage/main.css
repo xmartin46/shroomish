@@ -1,0 +1,102 @@
+
+
+/**
+
+General components
+**/  
+
+.mainGrid {
+    width: inherit;
+}
+
+h1 {
+    font-size: 6em;
+    margin: 0;
+}
+
+h2 {
+    font-size: 4em;
+    margin: 0;
+}
+
+h3{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/**
+
+Layouts
+
+**/
+
+.box-header {
+    font-family: 'Righteous', cursive;
+    padding-top: 1.52rem;
+    padding-left: 1.52rem;
+    width: fit-content;
+}
+
+
+/**
+    Components 
+**/
+
+.name {
+    color:#7C0A02;
+    display: inline;
+}
+
+/**
+Third-part adpated
+**/
+
+.boxButton {
+    padding-left: 4em;
+    padding-right: 4em;
+}
+
+.mainButton {
+    color: white;
+    font-size: 1.5rem;
+    height: 3.5rem;
+}
+
+
+.main-class {
+    padding: 5rem;
+    right: 0;
+    left: 0;
+    width: initial;
+    height: initial;
+    position: absolute;
+}
+
+.background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    background-image: url('wallpaper.jpg');
+    background-repeat  : 'no-repeat';
+    background-position: 'center';
+    background-size: 100% auto;
+    opacity: 0.5;
+    z-index: -9999;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+
+    .background {
+        background-size: auto 100%;
+    }
+
+    .main-class {
+        padding: 0.5em;
+        width: min-content;
+        height: -webkit-fill-available;
+    }
+
+  }

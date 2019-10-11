@@ -2,30 +2,24 @@ import os
 from tqdm import tqdm
 
 DESIRED_MUSHROOMS = [
-"amanita",
+"amanita_muscaria",
 "galerina_marginata",
-"cortinarius",
+"cortinarius_caperatus",
 "gyromitra_esculenta",
 "armillaria_mellea",
 "albatrellus_ovinus", 
 "boletus_edulis", 
-"boletus pinophilus",
 "cantharellus_cibarius", 
 "craterellus_tubaeformis",
 "suillus_luteus",
 "hygrophorus_camarophyllus",
 "hydnum_repandum",
-"hydnum_rufescens",
 "coprinus_comatus",
-"lycoperdon_perlatum",
 "lycoperdon_pyriforme",
 "tylopilus_felleu",
-"suillus grevillei",
+"suillus_grevillei",
 "leccinum_scabrum",
-"leccinum_scabrum",
-"leccinum_versipelle",
 "suillus_luteus",
-"suillus_variegatus"
 ]
 
 llista_mushrooms = os.listdir('mushroom_img')

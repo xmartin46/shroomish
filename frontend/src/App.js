@@ -1,54 +1,26 @@
-import React, { useState, useCallback } from 'react';
-import './App.css';
-//import MushroomList from './components/MushroomList'
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Homepage from './components/Homepage/Homepage';
+import Classify from './components/Classifier/Classify';
+import Gallery from './components/Gallery/Gallery';
 import PrimarySearchAppBar from './components/PrimarySearchAppBar'
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
-import { photos } from "./components/photos";
 
-
-
-
-function App() {
-	 const [currentImage, setCurrentImage] = useState(0);
-  const [viewerIsOpen, setViewerIsOpen] = useState(false);
-
-  const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
-
-  const closeLightbox = () => {
-    setCurrentImage(0);
-    setViewerIsOpen(false);
-  };
-
-  return (
-    <div className="App">
-	  <div>
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+        <div>
 	  <PrimarySearchAppBar/>
 	  </div>
-	<header className="App-header">
-	     <div>
-      <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
-        {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
-            <Carousel
-              currentIndex={currentImage}
-              views={photos.map(x => ({
-                ...x,
-                srcset: x.srcSet,
-                caption: x.title
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
-    </div>
-	  </header>
-    </div>
-  );
+          <Route path='/' exact component={Homepage} />
+          <Route path='/classify/' exact component={Classify} />
+          <Route path='/gallery/' exact component={Gallery} />  
+
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;

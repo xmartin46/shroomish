@@ -10,7 +10,7 @@ for x in names_list:
 
 print('Number of classes inside our dataset: {}'.format(len(names_set)))
 
-arguments= {"keywords":"{}".format(','.join(names_set)), "limit":60,"print_urls":True}
+arguments= {"keywords":"{}".format(','.join(names_set)), "limit":100,"print_urls":True}
 absolute_image_paths = response.download(arguments)
 print(absolute_image_paths)
 prefix = './downloads'

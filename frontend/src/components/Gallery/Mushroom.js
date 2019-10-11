@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+
 const Mushroom = (props) => {
     console.log(props)
     return(
@@ -22,9 +23,9 @@ const Mushroom = (props) => {
 		    <Typography gutterBottom variant='headline' component="subtitle1">
                         {props.mushroom.fields.latin_name}
                     </Typography>
-                    <Typography component="p">
+                    {/* <Typography component="p">
                         {props.mushroom.fields.description}
-                    </Typography>
+                    </Typography> */}
                     </CardContent>
                     <CardActions>
                     <Button size="small" color="primary" href={props.mushroom.fields.url} target="_blank">
