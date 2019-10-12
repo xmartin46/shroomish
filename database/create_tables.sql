@@ -11,9 +11,10 @@ CREATE TABLE "user_account" (
 
 CREATE TABLE "mushroom" (
 	"id" serial NOT NULL,
-	"name" VARCHAR(255) NOT NULL UNIQUE,
+	"name_eng" VARCHAR(255) NOT NULL,
+	"name_latin" VARCHAR(255) NOT NULL UNIQUE,
 	"description" VARCHAR(10485760) NOT NULL, /* 10485760 = MAX_SIZE OF VARCHAR*/
-	"edible" BOOLEAN NOT NULL,
+	"edibility" VARCHAR(255) NOT NULL,
 	CONSTRAINT "Mushroom_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -35,7 +36,7 @@ CREATE TABLE "mushroom_coordinate" (
 CREATE TABLE "mushroom_image" (
 	"id" serial NOT NULL,
 	"id_mushroom" integer NOT NULL,
-	"PhotoURL" VARCHAR(255) NOT NULL,
+	"URL" VARCHAR(255) NOT NULL,
 	CONSTRAINT "photoList_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
