@@ -35,7 +35,7 @@ const CardList = ({ mushrooms }) => {
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
-    img={mushroom.img_urls}
+    img={mushroom.img_urls} //TODO change to url
     description= {mushroom.description}
     edibility={mushroom.edibility}
     />

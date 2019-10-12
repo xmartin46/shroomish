@@ -166,11 +166,10 @@ export default function PrimarySearchAppBar() {
   };
 
 
-  const sendQuery = form => {
+  const sendQuery = name => {
   return axios({
     method: 'POST',
-    url: API + '/search',
-    data: form
+    url: API + '/search/'+ name
   })
   .then(res => {
     return res.data
