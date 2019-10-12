@@ -36,7 +36,7 @@ CREATE TABLE "mushroom_coordinate" (
 CREATE TABLE "mushroom_image" (
 	"id" serial NOT NULL,
 	"id_mushroom" integer NOT NULL,
-	"PhotoURL" VARCHAR(255) NOT NULL,
+	"URL" VARCHAR(255) NOT NULL,
 	CONSTRAINT "photoList_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
