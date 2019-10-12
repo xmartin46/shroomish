@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Box, Grid, Button } from 'grommet';
 import './main.css';
+import Typography from '@material-ui/core/Typography'
+
 
 class Main extends Component {
   constructor(props) {
@@ -14,26 +16,13 @@ class Main extends Component {
 
       <div className='main-class'>
 
-        <div className='background' />
-        <Grid
-            className='mainGrid'
-            columns={['fill']}
-            rows={['medium', 'small']}
-            gap='none'
-            areas={[
-              { name: 'header', start: [0, 0], end: [1, 0] },
-              { name: 'content', start: [0, 1], end: [1, 1] },
-            ]}
-          >
-            <Box className ='box-header' gridArea='header'>
-              <h1>Hello,</h1>
-              <h2>welcome to 
-                  <div className='name'> Mushroom Classifier!</div>
-              </h2>
-            </Box>
-            
-          </Grid>
-    
+<div className='background' />  
+<div className="content-wrapper">
+                 <Typography variant="headline" component="h2">
+                      Hello, welcome to
+                  </Typography>
+                  <div className='name'> <Typography variant="headline" component="h1"> Shroomish!</Typography></div>
+            </div>
       </div>
     
     );

@@ -3,6 +3,7 @@ import axios from 'axios'
 import './main.css';
 import {Grid, Box, Button } from 'grommet';
 import { API } from '../../consts';
+import Typography from '@material-ui/core/Typography'
 
 
 class Classify extends Component {
@@ -63,22 +64,24 @@ class Classify extends Component {
     <div className="main-class">
      
     <Box className ='box'>
-    
-        <p>
-          Click a mushroom picture or upload a picture and send it to server for prediction!
-        </p>
-        <p>
-          Our technology will automagically return which type of mushroom is:
-        </p>
-        <p>Prediction: { namePred }</p>
+    <Typography component="p">
+    Click a mushroom picture or upload a picture and send it to server for prediction!
+                  </Typography>
+                  <Typography component="p">
+                  Our technology will automagically return which type of mushroom is:
+                  </Typography>
+                  <Typography component="p">
+                  <p>Prediction: { namePred }</p>
         { error ? 
           <p>Error: { error }</p>
           :
           null
         }
+                  </Typography>
+        
         <form onSubmit={this.handleSubmit}>
           <input type="file" onChange={this.handleFileChange}/>
-          <button type="submit"> Submit</button>
+          <button type="submit"> <Typography>Submit</Typography></button>
           {/* <Button 
                     className='mainButton'
                     color='accent-1'

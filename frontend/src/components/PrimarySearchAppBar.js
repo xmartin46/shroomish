@@ -236,7 +236,7 @@ export default function PrimarySearchAppBar() {
   return (
 <MuiThemeProvider theme={theme}>
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background:'#f44336'}}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -248,7 +248,7 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Mushroom Classifier
+            Shroomish
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Homepage from './components/Homepage/Homepage';
 import Classify from './components/Classifier/Classify';
 import Gallery from './components/Gallery/Gallery';
-import PrimarySearchAppBar from './components/PrimarySearchAppBar'
-
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import PrimarySearchAppBar from './components/PrimarySearchAppBar';
+import theme from './components/theme';
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider muitheme={theme}>
       <Router>
         <div>
         <div>
@@ -16,9 +18,10 @@ class App extends Component {
           <Route path='/' exact component={Homepage} />
           <Route path='/classify/' exact component={Classify} />
           <Route path='/gallery/' exact component={Gallery} />  
-
+        
         </div>
       </Router>
+      </MuiThemeProvider>
     );
   }
 }
