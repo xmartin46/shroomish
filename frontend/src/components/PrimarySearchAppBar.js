@@ -29,24 +29,6 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 //https://www.florin-pop.com/blog/2019/02/react-movie-search-app/
 
-// function sendQuery(form) {
-//   return axios({
-//     method: 'POST',
-//     url: API + '/search',
-//     data: form
-//   })
-//   .then(res => {
-//     return res.data
-//   })
-//   .catch(err => {
-//     console.error(err)
-//     this.setState({
-//       error: err.response.data
-//     })
-//   })
-// }
-
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -183,6 +165,29 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
 
+
+  const sendQuery = form => {
+  return axios({
+    method: 'POST',
+    url: API + '/search',
+    data: form
+  })
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.error(err)
+  })
+}
+
+
+  const handleSearch = e => {
+    if(e.keyCode == 13){
+      sendQuery(e.target.value)
+      console.log('Sending '+ e.target.value)
+    }
+ }
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -253,7 +258,7 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
             Shroomish
           </Typography>
           <div className={classes.search}>
@@ -267,6 +272,7 @@ export default function PrimarySearchAppBar() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onKeyDown={handleSearch}
             />
           </div>
           <div className={classes.grow} />

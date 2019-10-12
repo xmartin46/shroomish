@@ -35,7 +35,7 @@ class Classify extends Component {
     .catch(err => {
       console.error(err)
       this.setState({
-        error: err.response.data
+        error: err.response
       })
     })
   }
@@ -49,6 +49,7 @@ class Classify extends Component {
   
   handleSubmit = (e) => {
     e.preventDefault()
+    console.log('Sending '+ this.state.form)
     this.sendImage(this.state.form)
     .then(pred => {
       this.setState({

@@ -1,19 +1,29 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Homepage from './components/Homepage/Homepage';
-import Classify from './components/Classifier/Classify';
-import Gallery from './components/Gallery/Gallery';
+import React, { Component} from 'react';
+import { BrowserRouter as Router,Switch, Route } from 'react-router-dom';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import theme from './components/theme';
 import { PUBLIC_URL } from './consts';
+
+const Gallery = React.lazy(() => 
+import("./components/Gallery/Gallery"));
+
+const Homepage = React.lazy(() => 
+import("./components/Homepage/Homepage"));
+
+const Classify = React.lazy(() => 
+import("./components/Classifier/Classify"));
+
+const renderLoader = () => <div className="loader"></div>;
+
 
 class App extends Component {
   componentDidMount(){
     document.title = "Shroomish";
   }
   render() {
-      return (
+    return (
+      <React.Suspense fallback={renderLoader()}>
       <MuiThemeProvider muitheme={theme}>
       <Router>
       <div>
@@ -26,8 +36,11 @@ class App extends Component {
       </div>
       </Router>
       </MuiThemeProvider>
+      </React.Suspense>
       );
     }
-  }
+}
+
   
   export default App;
+  
