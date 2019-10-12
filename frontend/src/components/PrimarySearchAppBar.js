@@ -22,23 +22,29 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import theme from './theme';
+import axios from 'axios'
+import { API } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
-/*function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
 
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-*/
+//https://www.florin-pop.com/blog/2019/02/react-movie-search-app/
+
+// function sendQuery(form) {
+//   return axios({
+//     method: 'POST',
+//     url: API + '/search',
+//     data: form
+//   })
+//   .then(res => {
+//     return res.data
+//   })
+//   .catch(err => {
+//     console.error(err)
+//     this.setState({
+//       error: err.response.data
+//     })
+//   })
+// }
 
 
 const drawerWidth = 240;
