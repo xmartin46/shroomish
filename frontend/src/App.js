@@ -9,8 +9,11 @@ import theme from './components/theme';
 import { PUBLIC_URL } from './consts';
 
 class App extends Component {
+  componentDidMount(){
+    document.title = "Shroomish";
+  }
   render() {
-    return (
+      return (
       <MuiThemeProvider muitheme={theme}>
       <Router>
       <div>
