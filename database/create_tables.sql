@@ -1,7 +1,7 @@
-CREATE TABLE "user_account" (
-	"id" serial NOT NULL,
-	"name" VARCHAR(255) NOT NULL UNIQUE,
-	"email" VARCHAR(255) NOT NULL UNIQUE,
+CREATE TABLE user_account (
+	id serial NOT NULL,
+	name VARCHAR(255) NOT NULL UNIQUE,
+	email VARCHAR(255) NOT NULL UNIQUE,
 	CONSTRAINT "Users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -9,12 +9,12 @@ CREATE TABLE "user_account" (
 
 
 
-CREATE TABLE "mushroom" (
-	"id" serial NOT NULL,
-	"name_eng" VARCHAR(255) NOT NULL,
-	"name_latin" VARCHAR(255) NOT NULL UNIQUE,
-	"description" VARCHAR(10485760) NOT NULL, /* 10485760 = MAX_SIZE OF VARCHAR*/
-	"edibility" VARCHAR(255) NOT NULL,
+CREATE TABLE mushroom (
+	id serial NOT NULL,
+	name_eng VARCHAR(255) NOT NULL,
+	name_latin VARCHAR(255) NOT NULL UNIQUE,
+	description VARCHAR(10485760) NOT NULL, /* 10485760 = MAX_SIZE OF VARCHAR*/
+	edibility VARCHAR(255) NOT NULL,
 	CONSTRAINT "Mushroom_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -22,10 +22,10 @@ CREATE TABLE "mushroom" (
 
 
 
-CREATE TABLE "mushroom_coordinate" (
-	"id" serial NOT NULL,
-	"id_mushroom" integer NOT NULL,
-	"LatLng" VARCHAR(255) NOT NULL,
+CREATE TABLE mushroom_coordinate (
+	id serial NOT NULL,
+	id_mushroom integer NOT NULL,
+	LatLng VARCHAR(255) NOT NULL,
 	CONSTRAINT "LatLngList_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -33,10 +33,10 @@ CREATE TABLE "mushroom_coordinate" (
 
 
 
-CREATE TABLE "mushroom_image" (
-	"id" serial NOT NULL,
-	"id_mushroom" integer NOT NULL,
-	"URL" VARCHAR(255) NOT NULL,
+CREATE TABLE mushroom_image (
+	id serial NOT NULL,
+	id_mushroom integer NOT NULL,
+	URL VARCHAR(255) NOT NULL,
 	CONSTRAINT "photoList_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -44,11 +44,11 @@ CREATE TABLE "mushroom_image" (
 
 
 
-CREATE TABLE "user_password" (
-	"id" serial NOT NULL,
-	"id_user" integer NOT NULL,
-	"password" VARCHAR(255) NOT NULL,
-	"salt" VARCHAR(255) NOT NULL,
+CREATE TABLE user_password (
+	id serial NOT NULL,
+	id_user integer NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	salt VARCHAR(255) NOT NULL,
 	CONSTRAINT "Password_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
