@@ -37,9 +37,11 @@ class MushroomScraper(scrapy.Spider):
 
         div_edibility = response.css('div.textus')[3]
         div_description = response.css('div.textus')[2]
-        aux = response.css('div.longtextus').css('::text').extract_first()
-        aux = "\n".join(aux.split("\n")[:-2])
-        div_description = div_description.css('::text').extract_first() + aux
+        aux = response.css('div.longtextus').css('::text').getall()
+        aux = "".join(aux)
+        aux = "\n".join(aux.split("\r\n")[:-2])
+        div_description = div_description.css('::text').extract_first() 
+        div_description = div_description + ". " + aux
         shroom['img_urls'] = img_urls
         shroom['description']= div_description
         shroom['edibility'] = div_edibility.css('::text').extract_first().lower()

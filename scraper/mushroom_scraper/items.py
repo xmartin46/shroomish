@@ -10,7 +10,7 @@ import scrapy
 class MushroomItem(scrapy.Item):
     name_latin = scrapy.Field()
     name_eng = scrapy.Field()
-    desc = scrapy.Field()
+    description = scrapy.Field()
     url = scrapy.Field()
     edibility = scrapy.Field()
     img_urls = scrapy.Field()
