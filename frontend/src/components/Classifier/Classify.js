@@ -22,7 +22,7 @@ class Classify extends Component {
   
   sendImage(form) {
     return axios({
-      method: 'POST',
+      method: 'GET',
       url: API + '/predict',
       data: form
     })
