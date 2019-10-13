@@ -1,6 +1,10 @@
 · index.js
   - Change "/search/" path to /gallery/?
+  - Change "/heatmap/:name_latin"? And should I send the heatmap or the coordinates?
 
 · /controllers/mushrooms.js
   - Return "message" in a json when no data is found in the DB??????? Ask Adrià and Ricardo
   - Should I sort the data alphabetically? And sort name_eng or name_latin or both???????
+  - In those function in which the search is for a particular mushroom, should I put LIKE or =?
+  - Do I have to add also a third column for the latlong? (See example from github example_10000 I think)
+  - getMushroomCoordinates all thing inside the query? IDK man => we cannot do more queries until that is done
