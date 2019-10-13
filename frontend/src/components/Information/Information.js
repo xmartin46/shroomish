@@ -3,7 +3,7 @@ import './main.css';
 import Typography from '@material-ui/core/Typography'
 
 
-class Main extends Component {
+class Information extends Component {
   render() {
     return (
 
@@ -22,4 +22,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Information;

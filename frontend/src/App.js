@@ -1,26 +1,46 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Homepage from './components/Homepage/Homepage';
-import Classify from './components/Classifier/Classify';
-import Gallery from './components/Gallery/Gallery';
-import PrimarySearchAppBar from './components/PrimarySearchAppBar'
+import React, { Component} from 'react';
+import { BrowserRouter as Router,Switch, Route } from 'react-router-dom';
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import PrimarySearchAppBar from './components/PrimarySearchAppBar';
+import theme from './components/theme';
+import { PUBLIC_URL } from './consts';
+
+const Gallery = React.lazy(() => 
+import("./components/Gallery/Gallery"));
+
+const Homepage = React.lazy(() => 
+import("./components/Homepage/Homepage"));
+
+const Classify = React.lazy(() => 
+import("./components/Classifier/Classify"));
+
+const renderLoader = () => <div className="loader"></div>;
+
 
 class App extends Component {
+  componentDidMount(){
+    document.title = "Shroomish";
+  }
   render() {
     return (
+      <React.Suspense fallback={renderLoader()}>
+      <MuiThemeProvider muitheme={theme}>
       <Router>
-        <div>
-        <div>
-	  <PrimarySearchAppBar/>
-	  </div>
-          <Route path='/' exact component={Homepage} />
-          <Route path='/classify/' exact component={Classify} />
-          <Route path='/gallery/' exact component={Gallery} />  
-
-        </div>
+      <div>
+      <div>
+      <PrimarySearchAppBar/>
+      </div>
+      <Route path={PUBLIC_URL + '/'} exact component={Homepage} />
+      <Route path={PUBLIC_URL + '/classify/'} exact component={Classify} />
+      <Route path={PUBLIC_URL + '/gallery/'} exact component={Gallery} />  
+      </div>
       </Router>
-    );
-  }
+      </MuiThemeProvider>
+      </React.Suspense>
+      );
+    }
 }
 
-export default App;
+  
+  export default App;
+  

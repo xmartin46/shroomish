@@ -1,3 +1,3 @@
 const API = 'http://localhost:8081';
-
-module.exports = {API};
+const PUBLIC_URL = ''
+module.exports = {API, PUBLIC_URL};
