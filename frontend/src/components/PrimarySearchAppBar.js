@@ -168,7 +168,7 @@ export default function PrimarySearchAppBar() {
 
   const sendQuery = name => {
   return axios({
-    method: 'POST',
+    method: 'GET',
     url: API + '/search/'+ name
   })
   .then(res => {
@@ -326,11 +326,7 @@ export default function PrimarySearchAppBar() {
               <ListItemText primary="Classifier" />
             </ListItem>
 
-            <ListItem button component="a" href="/gallery" key="Mushroom Gallery">
-              <ListItemIcon> <StorageIcon/></ListItemIcon>
-              <ListItemText primary="Mushroom Gallery" />
-            </ListItem>
-
+          
         </List>
         </Drawer>
       {renderMobileMenu}

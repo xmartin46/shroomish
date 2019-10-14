@@ -22,7 +22,7 @@ class Classify extends Component {
   
   sendImage(form) {
     return axios({
-      method: 'POST',
+      method: 'GET',
       url: API + '/predict',
       data: form
     })
@@ -62,13 +62,14 @@ class Classify extends Component {
     const { prediction, error} = this.state
     const namePred = "unknown"
     return (
-      <div className="main-class">
+      <div className="main-class" style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"10rem"}}>
       
-      <Box className ='box'>
-      <Typography component="p">
+      <Box className ='box' >
+      <Typography component="p" style={{fontSize:"2em"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
       </Typography>
-      <Typography component="p">
+      <br></br>
+      <Typography component="p" style={{fontSize:"1.2em"}}>
       Our technology will automagically return which type of mushroom is:
       </Typography>
       <Typography component="p">

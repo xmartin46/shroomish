@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  # Classifier TODO
+  # Backend TODO
+  # Client
+  shroomish-client-app:
+    container_name: shroomish-client-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.frontend:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+    restart: always
+
+

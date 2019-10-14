@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './main.css';
-// import Mushroom from './Mushroom'
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -35,14 +34,13 @@ const CardList = ({ mushrooms }) => {
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
-    img={mushroom.img_urls} //TODO change to url
-    description= {mushroom.description}
+    img={mushroom.img_urls} 
     edibility={mushroom.edibility}
     />
     ));
     
     return (
-      <div style={{ display:'flex',justifyContent:"center", flexWrap:"wrap", flexDirection:"row"}}>
+      <div className="cardlist" style={{display:'flex',flexGrow:'1',flexShrink:"1",flexBasis:"100%" ,justifyContent:"space-around", flexWrap:"wrap", flexDirection:"row", alignContent:"stretch"}}>
       {cardsArray}
       </div>
       );
@@ -50,14 +48,15 @@ const CardList = ({ mushrooms }) => {
     
     
     
-    const Mushroom = ({name,name_latin,img,description,edibility}) => {
+    const Mushroom = ({name,name_latin,img,edibility}) => {
       return(
-        <div style={{ display:'flex', margin:'2%' }}>
+        <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
+        <div style={{ display:'block', margin:'1vh' }} >
         <Card style={{   display: 'block',
-        width: '30vw',
+        width: '20vw', 
         transitionDuration: '0.3s'
         }}>
-        <CardMedia style={{height: 0, paddingTop: '56.25%'}}
+        <CardMedia style={{height: 0, paddingTop: '90%'}}
         image={img}
         title={name}
         />
@@ -65,20 +64,21 @@ const CardList = ({ mushrooms }) => {
         <Typography gutterBottom variant="headline" component="h3">
         {name}
         </Typography>
-        <Typography gutterBottom variant='headline' component="subtitle1">
+        <Typography gutterBottom variant='headline' component="h4">
         {name_latin}
         </Typography>
         <Typography component="p">
-        {description}
-        </Typography> 
+        {edibility}
+        </Typography>  
         </CardContent>
         <CardActions>
-        <Button size="small" color="primary" href={name} target="_blank">
+        <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
         Know more...
         </Button>
         </CardActions>
         </Card>
         </div>
+        </a>
         );
       }
       
