@@ -8,8 +8,8 @@ import { PUBLIC_URL } from './consts';
 const Gallery = React.lazy(() => 
 import("./components/Gallery/Gallery"));
 
-// const Homepage = React.lazy(() => 
-// import("./components/Homepage/Homepage"));
+const NotFound = React.lazy(() => 
+import("./components/NotFound/NotFound"));
 
 const Classify = React.lazy(() => 
 import("./components/Classifier/Classify"));
@@ -39,6 +39,7 @@ class App extends Component {
       <Route path={PUBLIC_URL + '/classify/'} exact component={Classify} />
       <Route path={PUBLIC_URL + '/gallery/'} exact component={Gallery} />
       <Route path={PUBLIC_URL + '/info/:id'} exact component={Information} />
+      <Route path={PUBLIC_URL + '/NotFound'} exact component={NotFound} />
       </div>
       </Router>
       </MuiThemeProvider>
