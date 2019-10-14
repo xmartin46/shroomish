@@ -14,7 +14,8 @@ echo 'Shroomish Creating DDL Trippify'
 docker run -it --rm --network trippify trippify-db psql -h trippify-db -U trippify trippify -f /tmp/create_ddl_trippify.sql
 echo 'Shroomish DDL Trippify created'
 
-
+echo 'Shroomish Building Classifier backend'
+docker compuse up -d build shroomish-classifier
 echo 'Shroomish Building and kicking off the Frontend containers'
 docker-compose up -d --build shroomish-client-app
 echo 'Shroomish Building and kicking off the Backend containers'

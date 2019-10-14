@@ -1,12 +1,49 @@
 version: '3.7'
 services:
-  # Classifier TODO
-  # Backend TODO
+  # Backend 
+  shroomish-backend:
+    image: shroomish-backend
+    container_name: shroomish-backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - shroomish
+    ports:
+      - 5432:5432
+
+  # Classifier
+  shroomish-classifier:
+    image: shroomish-classifier
+    container_name: shroomish-classifier
+    build:
+      context: classifier
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - shroomish
+    ports:
+      - 5432:5432
+
+  # DB
+  shroomish-db:
+    image: shroomish-db
+    container_name: shroomish-db
+    build:
+      context: database
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - shroomish
+    ports:
+      - 5432:5432
+
   # Client
   shroomish-client-app:
     container_name: shroomish-client-app
     build:
-      context: .
+      context: frontend
       dockerfile: Dockerfile
     volumes:
       - '.frontend:/usr/src/app'
