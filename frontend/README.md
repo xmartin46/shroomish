@@ -1,3 +1,8 @@
+```
+docker build -t shroomish-frontend .
+docker run -d -p 3000:3000 shroomish-frontend
+```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
