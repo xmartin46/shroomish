@@ -172,6 +172,7 @@ export default function PrimarySearchAppBar() {
     url: API + '/search/'+ name
   })
   .then(res => {
+    console.log(res.data)
     return res.data
   })
   .catch(err => {
@@ -228,7 +229,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -326,7 +327,7 @@ export default function PrimarySearchAppBar() {
               <ListItemText primary="Classifier" />
             </ListItem>
 
-          
+
         </List>
         </Drawer>
       {renderMobileMenu}

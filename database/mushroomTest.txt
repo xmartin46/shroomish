@@ -1,144 +1,6 @@
-CREATE SCHEMA shroomish AUTHORIZATION mushroom_admin;
-
--- Id sequences
-/*CREATE SEQUENCE trippify_trip_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-ALTER SEQUENCE trippify_trip_id_seq
-    OWNER TO mushroom_admin;
-
-
-CREATE SEQUENCE trippify_route_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-ALTER SEQUENCE trippify_route_id_seq
-    OWNER TO mushroom_admin;
-
-
-CREATE SEQUENCE trippify_participant_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-ALTER SEQUENCE trippify_participant_id_seq
-    OWNER TO mushroom_admin;
-
-
-CREATE SEQUENCE trippify_car_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 9223372036854775807
-    CACHE 1;
-
-ALTER SEQUENCE trippify_car_id_seq
-    OWNER TO mushroom_admin;*/
-
--- Tables
-/* id integer NOT NULL DEFAULT nextval('trippify_car_id_seq'::regclass) */
-CREATE TABLE user_account (
-	id serial NOT NULL,
-	name VARCHAR(255) NOT NULL UNIQUE COLLATE pg_catalog."default",
-	email VARCHAR(255) NOT NULL UNIQUE COLLATE pg_catalog."default",
-	CONSTRAINT user_account_pk PRIMARY KEY ("id")
-) WITH (
-  OIDS=FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE user_account
-    OWNER to mushroom_admin;
-
-
-
-CREATE TABLE user_password (
-	id serial NOT NULL,
-	id_user integer NOT NULL,
-	password VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	salt VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	CONSTRAINT user_password_pk PRIMARY KEY ("id"),
-  CONSTRAINT user_password_fk0 FOREIGN KEY (id_user)
-      REFERENCES user_account (id) /*MATCH SIMPLE
-      ON UPDATE NO ACTION
-      ON DELETE NO ACTION*/
-) WITH (
-  OIDS=FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE user_password
-    OWNER to mushroom_admin;
-
-
-
-CREATE TABLE mushroom (
-	id serial NOT NULL,
-	name_eng VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	name_latin VARCHAR(255) NOT NULL UNIQUE COLLATE pg_catalog."default",
-	description VARCHAR(10485760) NOT NULL COLLATE pg_catalog."default", /* 10485760 = MAX_SIZE OF VARCHAR*/
-	edibility VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	CONSTRAINT mushroom_pk PRIMARY KEY ("id")
-) WITH (
-  OIDS=FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE mushroom
-    OWNER to mushroom_admin;
-
-
-
-CREATE TABLE mushroom_coordinate (
-	id serial NOT NULL,
-	id_mushroom integer NOT NULL,
-	LatLng VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	CONSTRAINT mushroom_coordinate_pk PRIMARY KEY ("id"),
-  CONSTRAINT mushroom_coordinate_fk0 FOREIGN KEY (id_mushroom)
-      REFERENCES mushroom (id) /*MATCH SIMPLE
-      ON UPDATE NO ACTION
-      ON DELETE NO ACTION*/
-) WITH (
-  OIDS=FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE mushroom_coordinate
-    OWNER to mushroom_admin;
-
-
-
-CREATE TABLE mushroom_image (
-	id serial NOT NULL,
-	id_mushroom integer NOT NULL,
-	URL VARCHAR(255) NOT NULL COLLATE pg_catalog."default",
-	CONSTRAINT mushroom_image_pk PRIMARY KEY ("id"),
-  CONSTRAINT mushroom_image_fk0 FOREIGN KEY (id_mushroom)
-      REFERENCES mushroom (id) /*MATCH SIMPLE
-      ON UPDATE NO ACTION
-      ON DELETE NO ACTION*/
-) WITH (
-  OIDS=FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE mushroom_image
-    OWNER to mushroom_admin;
-
--- Insert values
-/* ************************ mushroom ************************* */
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Horse Mushroom','Agaricus arvensis','Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter. Agaricus arvensis, commonly known as the horse mushroom, is a sometimes massive agaric that has a white cap, ringed stem, and pink or chocolate colored gills.
 
-Cap white or cream colored, may have fine scales, first hemispherical in shape before flattening out with maturity. Flesh is white, firm and thick. Gills are at first white, becoming pink, then chocolate brown or blackish, free and crowded. Stem is white or cream; it is slightly club-shaped and smooth or finely scaly below the ring. Ring is white or cream, pendulous and superior. Viewed from below, on a closed-cap specimen, it has a well-developed ''cogwheel'' pattern around the stem.
+Cap white or cream colored, may have fine scales, first hemispherical in shape before flattening out with maturity. Flesh is white, firm and thick. Gills are at first white, becoming pink, then chocolate brown or blackish, free and crowded. Stem is white or cream; it is slightly club-shaped and smooth or finely scaly below the ring. Ring is white or cream, pendulous and superior. Viewed from below, on a closed-cap specimen, it has a well-developed ''cogwheel'' pattern around the stem. 
 
 Similar species There are several similar species. Agaricus macrosporus are very fleshy, with scaly stem girdles. Agaricus sylvicola is a woodland variety. Agaricus augustus and Agaricus xanthoderma are also similar. Be careful not to confuse it with the deadly poisonous Amanita virosa, which has white gills.
 ','edible and good ');
@@ -149,14 +11,14 @@ Cap shiny brown or grey-brown with a very finely striate margin, initially domed
 Amanita pantherina on the First Nature Web site.','poisonous');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Fly Amanita','Amanita muscaria','Cap 8-10 cm diameter; stem 8-18 cm tall * 1-2 cm diameter. Amanita muscaria, commonly known as the fly agaric or fly amanita, is a medium to large, fleshy agaric, with red cap, white patches, white gills, ring and a bulbous base. It grows on poor and sandy soils and the fruiting bodies emerge from the soil looking like white eggs.
 
-Cap first round to hemispherical, and finally to plate-like and flat in mature specimens, often with a low, shallow depression on disk when fully expanded. Surface shiny; deep scarlet, fading to orange-red or orange-yellow in older specimens. Gills white, free or barely touching the stem, crowded. Stem white, robust and has the slightly brittle, fibrous texture. At the base is a bulb that bears universal veil remnants in the form of two to four distinct rings or ruffs. Between the basal universal veil remnants and gills are remnants of the partial veil (which covers the gills during development) in the form of a white ring. It can be quite wide and flaccid with age.
+Cap first round to hemispherical, and finally to plate-like and flat in mature specimens, often with a low, shallow depression on disk when fully expanded. Surface shiny; deep scarlet, fading to orange-red or orange-yellow in older specimens. Gills white, free or barely touching the stem, crowded. Stem white, robust and has the slightly brittle, fibrous texture. At the base is a bulb that bears universal veil remnants in the form of two to four distinct rings or ruffs. Between the basal universal veil remnants and gills are remnants of the partial veil (which covers the gills during development) in the form of a white ring. It can be quite wide and flaccid with age. 
 
 Amanita muscaria on the First Nature Web site.
 ','poisonous');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Tawny grisette','Amanita fulva','Cap 4-9 cm diameter, stem 7-12 cm tall * 0.8-1.2 cm diameter. Amanita fulva, also known as Tawny grisette, is a medium-sized agaric with distinctive tawny cap and white gills, no ring and usually without cap patches but with volval bag. It grows solitary or scattered on soil in mixed woodlands, favouring birch. Not recommended to be eaten because of danger to be mistaken with poisonous members of the Amanita genus.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Tawny grisette','Amanita fulva','Cap 4-9 cm diameter, stem 7-12 cm tall * 0.8-1.2 cm diameter. Amanita fulva, also known as Tawny grisette, is a medium-sized agaric with distinctive tawny cap and white gills, no ring and usually without cap patches but with volval bag. It grows solitary or scattered on soil in mixed woodlands, favouring birch. Not recommended to be eaten because of danger to be mistaken with poisonous members of the Amanita genus. 
 
 Cap tan or orange-brown with sulcate margin, occasionally with brownish velar patches, at first ovoid, becoming expanded-convex and flattened with a slight umbo. Flesh white and brittle.
-Stem whitish or pallid cap coulor, narrower towards the apex and arising from white volval bag. Ring absent. Hollow in marture specimens.
+Stem whitish or pallid cap coulor, narrower towards the apex and arising from white volval bag. Ring absent. Hollow in marture specimens. 
 
 Similar species Amanita crocea and Amanita vaginata.
 
@@ -175,9 +37,9 @@ Albatrellus ovinus on the First Nature Web site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('IDKWTFISTHISSHITNIGGA                                      6','Albatrellus confluens','Cap 7-18 cm diameter, stem 3-7 cm tall * 1-3 cm thick. From above, this pale orange polypore looks like an agaric or a hedgehog mushrooom, but it has minute pores on the underside. The skin of the convex cap often cracks with age. It has a sturdy stem and very firm, mild to slightly bitter white flesh. Grows under conifers, mycorrhizal with conifers in a wide variety of ecosystems.
 
 Similar species Albatrellus ovinus is more cream white and does stain yellow or greenish yellow, particularly on the pores.','inedible');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('The Prince','Agaricus augustus','Cap 10-20 cm diameter, stem 10-20 cm tall * 2-4 cm diameter. Agaricus augustus, also known as the prince, is a tall, sometimes massive agaric that has orange-brown scales on the surface of both cap and stem. Surfaces of all parts stain yellow when handled or bruised.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('The Prince','Agaricus augustus','Cap 10-20 cm diameter, stem 10-20 cm tall * 2-4 cm diameter. Agaricus augustus, also known as the prince, is a tall, sometimes massive agaric that has orange-brown scales on the surface of both cap and stem. Surfaces of all parts stain yellow when handled or bruised. 
 
-Cap hemispherical during the so-called button stage, and then expands, becoming convex and finally flat. The cap cuticle is dry, and densely covered with concentrically arranged, brown-coloured scales on a white to yellow background. The flesh is thick, firm and white and may discolour yellow when bruised. Gills are not attached to stem, crowded and pallid at first, and turn pink then dark brown with maturity. Stem Solid; cylindrical to club-shaped. The surface is white. Ring membranous, with patches of brownish fibrils under.
+Cap hemispherical during the so-called button stage, and then expands, becoming convex and finally flat. The cap cuticle is dry, and densely covered with concentrically arranged, brown-coloured scales on a white to yellow background. The flesh is thick, firm and white and may discolour yellow when bruised. Gills are not attached to stem, crowded and pallid at first, and turn pink then dark brown with maturity. Stem Solid; cylindrical to club-shaped. The surface is white. Ring membranous, with patches of brownish fibrils under. 
 
 Similar species Agaricus subrefescens found in central and eastern U.S.
 
@@ -218,7 +80,7 @@ Gills are crowded close together, free from attachment to the stem, and white wi
 ','poisonous');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Grey veiled amanita','Amanita porphyria','Cap 4-10 cm diameter; stem 5-12 cm tall * 1-1.5 cm diameter. This medium to large, fleshy agaric that has greyish brown cap, sometimes with grey patches, white gills, ring, bulbous base, grows near coniferous trees.
 
-Cap hemispherical when young, later flat, greyish brown to brown in colour, usually smooth, sometimes with grey patches. Gills soft, crowded, white and free from the stem. Flesh is white with a smell of radish. Stem thick, smooth, white or pale yellow and has a grey to black ring. Has also a basal bulb.
+Cap hemispherical when young, later flat, greyish brown to brown in colour, usually smooth, sometimes with grey patches. Gills soft, crowded, white and free from the stem. Flesh is white with a smell of radish. Stem thick, smooth, white or pale yellow and has a grey to black ring. Has also a basal bulb. 
 
 Similar species Amanita porphyria can easily be confused with much more poisonous species such as the Panther cap (Amanita pantherina).
 
@@ -243,7 +105,7 @@ Similar species The related Turbinellus kauffmanii is similar-looking but has a 
 ','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Plums and Custard','Tricholomopsis rutilans','Cap 2-12 cm diameter; stem 3.5-5.5 cm tall * 1-1.5 cm diameter. This medium to large, fleshy agaric has a cap with plum fibrils on custard yellow backround and gills are egg -yellow, which makes it easily recognised. It grows solitary or in small caespitose tufts on or close to rotting conifer stumps.
 
-Cap plum-red scaled cap with yellow base colour. At first convex, becoming broadly umbonate. Gills egg -yellow, adnexed, broad, crowded. Stem yellow and covered with reddish purple, fibrillose scales, less densely than on cap, more or less equal. Flesh pallid yellow, tough, stuffed or full.
+Cap plum-red scaled cap with yellow base colour. At first convex, becoming broadly umbonate. Gills egg -yellow, adnexed, broad, crowded. Stem yellow and covered with reddish purple, fibrillose scales, less densely than on cap, more or less equal. Flesh pallid yellow, tough, stuffed or full. 
 Stem cylindrical and with a red scaly base developing to a yellow colour towards the cap. It has no ring or volva.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Yellow Rider','Tricholomopsis decora','Cap 4-12 cm diameter, stem 3.5-5.5 cm tall * 1-1.5 cm thick. This is a medium to large, fleshy agaric, cap with brown fibrils on a predominantly yellow background with brown to blackish scales, thinning towards the margin.
 
@@ -300,7 +162,7 @@ Similar species The poisonous and hot-tasting Russula emetica has no yellow colo
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('IDKWTFISTHISSHITNIGGA                                      34','Russula obscura','Cap 5-14 cm diameter, stem 6-12 cm tall * 1-3 cm thick. Russula obscura, also known as Russula vinosa, is a medium sized agaric mostly found with pine.
  ','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('The Sickener','Russula emetica','Cap 3-10 cm diameter, stem 4-9 cm tall * 0.7-2 cm thick. Russula emetica, also know as The Sickener, is a medium-sized agaric that has a convex to slightly depressed, sharlet-red cap. It grows mainly with coniferous trees in boggy areas. It is not highly poisonous and has a very hot taste.
-
+ 
 Cap convex to slightly depressed, and often shiny scarlet or cherry red, becoming sticky at wet. Gills are whitish, becoming pallid straw, more or less free, brittle, and narrow. Spores are white. Stem white, club shaped with a scurfy skin.
 
 Similar species Russula silvicola is the common dry woodland species across North America. Russula fageticola usually grows under beech trees, and it also tastes hot. Amanita muscaria has veil patches on the cap, a stem ring, and a bulb.
@@ -332,7 +194,7 @@ Fruiting bodyflat, with irregular lobes, and attached to the growing surface on 
 Occurrence It is grows infrequently from early summer to early autumn.
 ','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Liberty Cap','Psilocybe semilanceata','Cap 0.5-1.5 cm diameter, stem 2.5-7 cm tall * 0.1-0.2 cm thick. Psilocybe semilanceata, also known as Liberty Cap, is a hallucinogenic mushroom that contains the psychoactive compounds psilocybin. It has a distinctive yellowish pointed cap, clay or dark brown gills, and long slender stem. It grows in scattered trooping groups, on soil amongst grass in lawns and pastures favoring hilly sites.
-
+ 
 Cap pallid ochraceous-brown, hygrophanous, drying buff and varies in shape from sharply conical to bell-shaped, often with a prominent papilla. It does not change shape considerably as it ages. The cap margin is initially rolled inward but unrolls to become straight or even curled upwards in maturity. Gills moderately crowded together, and they have a narrowly adnexed to almost free attachment to the stem. Spores are purplish brown. Stem slender yellowish-brown and usually slightly thicker towards the base.
 
 Similar species Psilocybe fimetaria has a white veil at the margin. It grows in horse manure. There are also several other species the mushroom can be confused with.
@@ -351,7 +213,7 @@ INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Drya
 Fruiting body can be yellow to brown and has "squamules" or scales on its upper side. On the underside it has whitish cream pores that are made up of tubes packed together closely. The tubes are between 5 and 10 mm long. The taste is not distinctive. Stem black, thick and short.
 
 Polyporus squamosus on the Nature First Web site.','edible ');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Fringed Polypore','Polyporus ciliatus','Cap 2-12 cm diameter, stem 2-4 cm tall * 0.2-0.7 cm thick. Polyporus ciliatus, also known as Fringed Polypore, is a polypore that grows on fallen branches of deciduous trees annually on spring and early summer.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Fringed Polypore','Polyporus ciliatus','Cap 2-12 cm diameter, stem 2-4 cm tall * 0.2-0.7 cm thick. Polyporus ciliatus, also known as Fringed Polypore, is a polypore that grows on fallen branches of deciduous trees annually on spring and early summer. 
 
 Fruiting body upper surface grayish brown or yellowish-brown, convex at first, flattening with a depressed (umbilicate) centre. Particularly towards the margin, the cap surface is usually covered in tiny bristly hairs. The flesh is white and leathery. Stem variable in colour, often pale yellowish brown or tawny-buff, more or less equal, typically curved and sometimes thickened at the base. Pores whitish cream to buff, circular, elongating with age.
 ','inedible');
@@ -420,7 +282,7 @@ Fruiting body is yellowish brown, with darker parallel longitudinal ribs that ar
 Similar species Morchella esculenta is yellow with pale ribs along the length of its cap. Gyromitra species, which are poisonous, lack the pitted cap. It has a chambered, rather than hollow, stem.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Spring Cavalier','Melanoleuca cognata','Cap 4-10 cm diameter, stem 5-12 cm tall * 1-1.5 cm thick. Melanoleuca cognata, also know as Spring Cavalier, is a medium or large agaric, that is pale brown with an umbonate cap and white gills. It occurs often in the spring, when few other gilled mushrooms are fruiting, and grows solitary or scattered on soil in coniferous woods.
 
-Cap buff to warm brown, umbonate. Flesh cream, soft and full. Gills crowded, sinuate, notched and pink to dark ocher colored. Spores cream colored. Stem rust colored with brownish fibrils, tapering slightly upwards from more or less bulbous base. The mushroom has not ring.
+Cap buff to warm brown, umbonate. Flesh cream, soft and full. Gills crowded, sinuate, notched and pink to dark ocher colored. Spores cream colored. Stem rust colored with brownish fibrils, tapering slightly upwards from more or less bulbous base. The mushroom has not ring. 
 
 Melanoleuca cognata on the First NatureWeb site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Broad-gilled Collybia','Megacollybia platyphylla','Cap 4-12 cm diameter, stem 6-15 cm tall * 1.5-2 cm thick. Megacollybia platyphylla, also know as Broad-gilled Collybia, is a medium to large, fleshy agaric that has a pale brown, fibrillose cap, whitish gills and stem. It grows on buried decidous branches and stumps.
@@ -439,7 +301,7 @@ INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Para
 
 Cap pallid brown decorated with darker brown broad scales, starts off egg shaped and then bell shaped until the cap margin detaches from the stripe. The base colour becomes lighter with age. Dark scales appear on top when the brown surface cracks up from the smooth, central bump. Gills are white, free, and crowded. Flesh creamy white and soft. Stem is distinctive grey-brown with banded markings on a whitish background, long and thin with an onion shaped base. Above the dubble-edged ring that often falls off, it is evenly brown and below this, it is irregularly striped in a zigzag pattern. Ring is white above and brown below.
 
-Similar species The poisonous Chlorophyllum molybdites has a stouter stalk and a green spore print.
+Similar species The poisonous Chlorophyllum molybdites has a stouter stalk and a green spore print. 
 
 Macrolepiota procera on the First Nature Web site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Shaggy Parasol Lepiota','Macrolepiota  rachodes','Cap 5-15 cm diameter; stem 10-15 cm tall * 1-1.5 cm diameter. Macrolepiota  rachodes, also know as Shaggy Parasol Lepiota, is a large, fleshy agaric with shaggy, pale grey-brown cap and whitish gem with ring and bulbous base. It grows solitary or scattered on in woods generally, often with conifers.
@@ -458,7 +320,7 @@ Similar species Found in open, wooded areas, Lycoperdon lividium is also smooth,
 Lycoperdon pyriforme on the First Nature Web site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Puffball','Lycoperdon perlatum','2.5-6 cm diameter * 2-9 cm tall. Lycoperdon perlatum, also known as Common Puffball, is a yellowish brown rounded fungus, typically with a distinct stem and covered with short spines, each surrounded by smaller, grainlike scales. It grows typically in troops on soil in mixed woodland.
 
-Fruiting body white, becoming ochre-brown, covered with short pyramidial warts which fall off to reveal endoperidium decorated with a reticulate patter; sub-spherical opening by an apical pore, the fertile head tapering down into a distinct, sterile, basal region. Spore mass at first white and firm, becoming olive-brown and powdery. Spores are pale yellow to olive-brown.
+Fruiting body white, becoming ochre-brown, covered with short pyramidial warts which fall off to reveal endoperidium decorated with a reticulate patter; sub-spherical opening by an apical pore, the fertile head tapering down into a distinct, sterile, basal region. Spore mass at first white and firm, becoming olive-brown and powdery. Spores are pale yellow to olive-brown. 
 
 Similar species Lycoperdon nigrescens has longer, darker spines in groups, like those of the much longer-spined Lycoperdon echinatum. The surface of both has a similar pattern when the spines fall off.
 
@@ -486,7 +348,7 @@ Cap clear orange or red brown. Round to start with, then oval and finally convex
 ','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Brown Birch Bolete','Leccinum scabrum','Cap 5-15 cm diameter, stem 6-15 cm tall * 1.5-3 cm diameter. Leccinum scabrum, also know as Brown Birch Bolete, is a medium to large bolete that has a brown cap with gray-white pores and a white to gray stem covered with with gray-black scales. It grows specifically with birch, often on damp gound.
 
-Cap brown, with reddish or grayish tinges; convex or bun-shaped, at first finely downy, becoming smooth, somewhat scurfy when older. Flesh dirty white, unchanging, thick and firm. Pores dirty white or grayish brown, circular, small. Tubes same color as pores, adnate. Spores are ocher-brown. Stem whitish, covered with gray-brown scales, more or less equal or tapering slightly upwards. Ring absent.
+Cap brown, with reddish or grayish tinges; convex or bun-shaped, at first finely downy, becoming smooth, somewhat scurfy when older. Flesh dirty white, unchanging, thick and firm. Pores dirty white or grayish brown, circular, small. Tubes same color as pores, adnate. Spores are ocher-brown. Stem whitish, covered with gray-brown scales, more or less equal or tapering slightly upwards. Ring absent. 
 
 Similar species Distinguishing between Leccinum scabrum and its near relatives is difficult, and Leccinum scabrum is often used as a collective name for all brown capped Leccinum species like Leccinum variicolor.
 ','edible ');
@@ -502,7 +364,7 @@ Fruiting body attached directly to the trunk of a tree and is initially knob-sha
 
 Laetiporus sulphureus on the First Nature Web site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Luscious Lactarius','Lactarius volemus','Cap 5-11 cm diameter, stem 4-12 cm tall * 1-3 cm diameter. Lactarius volemus, also know as Luscious Lactarius, is a very fleshy, matte orange agaric that has a thin, cracking skin on its cap and a thick, velvety pale orange stem. When cut, it''s off-white, mild-tasting flesh produces white milk.
-
+ 
 Cap dry and velvety with a powdery matte texture and never sticky. Matte orange to red-brown coloured. At first slightly convex and develops a depression in the center later. The margin stays inrolled for some time. Gills creamy white, broadly attached to the stem slightly extending downward and densely packed. Turns brown when bruised. White drops often hangs under the gills. Stem is similarly colored as the cap but more pallid. Tapers off and darkens towards the base. It has no ring.
 
 Similar species Lactarius hygrophoroides is a good edible lacking the odor. It is equally common in eastern North America. It does not stain and has distant gills.','edible and good ');
@@ -515,10 +377,10 @@ Cap smooth, greasy, later depressed in the center and at first purplish violet w
 
 Similar species Lactarius argillaceflius grows in eastern North America under oaks with gills that stain and age brownish.
 ','edible when boiled ');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Woolly Milkcap','Lactarius torminosus','Cap 4-12 cm diameter, stem 4-8 cm tall * 1-2 cm thick. Lactarius torminosus, also know as Woolly Milkcap, is a largish, salmon-pink, distinctively woolly agaric that exudes white milk. The mushroom is mycorrhizal with birch and often found in open, grassy sites.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Woolly Milkcap','Lactarius torminosus','Cap 4-12 cm diameter, stem 4-8 cm tall * 1-2 cm thick. Lactarius torminosus, also know as Woolly Milkcap, is a largish, salmon-pink, distinctively woolly agaric that exudes white milk. The mushroom is mycorrhizal with birch and often found in open, grassy sites. 
 
-Cap at first round with a slightly depressed center and rolled-in margin. Then shallow to severely funnel shaped. It has a shaggy surface that has zones in shades of orange and orange-brown. Gills are pallid buff or salmon, extending downward, narrow, and crowded. Spores are pale yellowish cream. Stem is similarly colored as the cap but more pallid. It is short, smooth more or less equal or tapering at both ends. The mushroom has no ring.
-
+Cap at first round with a slightly depressed center and rolled-in margin. Then shallow to severely funnel shaped. It has a shaggy surface that has zones in shades of orange and orange-brown. Gills are pallid buff or salmon, extending downward, narrow, and crowded. Spores are pale yellowish cream. Stem is similarly colored as the cap but more pallid. It is short, smooth more or less equal or tapering at both ends. The mushroom has no ring. 
+ 
 Similar species Lactarius pubescens is paler with fainter zones.  It has a less shaggy cap. Lactarius scoticus is smaller and also pale.
 ','edible when boiled ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Birch Milkcap','Lactarius tabidus','Cap 2-4 cm diameter, stem 3-5 cm tall * 0.4-1 cm thick. Lactarius tabidus, also known as Birch Milkcap, is a small agaric with orange-brown cap, cinnamon gills that exudes white milk. It grows solitary or in scattered groups on soil under broad-leaf trees, favouring birch.
@@ -564,7 +426,7 @@ Cap first round and bumpy, then convex and as mature flat with a depressed cente
 Similar species Lactarius deterrimus found with spruce trees has a smooth stem and exudes green staining orange milk.
 
 Lactarius "deliciosus" group on the First Nature Web site.','edible and good ');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Curry Milkcap','Lactarius camphoratus','Cap 2.5-5 cm diameter, stem 3-5 cm tall * 0.4-0.7 cm thick. Lactarius camphoratus, also known as Curry Milkcap, is a smallish agaric with dark red-brown cap, pale gills and exudes white milk which savor of curry. It grows with conifers and deciduous trees, favoring acidic, well drained soil.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Curry Milkcap','Lactarius camphoratus','Cap 2.5-5 cm diameter, stem 3-5 cm tall * 0.4-0.7 cm thick. Lactarius camphoratus, also known as Curry Milkcap, is a smallish agaric with dark red-brown cap, pale gills and exudes white milk which savor of curry. It grows with conifers and deciduous trees, favoring acidic, well drained soil. 
 
 Cap dark red-brown with central depression or umbo and a furrowed margin. Gills decurrent, medium-spaced and quite thick. Spores are white to cream colored. Stem is pallid and similarly colored as the cap, more or less equal, and finely downy and becoming hollow. The mushroom has no ring.
 
@@ -573,7 +435,7 @@ Similar species Lactarius rufus and Lactarius helvus have a similar smell.
 Lactarius camphoratus on the First Nature Web site.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Laccaria','Laccaria laccata','Cap 1.5-6 cm diameter, stem 5-10 cm tall * 0.6-1 cm thick. Laccaria laccata, also know as Common Laccaria, is a a smallish agaric which is reddish brown throughout and has distant thickish gills and a fibrous stem. It grows in scattered trooping groups on soil in mixed woods and on heaths.
 
-Cap typically reddish brow, but may be shades of pink-brown. It has a toothed margin and a slight depression in the center. Gills colored as cap, but becoming powdered white with spores, adnate, thick, broad distant. Stem colored as cap, robust and strongly fibrillose, often twisted and laterally compressed. The mushroom has no ring.
+Cap typically reddish brow, but may be shades of pink-brown. It has a toothed margin and a slight depression in the center. Gills colored as cap, but becoming powdered white with spores, adnate, thick, broad distant. Stem colored as cap, robust and strongly fibrillose, often twisted and laterally compressed. The mushroom has no ring. 
 
 Similar species Laccaria bicolor has contrasting, pale blue gills. Laccaria proxima is larger with more fibrillose stem. Laccaria ochropurpurea is much larger and has purple gills.
 
@@ -610,7 +472,7 @@ INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Coni
 
 Cap yellow to orange or brownish colour with pale yellow flesh. Gills initially pale orangish-yellow, pale grey when mature, later darker purple/brown. Spore print dark burgundy/brown. Stem yellowish, somewhat rust-brown below.
 
-Similar species  Hypholoma fasciculare and Hypholoma sublateritium, which are poisonous, also Hypholoma radicosum which is much rarer but is found in similar sites.
+Similar species  Hypholoma fasciculare and Hypholoma sublateritium, which are poisonous, also Hypholoma radicosum which is much rarer but is found in similar sites. 
 
 Hypholoma capnoides on the First Nature Web site.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Late Fall Wax Cap','Hygrophorus hypothejus','Cap 3-7 cm diameter, stem 4-7 cm tall * 0.7-1.4 cm thick. Hygrophorus hypothejus, also known as Late Fall Wax Cap, is a smallish, slimy agaric that has a dull brown cap and distinctive yellowish gills and stem. It grows in trooping groups on soil in pine woods from late autumn to winter.
@@ -621,13 +483,13 @@ Gills goes down the stem and are sparse and elastic. At first mild vanilla to bu
 Similar species Hygrophorus locorum is bright yellow and associated with larch. Several other Hygrophorus species, found with pine, are distinguished from Hygrophorus hypothejus by their different coloring.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Arched Wood Wax','Hygrophorus camarophyllus','Cap 2-7 cm diameter, stem 2.5 - 13 cm tall * 1 - 2 cm thick. Hygrophorus camarophyllus, also known as Arched Wood Wax, is a medium-sized agaric which is distinct because of the dry, streaked cap, white, waxy gills that contrast beautifully with the carbon-brown cap and stem.
 
-Cap umbonate and often with a raised boss in center of cap, carbon-brown to gray-black with dark radial streaks. Gills decurrent, sparse, waxy, first white, with age white-gray. Stem top often brighter than other stem but not always, otherwise greyish with ingrown threads, cylindrical or narrowed downward, solid to stuffed. Flesh white, brittle, with mild flavor and pleasant aroma.
+Cap umbonate and often with a raised boss in center of cap, carbon-brown to gray-black with dark radial streaks. Gills decurrent, sparse, waxy, first white, with age white-gray. Stem top often brighter than other stem but not always, otherwise greyish with ingrown threads, cylindrical or narrowed downward, solid to stuffed. Flesh white, brittle, with mild flavor and pleasant aroma. 
  Grows in mossy pine forests all over Scandinavia. Has a fairly modest taste but still a delicacy.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('False Chanterelle','Hygrophoropsis aurantiaca','Cap 2-8 cm diameter, stem 3-5 cm tall * 0.5-1 cm thick. Hygrophoropsis aurantiaca, also commonly knows as False Chanterelle, is a smallish orange-yellow agaric that has a shallowly funnel-shaped cap reminiscent of a chanterelle but with true gills. It grows typically among needle litter, rotten wood, or sawdust.
 
 Cap golden-orange, initially convex but becoming funnel-shaped as the mushroom matures. The cap margin, which remains rolled in a little, becomes wavy or lobed in age. The cap surface is covered with a fine down. Gills decurrent, narrow and forked, which is a distinctive and distinguishing feature. They are generally a more intense shade of orange than the cap. Stem  is similarly colored as the cap. It is stout, more or less equal, smooth, and typically curved. The gills may be slightly crimped along the stem. The mushroom has no ring.
 
-Similar species Cantharellus cibarius, Omphalotus olearius
+Similar species Cantharellus cibarius, Omphalotus olearius 
 ','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Terracotta Hedgehog','Hydnum rufescens','Cap 2-6 cm diameter, stem 1.5-4 cm diameter * 0.8-1.5 cm tall. Hydnum rufescens, also known as Terracotta Hedgehog, is a small or medium-sized fruiting body is similar to that of Hydnum repandum but is smaller, thinner and salmon pink colored. It grows on soil in broad-leaf or coniferous woods.
 
@@ -690,7 +552,7 @@ Cap gray-brown, convex or bun shaped, becoming expanded and flattened, heavily v
 ','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Funeral Bell','Galerina marginata','Cap 2.5-6.5 cm diameter, stem 3-9 cm tall * 0.3-0.8 cm diameter. Galerina marginata, also known as Funeral Bell, is a small agaric with yellowish tan, sticky cap, similarly colored as the gills and a ring on the stem. It grows in clusters on stumps and logs of broad-leaf trees.
 
-Cap starts convex, sometimes broadly conical, and has edges (margins) that are curved in against the gills. It becomes later broadly convex and then flattened, sometimes developing a central elevation, or umbo. Gills typically narrow and crowded, with a broadly adnate to nearly decurrent attachment to the stem and convex edges. They are a pallid brown when young, becoming tawny at maturity. Stem more or less equal or is slightly enlarged downward. Initially solid, it becomes hollow from the bottom up as it matures. The membranous ring is located on the upper half of the stem near the cap, but may be sloughed off and missing in older specimens. Above the level of the ring, the stem surface has a very fine whitish powder and is paler than the cap; below the ring it is brown down to the reddish-brown to bistre base.
+Cap starts convex, sometimes broadly conical, and has edges (margins) that are curved in against the gills. It becomes later broadly convex and then flattened, sometimes developing a central elevation, or umbo. Gills typically narrow and crowded, with a broadly adnate to nearly decurrent attachment to the stem and convex edges. They are a pallid brown when young, becoming tawny at maturity. Stem more or less equal or is slightly enlarged downward. Initially solid, it becomes hollow from the bottom up as it matures. The membranous ring is located on the upper half of the stem near the cap, but may be sloughed off and missing in older specimens. Above the level of the ring, the stem surface has a very fine whitish powder and is paler than the cap; below the ring it is brown down to the reddish-brown to bistre base. 
 
 Similar species Galerina marginata may be mistaken for a few edible mushroom species like Pholiota mutabilis, Armillaria mellea and Kuehneromyces mutabilis.
 
@@ -702,7 +564,7 @@ Cap grayish tan or darker, conic to broadly conic, flattening out somewhat but r
 Entoloma vernum on the First Nature Web site.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Silky Pinkgill','Entoloma sericeum','Cap 2-4 cm diameter, stem 2-7 cm tall * 0.15-0.5 cm thick. Entoloma sericeum, also known as Silky Pinkgill, is a small agaric that has a dark brownish grey cap and stem, with pale gills. It grows solitary, or in small trooping groups on soul in grass and on open moorland.
 
-Cap initially conical, developing an umbo as it becomes broadly convex; hygrophanous, darker brown when wet and much paler, often streaky buff when dry; surface smooth with silky radial fibrils. Flesh same color as cap or more pallid.  Gills sinuate; pale grey at first, becoming pinkish grey and eventually brown. Spores are pink. Stem same color as cap, more pallid at the apex and base, silky fibrillose, more or less equal, base slightly swollen. The mushroom has no ring.
+Cap initially conical, developing an umbo as it becomes broadly convex; hygrophanous, darker brown when wet and much paler, often streaky buff when dry; surface smooth with silky radial fibrils. Flesh same color as cap or more pallid.  Gills sinuate; pale grey at first, becoming pinkish grey and eventually brown. Spores are pink. Stem same color as cap, more pallid at the apex and base, silky fibrillose, more or less equal, base slightly swollen. The mushroom has no ring. 
 
 Similar species There are several Entoloma species that are similar in appearance, such as Entoloma cetratum, which is warmer honey brown and Entoloma conferendum which has star-shaped spores.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Earthy Powdercap','Cystoderma amianthinum','Cap 2-5 cm diameter, stem 3-5 cm tall * 0.4-0.8 cm thick. Cystoderma amianthinum, also known as Earthy Powdercap or Saffron parasol, is a small to medium, fleshy agaric with ochre-yellow cap, white or cream gills has a coarsely granular stem with ring. It grows solitary or scattered in small tufted groups in damp mossy grassland, in coniferous forest clearings, or on wooded heaths.
@@ -713,7 +575,7 @@ Stem cylindrical, and has a flaky-granular sheath beneath a fleeting, powdery ri
 Cystoderma amianthinum on the First Nature Web site.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Trumpet Chantarelle','Craterellus tubaeformis','Cap 1.5-6 cm dia; stem 3-8 cm tall * 0.4-0.9 cm dia.. Craterellus tubaeformis (formerly Cantharellus tubaeformis) is an edible fungus, also known as Yellowfoot, winter mushroom, or Trumpet Chanterelle. It is small to medium-sized, funnel-shaped, dingy-brown cap has forked veins instead of gills and a yellowish stem. It grows on moss and found mostly in conifer bogs.
 
-Cap dark grayish brown, convex and sometimes hollow down the middle. The forked veins are widely separated, and of lighter color than the cap. Stem tall, yellowish, somewhat flattened and hollow and often slightly club-shaped or bulbous at the base. Flesh thin and membranous.
+Cap dark grayish brown, convex and sometimes hollow down the middle. The forked veins are widely separated, and of lighter color than the cap. Stem tall, yellowish, somewhat flattened and hollow and often slightly club-shaped or bulbous at the base. Flesh thin and membranous. 
 
 Similar species Chrysomphalina chrysophylla, which has gills instead of veins.
 
@@ -734,7 +596,7 @@ Cap olive- to dark reddish brown, convex to umbonate. Gills blood red, later mor
 Cortinarius semisanguineus on the First Nature Web site.','poisonous');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Deadly Webcap','Cortinarius rubellus','Cap 3-8 cm diameter, stem 5-11 cm tall * 0.8-1.5 cm diameter. Cortinarius rubellus, commonly known as the Deadly Webcap, is a lethally poisonous mushroom which smells of radishes and is reddish orange with a pointed, umbonate cap covered with fibrils.
 
-Cap conical to convex (partly flattening to umbonate with maturity). In colour, it is a tawny to date brown with paler margins, and is covered in fine, fibrous scales. The gills are ochre- or caramel-coloured, changing to a deeper brown with age as the spores mature. They have an adnate connection to the stipe.
+Cap conical to convex (partly flattening to umbonate with maturity). In colour, it is a tawny to date brown with paler margins, and is covered in fine, fibrous scales. The gills are ochre- or caramel-coloured, changing to a deeper brown with age as the spores mature. They have an adnate connection to the stipe. 
 The Stem has a bulbous base. It is the same colour or slightly paler than the cap, and can have yellow fragments of the veil (cortina) attached to its lower half. The flesh is cream or pale yellow, but more tan below the pileipellis and in the stem base. It smells slightly of radishes and has no strong taste.
 
 Similar species Cortinarius limonius, also poisonous, has more vivid orange coloring. Cortinarius orellanus has a less conical cap and grows near decidous trees.','lethally poisonous');
@@ -775,21 +637,21 @@ Cap yellow-brown to brownish-ochre, which is covered with whitish fibres. The su
 Similar species Cortinarius species are related, but have no true stem rings and have rust-brown spores.
 
 Cortinarius caperatus on the www.first-nature.com web site.','edible and good ');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Red-banded Cort','Cortinarius armillatus','Cap 4-12 cm diameter, stem 6-12 cm tall * 1-3 cm thick. Cortinarius armillatus, commonly known as the Red-banded cortinarius, is a medium or large agaric that has a rust-brown, bell-shaped, fibrous cap, rust gills and reddish belts on stem with swollen base. It grows typically in moist coniferous forests, especially spruced ones.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Red-banded Cort','Cortinarius armillatus','Cap 4-12 cm diameter, stem 6-12 cm tall * 1-3 cm thick. Cortinarius armillatus, commonly known as the Red-banded cortinarius, is a medium or large agaric that has a rust-brown, bell-shaped, fibrous cap, rust gills and reddish belts on stem with swollen base. It grows typically in moist coniferous forests, especially spruced ones. 
 
 Cap bell shaped at first, later flattening out, vividly rust-brown becoming slightly paler with age, with small fibrous scales, often with reddish cortinal remnants forming a belt at margin. Gills dark rust-brown; broad, distant and shallowly sinuate. Spores are rusty brown. Stem is a pallid cap color streaked with fibrils, more or less equal but markedly swollen at base. Ring is made of velar remnants forming one or more orange-red median or inferior ring zones. Flesh is light brown.
 
 Cortinarius armillatus on the First Nature Web site.','inedible');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Silvery Violet Cort','Cortinarius alboviolaceus','Cap 5-8 cm diameter, stem 5-12 cm tall * 1-2 cm thick. Cortinarius alboviolaceus, also called Silvery violet cort, has a convex to umbonate, fleshy, silvery violet cap. It grows with deciduous trees, but also found with conifers, often on acidic soil.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Silvery Violet Cort','Cortinarius alboviolaceus','Cap 5-8 cm diameter, stem 5-12 cm tall * 1-2 cm thick. Cortinarius alboviolaceus, also called Silvery violet cort, has a convex to umbonate, fleshy, silvery violet cap. It grows with deciduous trees, but also found with conifers, often on acidic soil. 
 
-Cap at first domed and then shallowly convex with a broad umbo, the dry, silky caps vary in colour from almost white through pale lilac to pale mauve. The rather broad, sinuate, notched gills are medium spaced and light gray-blue to cinnamon-brown. Stem The twisted, often club-shaped stem is often bowed rather than straight, is pale and fibrous with a slightly clavate (club-shaped) base and sometimes marked rust-brown around the veil zone by deposited spores.
+Cap at first domed and then shallowly convex with a broad umbo, the dry, silky caps vary in colour from almost white through pale lilac to pale mauve. The rather broad, sinuate, notched gills are medium spaced and light gray-blue to cinnamon-brown. Stem The twisted, often club-shaped stem is often bowed rather than straight, is pale and fibrous with a slightly clavate (club-shaped) base and sometimes marked rust-brown around the veil zone by deposited spores. 
 
 Similar species Cortinarius malachius has a slightly scaly cap. It is associated with conifers, as are Cortinarius camphoratus and Cortinarius tranganus, which are noted for their penetrating smells; the former reminiscent of half-rotten potatoes, the latter sweet and sticky.
 
 Cortinarius alboviolaceus on the First Nature Web site.','inedible');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Umbrella Inky Cap','Coprinus plicatilis','Cap 0.8–2 cm; stem 4-8 cm tall * 1-2 mm diameter. Parasola plicatilis, also known as Parasola plicatilis or Umbrella inky cap is a small parasol-like agaric that can be found in grassy areas, alone, scattered or in small groups. The fruiting bodies grow at night after rain, and will self decompose after spore dispersion is achieved.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Umbrella Inky Cap','Coprinus plicatilis','Cap 0.8–2 cm; stem 4-8 cm tall * 1-2 mm diameter. Parasola plicatilis, also known as Parasola plicatilis or Umbrella inky cap is a small parasol-like agaric that can be found in grassy areas, alone, scattered or in small groups. The fruiting bodies grow at night after rain, and will self decompose after spore dispersion is achieved. 
 
-Cap buff, more cinnamon at the centre and later with gray tinge at the margin. The shape is ovoid at first, becoming convex or bell-shaped, then flat and finally shallowly convex like a parasol. Gills pallid clay,  soon grey and finally black; free from the stem; close or nearly distant. Stem white or buff, equal above a slightly swollen base; fragile; hollow; bald or very finely silky. The mushroom has no ring.
+Cap buff, more cinnamon at the centre and later with gray tinge at the margin. The shape is ovoid at first, becoming convex or bell-shaped, then flat and finally shallowly convex like a parasol. Gills pallid clay,  soon grey and finally black; free from the stem; close or nearly distant. Stem white or buff, equal above a slightly swollen base; fragile; hollow; bald or very finely silky. The mushroom has no ring. 
 
 Similar species Coprinus auricomus tends to be a bit bigger and has browner cap. A microscope reveals thick-walled brown hairs, confirming it''s identity. Other similar species include Coprinus keuhneri, Coprinus leiocephalus and Coprinus nudiceps. They can be distinguished only by carefully measuring the spores.
 
@@ -799,9 +661,9 @@ INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Shag
 Cap almost cylindrical  and initially covers most of its stem, becomes later conical. It is mostly white with shaggy scales, which are more pale brown at the apex. Gills free, colour change rapidly from white to pink, then to black. It is deliquescent. Spores are black. Stem is white, smooth, often very tall, slightly swollen at base and sometimes rooting. It has a loose ring which is white, thin and often slipping down stem towards base. The flesh is white, hollow and fragile and the taste mild.
 
 Coprinus comatus on the First Nature Web site.','edible and good ');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Ink Cap','Coprinopsis atramentaria','Cap 3-7 cm tall * variable diameter, stem 7-14 cm tall * 1-1.5 cm thick. Coprinopsis atramentaria, commonly known as the common ink cap, inky cap or alcohol inky cap, is poisonous, when combined with alcohol. It is a medium-sized conical agaric, that is greyish brownish and later blackening. It grows generally in tufts, in fields, gardens and waste ground, near broad-leaf tree stumps or buried wood.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Ink Cap','Coprinopsis atramentaria','Cap 3-7 cm tall * variable diameter, stem 7-14 cm tall * 1-1.5 cm thick. Coprinopsis atramentaria, commonly known as the common ink cap, inky cap or alcohol inky cap, is poisonous, when combined with alcohol. It is a medium-sized conical agaric, that is greyish brownish and later blackening. It grows generally in tufts, in fields, gardens and waste ground, near broad-leaf tree stumps or buried wood. 
 
-Cap egg-shaped, expanding to become slightly umbonate with age. The colour is gray to gray-brown. Flesh is white, hollow and medium in young specimens but soon discolors and deliqueces slowly from the margin. Gills free, extremely crowded and edged with white. Spores are black. Stem is white and smooth with fine, reddish brown fibrils at base.
+Cap egg-shaped, expanding to become slightly umbonate with age. The colour is gray to gray-brown. Flesh is white, hollow and medium in young specimens but soon discolors and deliqueces slowly from the margin. Gills free, extremely crowded and edged with white. Spores are black. Stem is white and smooth with fine, reddish brown fibrils at base. 
 
 Similar species Coprinus insignis has warty spores. Coprinus micaeus is smaller and more fragile. It granulates when young.
 
@@ -822,7 +684,7 @@ Synonyms the mushroom is now known under the name Gymnopus dryophilus.
 
 Gymnopus dryophilus (Collybia dryophila) on the www.first-nature.com web site.
 ','inedible');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Dread Dough Clitopilus','Clitopilus prunulus','2-3 cm diameter * 2-3 cm tall. A pale gray-white cap and decurrent, pale pink gills, combined with a strong smell of fresh bread dough, distinguish this species.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Dread Dough Clitopilus','Clitopilus prunulus','2-3 cm diameter * 2-3 cm tall. A pale gray-white cap and decurrent, pale pink gills, combined with a strong smell of fresh bread dough, distinguish this species. 
 
 Cap white or light gray or yellow, convex to funnel-shaped that may have inrolled margin, sticky when moist. Gills decurrent, spaced together rather closely, and whitish, although they often develop a pinkish hue in age. Stem is central or off-center and is similar in color to the cap.
 
@@ -837,7 +699,7 @@ Clitocybe nebularis on the www.first-nature.com web site.
 ','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Funnel Cap','Clitocybe gibba','Cap 3-8 cm diameter, stem 3-8 cm tall * 0.5-1 cm thick. Clitocybe gibba is a hardwood-loving mushroom that features a pinkish tan cap that becomes fairly deeply vase-shaped by maturity. Its pale, crowded gills run down the stem, which is pale in comparison to the cap. It grows solitary or in small troops on soil in broad-leaf woods and on heaths from July to September.
 
-Cap is pink-tinged, leather brown and smooth, silky, and funnel-shaped, typically with a wavy margin. Flesh is soft and white with a fruity smell. Gills are closely spaced, white and deeply extended downward. Stem is similarly colored as the cap. It is smooth and more or less equal apart from a slightly swollen base. The mushroom has no ring.Spores are white-cream colorcolored.
+Cap is pink-tinged, leather brown and smooth, silky, and funnel-shaped, typically with a wavy margin. Flesh is soft and white with a fruity smell. Gills are closely spaced, white and deeply extended downward. Stem is similarly colored as the cap. It is smooth and more or less equal apart from a slightly swollen base. The mushroom has no ring.Spores are white-cream colorcolored. 
 
 Clitocybe gibba on the www.first-nature.com web site.','inedible');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Club-footed Clitocybe','Clitocybe clavipes','Cap 4-8 cm diameter, stem 3-7 cm tall * 1-1.5 cm thick. Clitocybe clavipes, commonly known as the club-foot or club-footed clitocybe is identified by it''s club-shaped stem, which is swollen at the base and tapering toward the top and funnel-shaped cap with white girls that extend downward. It grows solitary or in small troops on soil in broad-leaf woods, favorfavoring beech.
@@ -855,9 +717,9 @@ Similar species Chalciporus piparatoides it similar but can be distinguished by 
 
 Chalciporus piperatus on the MushroomExpert.Com Web site.
 ','inedible');
-INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Chantarelle','Cantharellus cibarius','Cap 3-10 cm across, stem 2-10 cm tall * 0.4-1.5 cm thick. This mushroom is typically orange or yellow, meaty and funnel-shaped. On the lower surface, underneath the smooth cap, it has gill-like ridges that run almost all the way down its stem, which tapers down seamlessly from the cap.
+INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Common Chantarelle','Cantharellus cibarius','Cap 3-10 cm across, stem 2-10 cm tall * 0.4-1.5 cm thick. This mushroom is typically orange or yellow, meaty and funnel-shaped. On the lower surface, underneath the smooth cap, it has gill-like ridges that run almost all the way down its stem, which tapers down seamlessly from the cap. 
 
-Cap light yellow, bright yellow to orange in colour, fading with age. As young formed as a button and then turns more cone shaped. The margin stays folded in for a long time and then often becomes wavy and uneven at maturity. The mushroom has gill-like veins under the cap, not gills. Flesh firm, thick, yellow. Stem solid, tapers downward from cap. The surface is smooth and the colour similar to the cap or a lighter yellow to almost white.
+Cap light yellow, bright yellow to orange in colour, fading with age. As young formed as a button and then turns more cone shaped. The margin stays folded in for a long time and then often becomes wavy and uneven at maturity. The mushroom has gill-like veins under the cap, not gills. Flesh firm, thick, yellow. Stem solid, tapers downward from cap. The surface is smooth and the colour similar to the cap or a lighter yellow to almost white. 
 
 Similar spiecies Hygrophoropsis aurantiaca which is not mycorrhizal. Can also be confused with the poisonous mushrooms Omphalotus olearius, which has a luminous quality and grows on dead wood, and Cortinarius speciosissimus.
 
@@ -896,7 +758,7 @@ Similar species Boletus chrysenteron has a reddish brown cap that cracks to reve
 Boletus subtomentosus on the www.first-nature.com web site.','edible ');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Satan''s Bolete','Boletus satanas','Cap 8-25 cm diameter, stem 6-9 cm tall * 5-10 cm diameter. This lethally poisonous fleshy bolete has a smooth, bun-shaped cap that is almost white. Boletus satanas is best identified by its orange to blood-red pores and prominent yellow to blood-red net pattern. It also has a fat, yellow to red stem.
 
-Cap compact, at first it is hemispheric with an inrolled margin, later flattening in the shape of a pad, and in older specimens it is bent irregularly. The pileus at first greyish white, later more greenish ochre or leather colour. The surface of the cap is finely tomentose, later smooth and often slightly sticky in wet weather. Pores are small, circular and red, sometimes blood-red, but orange at margin. The free to slightly adnate tubes are yellow then olive, blue where cut. Stem yellow background covered with a hexagonal close-meshed net that starts bright red and turns dark blood-red. Often very bulbous and usually wider than it is long. When young almost spherical.
+Cap compact, at first it is hemispheric with an inrolled margin, later flattening in the shape of a pad, and in older specimens it is bent irregularly. The pileus at first greyish white, later more greenish ochre or leather colour. The surface of the cap is finely tomentose, later smooth and often slightly sticky in wet weather. Pores are small, circular and red, sometimes blood-red, but orange at margin. The free to slightly adnate tubes are yellow then olive, blue where cut. Stem yellow background covered with a hexagonal close-meshed net that starts bright red and turns dark blood-red. Often very bulbous and usually wider than it is long. When young almost spherical. 
 ','lethally poisonous');
 INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES ('Pinewood King Bolete','Boletus pinophilus','Cap 6–15(20) cm; stem 5-15 cm tall * 4-7 cm diameter. This is a large bolete with dark brown cap, cream pores, reddish brown netted, bulbous stem, commonly known as the pine bolete or pinewood king bolete. It grows solitary or scattered on soil particularly with Scots pine in Britain. The mushroom prefers the poor, acidic, and sandy soils associated with coniferous forests.
 
@@ -919,652 +781,3 @@ Similar species Boletus edulis has a barrel-shaped stem with white net patternin
 Synonyms Synonyms of Boletus badius include Imleria badia, Ixocomus badius and Xerocomus badius.
 
 Imleria badia on the First Nature Web site.','edible and good ');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* *********************** mushroom_image *************************** */
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(1,'http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(1,'http://www.mushroom.world/data/fungi/Agaricusarvensis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(1,'http://www.mushroom.world/data/fungi/Agaricusarvensis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(1,'http://www.mushroom.world/data/fungi/Agaricusarvensis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(1,'http://www.mushroom.world/data/fungi/Agaricusarvensis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(2,'http://www.mushroom.world/data/fungi/Amanitapantherina1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(2,'http://www.mushroom.world/data/fungi/Amanitapantherina2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(2,'http://www.mushroom.world/data/fungi/Amanitapantherina3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(3,'http://www.mushroom.world/data/fungi/Amanitamuscaria6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(4,'http://www.mushroom.world/data/fungi/Amanitafulva6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(5,'http://www.mushroom.world/data/fungi/Amanitaceciliae1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(5,'http://www.mushroom.world/data/fungi/Amanitaceciliae2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(5,'http://www.mushroom.world/data/fungi/Amanitaceciliae3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(5,'http://www.mushroom.world/data/fungi/Amanitaceciliae4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(6,'http://www.mushroom.world/data/fungi/Albatrellusovinus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(6,'http://www.mushroom.world/data/fungi/Albatrellusovinus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(6,'http://www.mushroom.world/data/fungi/Albatrellusovinus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(6,'http://www.mushroom.world/data/fungi/Albatrellusovinus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(6,'http://www.mushroom.world/data/fungi/Albatrellusovinus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(7,'http://www.mushroom.world/data/fungi/Albatrellusconfluens1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(7,'http://www.mushroom.world/data/fungi/Albatrellusconfluens2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(7,'http://www.mushroom.world/data/fungi/Albatrellusconfluens3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(8,'http://www.mushroom.world/data/fungi/Agaricusaugustus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(8,'http://www.mushroom.world/data/fungi/Agaricusaugustus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(8,'http://www.mushroom.world/data/fungi/Agaricusaugustus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(8,'http://www.mushroom.world/data/fungi/Agaricusaugustus4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(9,'http://www.mushroom.world/data/fungi/Bankerafuligineoalba1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(10,'http://www.mushroom.world/data/fungi/Auriscalpiumvulgare1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(10,'http://www.mushroom.world/data/fungi/Auriscalpiumvulgare2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(11,'http://www.mushroom.world/data/fungi/Armillariamellea6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(12,'http://www.mushroom.world/data/fungi/Amanitavirosa1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(12,'http://www.mushroom.world/data/fungi/Amanitavirosa2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(12,'http://www.mushroom.world/data/fungi/Amanitavirosa3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(12,'http://www.mushroom.world/data/fungi/Amanitavirosa4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(13,'http://www.mushroom.world/data/fungi/Amanitarubescens1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(13,'http://www.mushroom.world/data/fungi/Amanitarubescens2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(13,'http://www.mushroom.world/data/fungi/Amanitarubescens3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(13,'http://www.mushroom.world/data/fungi/Amanitarubescens4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(13,'http://www.mushroom.world/data/fungi/Amanitarubescens5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(14,'http://www.mushroom.world/data/fungi/Amanitaregalis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(14,'http://www.mushroom.world/data/fungi/Amanitaregalis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(14,'http://www.mushroom.world/data/fungi/Amanitaregalis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(14,'http://www.mushroom.world/data/fungi/Amanitaregalis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(14,'http://www.mushroom.world/data/fungi/Amanitaregalis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(15,'http://www.mushroom.world/data/fungi/Amanitaporphyria1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(15,'http://www.mushroom.world/data/fungi/Amanitaporphyria2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(15,'http://www.mushroom.world/data/fungi/Amanitaporphyria3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(15,'http://www.mushroom.world/data/fungi/Amanitaporphyria4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(15,'http://www.mushroom.world/data/fungi/Amanitaporphyria5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(16,'http://www.mushroom.world/data/fungi/Amanitaphalloides1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(16,'http://www.mushroom.world/data/fungi/Amanitaphalloides2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(16,'http://www.mushroom.world/data/fungi/Amanitaphalloides3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(16,'http://www.mushroom.world/data/fungi/Amanitaphalloides4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(16,'http://www.mushroom.world/data/fungi/Amanitaphalloides5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(17,'http://www.mushroom.world/data/fungi/Tylopilusfelleus7.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(18,'http://www.mushroom.world/data/fungi/Turbinellusfloccosus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(18,'http://www.mushroom.world/data/fungi/Turbinellusfloccosus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(19,'http://www.mushroom.world/data/fungi/Tricholomopsisrutilans1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(19,'http://www.mushroom.world/data/fungi/Tricholomopsisrutilans2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(19,'http://www.mushroom.world/data/fungi/Tricholomopsisrutilans3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(19,'http://www.mushroom.world/data/fungi/Tricholomopsisrutilans4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(19,'http://www.mushroom.world/data/fungi/Tricholomopsisrutilans5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(20,'http://www.mushroom.world/data/fungi/Tricholomopsisdecora1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(20,'http://www.mushroom.world/data/fungi/Tricholomopsisdecora2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(20,'http://www.mushroom.world/data/fungi/Tricholomopsisdecora3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(20,'http://www.mushroom.world/data/fungi/Tricholomopsisdecora4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(21,'http://www.mushroom.world/data/fungi/Tricholomasejunctum1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(21,'http://www.mushroom.world/data/fungi/Tricholomasejunctum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(21,'http://www.mushroom.world/data/fungi/Tricholomasejunctum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(21,'http://www.mushroom.world/data/fungi/Tricholomasejunctum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(22,'http://www.mushroom.world/data/fungi/Tricholomasaponaceum1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(22,'http://www.mushroom.world/data/fungi/Tricholomasaponaceum2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(23,'http://www.mushroom.world/data/fungi/Tricholomafocale1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(23,'http://www.mushroom.world/data/fungi/Tricholomafocale2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(23,'http://www.mushroom.world/data/fungi/Tricholomafocale3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(23,'http://www.mushroom.world/data/fungi/Tricholomafocale4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(23,'http://www.mushroom.world/data/fungi/Tricholomafocale5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(24,'http://www.mushroom.world/data/fungi/Tricholomaflavovirens1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(24,'http://www.mushroom.world/data/fungi/Tricholomaflavovirens2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(25,'http://www.mushroom.world/data/fungi/Suillusvariegatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(25,'http://www.mushroom.world/data/fungi/Suillusvariegatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(25,'http://www.mushroom.world/data/fungi/Suillusvariegatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(25,'http://www.mushroom.world/data/fungi/Suillusvariegatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(25,'http://www.mushroom.world/data/fungi/Suillusvariegatus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(26,'http://www.mushroom.world/data/fungi/Suillusluteus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(26,'http://www.mushroom.world/data/fungi/Suillusluteus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(26,'http://www.mushroom.world/data/fungi/Suillusluteus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(26,'http://www.mushroom.world/data/fungi/Suillusluteus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(26,'http://www.mushroom.world/data/fungi/Suillusluteus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(27,'http://www.mushroom.world/data/fungi/Suillusgrevillei7.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(28,'http://www.mushroom.world/data/fungi/Suillusbovinus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(28,'http://www.mushroom.world/data/fungi/Suillusbovinus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(28,'http://www.mushroom.world/data/fungi/Suillusbovinus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(28,'http://www.mushroom.world/data/fungi/Suillusbovinus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(28,'http://www.mushroom.world/data/fungi/Suillusbovinus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(29,'http://www.mushroom.world/data/fungi/Strophariahornemannii6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(30,'http://www.mushroom.world/data/fungi/Strobilurusstephanocystis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(30,'http://www.mushroom.world/data/fungi/Strobilurusstephanocystis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(30,'http://www.mushroom.world/data/fungi/Strobilurusstephanocystis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(31,'http://www.mushroom.world/data/fungi/Strobilurusesculentus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(31,'http://www.mushroom.world/data/fungi/Strobilurusesculentus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(31,'http://www.mushroom.world/data/fungi/Strobilurusesculentus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(32,'http://www.mushroom.world/data/fungi/Sarcodonsquamosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(32,'http://www.mushroom.world/data/fungi/Sarcodonsquamosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(32,'http://www.mushroom.world/data/fungi/Sarcodonsquamosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(32,'http://www.mushroom.world/data/fungi/Sarcodonsquamosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(32,'http://www.mushroom.world/data/fungi/Sarcodonsquamosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(33,'http://www.mushroom.world/data/fungi/Russulaxerampelina1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(33,'http://www.mushroom.world/data/fungi/Russulaxerampelina2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(34,'http://www.mushroom.world/data/fungi/Russulapaludosa6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(35,'http://www.mushroom.world/data/fungi/Russulaobscura1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(35,'http://www.mushroom.world/data/fungi/Russulaobscura2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(35,'http://www.mushroom.world/data/fungi/Russulaobscura3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(35,'http://www.mushroom.world/data/fungi/Russulaobscura4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(35,'http://www.mushroom.world/data/fungi/Russulaobscura5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(36,'http://www.mushroom.world/data/fungi/Russulaemetica6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(37,'http://www.mushroom.world/data/fungi/Russuladecolorans1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(37,'http://www.mushroom.world/data/fungi/Russuladecolorans2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(37,'http://www.mushroom.world/data/fungi/Russuladecolorans3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(37,'http://www.mushroom.world/data/fungi/Russuladecolorans4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(37,'http://www.mushroom.world/data/fungi/Russuladecolorans5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(38,'http://www.mushroom.world/data/fungi/Russulaclaroflava6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(39,'http://www.mushroom.world/data/fungi/Russulaaeruginea1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(39,'http://www.mushroom.world/data/fungi/Russulaaeruginea2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(39,'http://www.mushroom.world/data/fungi/Russulaaeruginea3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(39,'http://www.mushroom.world/data/fungi/Russulaaeruginea4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(40,'http://www.mushroom.world/data/fungi/Russulaacrifolia1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(40,'http://www.mushroom.world/data/fungi/Russulaacrifolia2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(41,'http://www.mushroom.world/data/fungi/Rickenellaswartzii1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(41,'http://www.mushroom.world/data/fungi/Rickenellaswartzii2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(41,'http://www.mushroom.world/data/fungi/Rickenellaswartzii3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(41,'http://www.mushroom.world/data/fungi/Rickenellaswartzii4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(42,'http://www.mushroom.world/data/fungi/Rhizinaundulata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(42,'http://www.mushroom.world/data/fungi/Rhizinaundulata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(42,'http://www.mushroom.world/data/fungi/Rhizinaundulata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(43,'http://www.mushroom.world/data/fungi/Psilocybesemilanceata6.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(44,'http://www.mushroom.world/data/fungi/Psathyrellacandolleana1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(44,'http://www.mushroom.world/data/fungi/Psathyrellacandolleana2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(44,'http://www.mushroom.world/data/fungi/Psathyrellacandolleana3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(44,'http://www.mushroom.world/data/fungi/Psathyrellacandolleana4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(44,'http://www.mushroom.world/data/fungi/Psathyrellacandolleana5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(45,'http://www.mushroom.world/data/fungi/Polyporussquamosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(45,'http://www.mushroom.world/data/fungi/Polyporussquamosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(45,'http://www.mushroom.world/data/fungi/Polyporussquamosus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(46,'http://www.mushroom.world/data/fungi/Polyporusciliatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(46,'http://www.mushroom.world/data/fungi/Polyporusciliatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(46,'http://www.mushroom.world/data/fungi/Polyporusciliatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(46,'http://www.mushroom.world/data/fungi/Polyporusciliatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(46,'http://www.mushroom.world/data/fungi/Polyporusciliatus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(47,'http://www.mushroom.world/data/fungi/Pholiotasquarrosa1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(47,'http://www.mushroom.world/data/fungi/Pholiotasquarrosa2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(47,'http://www.mushroom.world/data/fungi/Pholiotasquarrosa3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(47,'http://www.mushroom.world/data/fungi/Pholiotasquarrosa4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(47,'http://www.mushroom.world/data/fungi/Pholiotasquarrosa5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(48,'http://www.mushroom.world/data/fungi/Pholiotaaurivella1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(48,'http://www.mushroom.world/data/fungi/Pholiotaaurivella2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(48,'http://www.mushroom.world/data/fungi/Pholiotaaurivella3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(48,'http://www.mushroom.world/data/fungi/Pholiotaaurivella4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(48,'http://www.mushroom.world/data/fungi/Pholiotaaurivella5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(49,'http://www.mushroom.world/data/fungi/Pholiotaalnicola6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(50,'http://www.mushroom.world/data/fungi/Phallusrubicundus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(50,'http://www.mushroom.world/data/fungi/Phallusrubicundus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(51,'http://www.mushroom.world/data/fungi/Paxillusinvolutus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(51,'http://www.mushroom.world/data/fungi/Paxillusinvolutus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(51,'http://www.mushroom.world/data/fungi/Paxillusinvolutus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(51,'http://www.mushroom.world/data/fungi/Paxillusinvolutus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(51,'http://www.mushroom.world/data/fungi/Paxillusinvolutus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(52,'http://www.mushroom.world/data/fungi/Paxillusatrotomentosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(52,'http://www.mushroom.world/data/fungi/Paxillusatrotomentosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(52,'http://www.mushroom.world/data/fungi/Paxillusatrotomentosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(52,'http://www.mushroom.world/data/fungi/Paxillusatrotomentosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(52,'http://www.mushroom.world/data/fungi/Paxillusatrotomentosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(53,'http://www.mushroom.world/data/fungi/Otideaonotica1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(53,'http://www.mushroom.world/data/fungi/Otideaonotica2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(54,'http://www.mushroom.world/data/fungi/Mycenapura1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(54,'http://www.mushroom.world/data/fungi/Mycenapura2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(54,'http://www.mushroom.world/data/fungi/Mycenapura3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(54,'http://www.mushroom.world/data/fungi/Mycenapura4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(55,'http://www.mushroom.world/data/fungi/Mycenagalericulata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(55,'http://www.mushroom.world/data/fungi/Mycenagalericulata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(55,'http://www.mushroom.world/data/fungi/Mycenagalericulata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(55,'http://www.mushroom.world/data/fungi/Mycenagalericulata4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(56,'http://www.mushroom.world/data/fungi/Morchellaelata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(56,'http://www.mushroom.world/data/fungi/Morchellaelata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(56,'http://www.mushroom.world/data/fungi/Morchellaelata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(56,'http://www.mushroom.world/data/fungi/Morchellaelata4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(56,'http://www.mushroom.world/data/fungi/Morchellaelata5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(57,'http://www.mushroom.world/data/fungi/Melanoleucacognata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(57,'http://www.mushroom.world/data/fungi/Melanoleucacognata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(57,'http://www.mushroom.world/data/fungi/Melanoleucacognata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(57,'http://www.mushroom.world/data/fungi/Melanoleucacognata4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(58,'http://www.mushroom.world/data/fungi/Megacollybiaplatyphylla1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(58,'http://www.mushroom.world/data/fungi/Megacollybiaplatyphylla2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(58,'http://www.mushroom.world/data/fungi/Megacollybiaplatyphylla3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(59,'http://www.mushroom.world/data/fungi/Marasmiusoreades1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(59,'http://www.mushroom.world/data/fungi/Marasmiusoreades2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(59,'http://www.mushroom.world/data/fungi/Marasmiusoreades3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(59,'http://www.mushroom.world/data/fungi/Marasmiusoreades4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(59,'http://www.mushroom.world/data/fungi/Marasmiusoreades5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(60,'http://www.mushroom.world/data/fungi/Macrolepiotaprocera1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(60,'http://www.mushroom.world/data/fungi/Macrolepiotaprocera2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(60,'http://www.mushroom.world/data/fungi/Macrolepiotaprocera3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(60,'http://www.mushroom.world/data/fungi/Macrolepiotaprocera4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(60,'http://www.mushroom.world/data/fungi/Macrolepiotaprocera5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(61,'http://www.mushroom.world/data/fungi/Macrolepiotarachodes1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(61,'http://www.mushroom.world/data/fungi/Macrolepiotarachodes2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(61,'http://www.mushroom.world/data/fungi/Macrolepiotarachodes3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(61,'http://www.mushroom.world/data/fungi/Macrolepiotarachodes4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(62,'http://www.mushroom.world/data/fungi/Lycoperdonpyriforme1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(62,'http://www.mushroom.world/data/fungi/Lycoperdonpyriforme2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(62,'http://www.mushroom.world/data/fungi/Lycoperdonpyriforme3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(62,'http://www.mushroom.world/data/fungi/Lycoperdonpyriforme4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(63,'http://www.mushroom.world/data/fungi/Lycoperdonperlatum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(63,'http://www.mushroom.world/data/fungi/Lycoperdonperlatum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(63,'http://www.mushroom.world/data/fungi/Lycoperdonperlatum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(63,'http://www.mushroom.world/data/fungi/Lycoperdonperlatum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(63,'http://www.mushroom.world/data/fungi/Lycoperdonperlatum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(64,'http://www.mushroom.world/data/fungi/Lycoperdonnigrescens1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(64,'http://www.mushroom.world/data/fungi/Lycoperdonnigrescens2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(64,'http://www.mushroom.world/data/fungi/Lycoperdonnigrescens3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(64,'http://www.mushroom.world/data/fungi/Lycoperdonnigrescens4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(64,'http://www.mushroom.world/data/fungi/Lycoperdonnigrescens5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(65,'http://www.mushroom.world/data/fungi/Lycoperdonexcipuliforme1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(65,'http://www.mushroom.world/data/fungi/Lycoperdonexcipuliforme2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(65,'http://www.mushroom.world/data/fungi/Lycoperdonexcipuliforme3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(65,'http://www.mushroom.world/data/fungi/Lycoperdonexcipuliforme4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(66,'http://www.mushroom.world/data/fungi/Lepistanuda1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(66,'http://www.mushroom.world/data/fungi/Lepistanuda2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(66,'http://www.mushroom.world/data/fungi/Lepistanuda3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(66,'http://www.mushroom.world/data/fungi/Lepistanuda4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(66,'http://www.mushroom.world/data/fungi/Lepistanuda5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(67,'http://www.mushroom.world/data/fungi/Leccinumversipelle1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(67,'http://www.mushroom.world/data/fungi/Leccinumversipelle2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(67,'http://www.mushroom.world/data/fungi/Leccinumversipelle3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(67,'http://www.mushroom.world/data/fungi/Leccinumversipelle4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(67,'http://www.mushroom.world/data/fungi/Leccinumversipelle5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(68,'http://www.mushroom.world/data/fungi/Leccinumscabrum6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(69,'http://www.mushroom.world/data/fungi/Leccinumaurantiacum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(69,'http://www.mushroom.world/data/fungi/Leccinumaurantiacum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(69,'http://www.mushroom.world/data/fungi/Leccinumaurantiacum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(69,'http://www.mushroom.world/data/fungi/Leccinumaurantiacum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(70,'http://www.mushroom.world/data/fungi/Laetiporussulphureus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(70,'http://www.mushroom.world/data/fungi/Laetiporussulphureus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(70,'http://www.mushroom.world/data/fungi/Laetiporussulphureus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(70,'http://www.mushroom.world/data/fungi/Laetiporussulphureus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(71,'http://www.mushroom.world/data/fungi/Lactariusvolemus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(71,'http://www.mushroom.world/data/fungi/Lactariusvolemus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(71,'http://www.mushroom.world/data/fungi/Lactariusvolemus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(72,'http://www.mushroom.world/data/fungi/Lactariusturpis6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(73,'http://www.mushroom.world/data/fungi/Lactariustrivialis6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(74,'http://www.mushroom.world/data/fungi/Lactariustorminosus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(75,'http://www.mushroom.world/data/fungi/Lactariustabidus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(75,'http://www.mushroom.world/data/fungi/Lactariustabidus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(75,'http://www.mushroom.world/data/fungi/Lactariustabidus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(76,'http://www.mushroom.world/data/fungi/Lactariusrufus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(77,'http://www.mushroom.world/data/fungi/Lactariusmammosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(77,'http://www.mushroom.world/data/fungi/Lactariusmammosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(77,'http://www.mushroom.world/data/fungi/Lactariusmammosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(77,'http://www.mushroom.world/data/fungi/Lactariusmammosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(77,'http://www.mushroom.world/data/fungi/Lactariusmammosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(78,'http://www.mushroom.world/data/fungi/Lactariuslignyotus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(78,'http://www.mushroom.world/data/fungi/Lactariuslignyotus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(78,'http://www.mushroom.world/data/fungi/Lactariuslignyotus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(78,'http://www.mushroom.world/data/fungi/Lactariuslignyotus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(78,'http://www.mushroom.world/data/fungi/Lactariuslignyotus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(79,'http://www.mushroom.world/data/fungi/Lactariushelvus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(80,'http://www.mushroom.world/data/fungi/Lactariusdeterrimus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(80,'http://www.mushroom.world/data/fungi/Lactariusdeterrimus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(80,'http://www.mushroom.world/data/fungi/Lactariusdeterrimus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(80,'http://www.mushroom.world/data/fungi/Lactariusdeterrimus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(80,'http://www.mushroom.world/data/fungi/Lactariusdeterrimus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(81,'http://www.mushroom.world/data/fungi/Lactariusdeliciosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(81,'http://www.mushroom.world/data/fungi/Lactariusdeliciosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(81,'http://www.mushroom.world/data/fungi/Lactariusdeliciosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(81,'http://www.mushroom.world/data/fungi/Lactariusdeliciosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(81,'http://www.mushroom.world/data/fungi/Lactariusdeliciosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(82,'http://www.mushroom.world/data/fungi/Lactariuscamphoratus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(82,'http://www.mushroom.world/data/fungi/Lactariuscamphoratus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(82,'http://www.mushroom.world/data/fungi/Lactariuscamphoratus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(82,'http://www.mushroom.world/data/fungi/Lactariuscamphoratus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(82,'http://www.mushroom.world/data/fungi/Lactariuscamphoratus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(83,'http://www.mushroom.world/data/fungi/Laccarialaccata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(83,'http://www.mushroom.world/data/fungi/Laccarialaccata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(83,'http://www.mushroom.world/data/fungi/Laccarialaccata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(83,'http://www.mushroom.world/data/fungi/Laccarialaccata4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(84,'http://www.mushroom.world/data/fungi/Kuehneromycesmutabilis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(84,'http://www.mushroom.world/data/fungi/Kuehneromycesmutabilis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(84,'http://www.mushroom.world/data/fungi/Kuehneromycesmutabilis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(84,'http://www.mushroom.world/data/fungi/Kuehneromycesmutabilis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(84,'http://www.mushroom.world/data/fungi/Kuehneromycesmutabilis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(85,'http://www.mushroom.world/data/fungi/Inocybelacera1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(85,'http://www.mushroom.world/data/fungi/Inocybelacera2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(85,'http://www.mushroom.world/data/fungi/Inocybelacera3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(86,'http://www.mushroom.world/data/fungi/Hypholomamarginatum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(86,'http://www.mushroom.world/data/fungi/Hypholomamarginatum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(86,'http://www.mushroom.world/data/fungi/Hypholomamarginatum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(87,'http://www.mushroom.world/data/fungi/Hypholomafasciculare1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(87,'http://www.mushroom.world/data/fungi/Hypholomafasciculare2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(87,'http://www.mushroom.world/data/fungi/Hypholomafasciculare3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(87,'http://www.mushroom.world/data/fungi/Hypholomafasciculare4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(87,'http://www.mushroom.world/data/fungi/Hypholomafasciculare5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(88,'http://www.mushroom.world/data/fungi/Hypholomacapnoides6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(89,'http://www.mushroom.world/data/fungi/Hygrophorushypothejus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(89,'http://www.mushroom.world/data/fungi/Hygrophorushypothejus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(89,'http://www.mushroom.world/data/fungi/Hygrophorushypothejus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(89,'http://www.mushroom.world/data/fungi/Hygrophorushypothejus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(89,'http://www.mushroom.world/data/fungi/Hygrophorushypothejus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(90,'http://www.mushroom.world/data/fungi/Hygrophoruscamarophyllus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(90,'http://www.mushroom.world/data/fungi/Hygrophoruscamarophyllus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(90,'http://www.mushroom.world/data/fungi/Hygrophoruscamarophyllus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(90,'http://www.mushroom.world/data/fungi/Hygrophoruscamarophyllus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(90,'http://www.mushroom.world/data/fungi/Hygrophoruscamarophyllus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(91,'http://www.mushroom.world/data/fungi/Hygrophoropsisaurantiaca1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(91,'http://www.mushroom.world/data/fungi/Hygrophoropsisaurantiaca2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(91,'http://www.mushroom.world/data/fungi/Hygrophoropsisaurantiaca3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(91,'http://www.mushroom.world/data/fungi/Hygrophoropsisaurantiaca4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(91,'http://www.mushroom.world/data/fungi/Hygrophoropsisaurantiaca5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(92,'http://www.mushroom.world/data/fungi/Hydnumrufescens6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(93,'http://www.mushroom.world/data/fungi/Hydnumrepandum6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(94,'http://www.mushroom.world/data/fungi/Hortiboletusrubellus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(94,'http://www.mushroom.world/data/fungi/Hortiboletusrubellus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(94,'http://www.mushroom.world/data/fungi/Hortiboletusrubellus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(95,'http://www.mushroom.world/data/fungi/Hericiumerinaceus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(95,'http://www.mushroom.world/data/fungi/Hericiumerinaceus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(95,'http://www.mushroom.world/data/fungi/Hericiumerinaceus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(96,'http://www.mushroom.world/data/fungi/Hebelomamesophaeum6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(97,'http://www.mushroom.world/data/fungi/Hebelomacrustuliniforme1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(97,'http://www.mushroom.world/data/fungi/Hebelomacrustuliniforme2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(97,'http://www.mushroom.world/data/fungi/Hebelomacrustuliniforme3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(97,'http://www.mushroom.world/data/fungi/Hebelomacrustuliniforme4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(97,'http://www.mushroom.world/data/fungi/Hebelomacrustuliniforme5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(98,'http://www.mushroom.world/data/fungi/Gyromitrainfula1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(98,'http://www.mushroom.world/data/fungi/Gyromitrainfula2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(98,'http://www.mushroom.world/data/fungi/Gyromitrainfula3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(98,'http://www.mushroom.world/data/fungi/Gyromitrainfula4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(99,'http://www.mushroom.world/data/fungi/Gyromitraesculenta6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(100,'http://www.mushroom.world/data/fungi/Gomphidiusglutinosus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(101,'http://www.mushroom.world/data/fungi/Galerinamarginata1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(101,'http://www.mushroom.world/data/fungi/Galerinamarginata2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(101,'http://www.mushroom.world/data/fungi/Galerinamarginata3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(101,'http://www.mushroom.world/data/fungi/Galerinamarginata4.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(101,'http://www.mushroom.world/data/fungi/Galerinamarginata5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(102,'http://www.mushroom.world/data/fungi/Entolomavernum6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(103,'http://www.mushroom.world/data/fungi/Entolomasericeum6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(104,'http://www.mushroom.world/data/fungi/Cystodermaamianthinum1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(104,'http://www.mushroom.world/data/fungi/Cystodermaamianthinum2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(104,'http://www.mushroom.world/data/fungi/Cystodermaamianthinum3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(105,'http://www.mushroom.world/data/fungi/Craterellustubaeformis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(105,'http://www.mushroom.world/data/fungi/Craterellustubaeformis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(105,'http://www.mushroom.world/data/fungi/Craterellustubaeformis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(105,'http://www.mushroom.world/data/fungi/Craterellustubaeformis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(106,'http://www.mushroom.world/data/fungi/Cortinariustraganus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(106,'http://www.mushroom.world/data/fungi/Cortinariustraganus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(106,'http://www.mushroom.world/data/fungi/Cortinariustraganus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(106,'http://www.mushroom.world/data/fungi/Cortinariustraganus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(106,'http://www.mushroom.world/data/fungi/Cortinariustraganus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(107,'http://www.mushroom.world/data/fungi/Cortinariussemisanguineus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(107,'http://www.mushroom.world/data/fungi/Cortinariussemisanguineus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(107,'http://www.mushroom.world/data/fungi/Cortinariussemisanguineus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(107,'http://www.mushroom.world/data/fungi/Cortinariussemisanguineus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(107,'http://www.mushroom.world/data/fungi/Cortinariussemisanguineus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(108,'http://www.mushroom.world/data/fungi/Cortinariusrubellus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(108,'http://www.mushroom.world/data/fungi/Cortinariusrubellus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(108,'http://www.mushroom.world/data/fungi/Cortinariusrubellus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(109,'http://www.mushroom.world/data/fungi/Cortinariusorellanus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(109,'http://www.mushroom.world/data/fungi/Cortinariusorellanus2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(110,'http://www.mushroom.world/data/fungi/Cortinariusmucosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(110,'http://www.mushroom.world/data/fungi/Cortinariusmucosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(110,'http://www.mushroom.world/data/fungi/Cortinariusmucosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(110,'http://www.mushroom.world/data/fungi/Cortinariusmucosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(111,'http://www.mushroom.world/data/fungi/Cortinariusmalicorius1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(111,'http://www.mushroom.world/data/fungi/Cortinariusmalicorius2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(112,'http://www.mushroom.world/data/fungi/Cortinariuslaniger1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(112,'http://www.mushroom.world/data/fungi/Cortinariuslaniger2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(112,'http://www.mushroom.world/data/fungi/Cortinariuslaniger3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(112,'http://www.mushroom.world/data/fungi/Cortinariuslaniger4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(112,'http://www.mushroom.world/data/fungi/Cortinariuslaniger5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(113,'http://www.mushroom.world/data/fungi/Cortinariuscroceus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(113,'http://www.mushroom.world/data/fungi/Cortinariuscroceus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(113,'http://www.mushroom.world/data/fungi/Cortinariuscroceus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(113,'http://www.mushroom.world/data/fungi/Cortinariuscroceus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(114,'http://www.mushroom.world/data/fungi/Cortinariuscollinitus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(114,'http://www.mushroom.world/data/fungi/Cortinariuscollinitus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(114,'http://www.mushroom.world/data/fungi/Cortinariuscollinitus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(114,'http://www.mushroom.world/data/fungi/Cortinariuscollinitus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(115,'http://www.mushroom.world/data/fungi/Cortinariuscaperatus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(116,'http://www.mushroom.world/data/fungi/Cortinariusarmillatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(116,'http://www.mushroom.world/data/fungi/Cortinariusarmillatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(116,'http://www.mushroom.world/data/fungi/Cortinariusarmillatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(116,'http://www.mushroom.world/data/fungi/Cortinariusarmillatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(117,'http://www.mushroom.world/data/fungi/Cortinariusalboviolaceus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(117,'http://www.mushroom.world/data/fungi/Cortinariusalboviolaceus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(117,'http://www.mushroom.world/data/fungi/Cortinariusalboviolaceus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(118,'http://www.mushroom.world/data/fungi/Coprinusplicatilis6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(119,'http://www.mushroom.world/data/fungi/Coprinuscomatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(119,'http://www.mushroom.world/data/fungi/Coprinuscomatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(119,'http://www.mushroom.world/data/fungi/Coprinuscomatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(119,'http://www.mushroom.world/data/fungi/Coprinuscomatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(119,'http://www.mushroom.world/data/fungi/Coprinuscomatus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(120,'http://www.mushroom.world/data/fungi/Coprinopsisatramentaria6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(121,'http://www.mushroom.world/data/fungi/Coltriciaperennis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(121,'http://www.mushroom.world/data/fungi/Coltriciaperennis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(121,'http://www.mushroom.world/data/fungi/Coltriciaperennis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(121,'http://www.mushroom.world/data/fungi/Coltriciaperennis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(121,'http://www.mushroom.world/data/fungi/Coltriciaperennis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(122,'http://www.mushroom.world/data/fungi/Collybiadryophila1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(122,'http://www.mushroom.world/data/fungi/Collybiadryophila2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(122,'http://www.mushroom.world/data/fungi/Collybiadryophila3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(122,'http://www.mushroom.world/data/fungi/Collybiadryophila4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(123,'http://www.mushroom.world/data/fungi/Clitopilusprunulus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(123,'http://www.mushroom.world/data/fungi/Clitopilusprunulus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(123,'http://www.mushroom.world/data/fungi/Clitopilusprunulus3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(124,'http://www.mushroom.world/data/fungi/Clitocybenebularis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(124,'http://www.mushroom.world/data/fungi/Clitocybenebularis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(124,'http://www.mushroom.world/data/fungi/Clitocybenebularis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(124,'http://www.mushroom.world/data/fungi/Clitocybenebularis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(124,'http://www.mushroom.world/data/fungi/Clitocybenebularis5.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(125,'http://www.mushroom.world/data/fungi/Clitocybegibba6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(126,'http://www.mushroom.world/data/fungi/Clitocybeclavipes1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(126,'http://www.mushroom.world/data/fungi/Clitocybeclavipes2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(126,'http://www.mushroom.world/data/fungi/Clitocybeclavipes3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(126,'http://www.mushroom.world/data/fungi/Clitocybeclavipes4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(126,'http://www.mushroom.world/data/fungi/Clitocybeclavipes5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(127,'http://www.mushroom.world/data/fungi/Chalciporuspiperatus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(128,'http://www.mushroom.world/data/fungi/Cantharelluscibarius6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(129,'http://www.mushroom.world/data/fungi/Cantharellulaumbonata1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(129,'http://www.mushroom.world/data/fungi/Cantharellulaumbonata2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(129,'http://www.mushroom.world/data/fungi/Cantharellulaumbonata3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(129,'http://www.mushroom.world/data/fungi/Cantharellulaumbonata4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(130,'http://www.mushroom.world/data/fungi/Calocybepersicolor1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(131,'http://www.mushroom.world/data/fungi/Calocybegambosa1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(131,'http://www.mushroom.world/data/fungi/Calocybegambosa2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(131,'http://www.mushroom.world/data/fungi/Calocybegambosa3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(132,'http://www.mushroom.world/data/fungi/Caloceraviscosa1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(132,'http://www.mushroom.world/data/fungi/Caloceraviscosa2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(133,'http://www.mushroom.world/data/fungi/Bovistaplumbea1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(133,'http://www.mushroom.world/data/fungi/Bovistaplumbea2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(133,'http://www.mushroom.world/data/fungi/Bovistaplumbea3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(133,'http://www.mushroom.world/data/fungi/Bovistaplumbea4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(133,'http://www.mushroom.world/data/fungi/Bovistaplumbea5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(134,'http://www.mushroom.world/data/fungi/Bondarzewiaberkeleyi1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(134,'http://www.mushroom.world/data/fungi/Bondarzewiaberkeleyi2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(134,'http://www.mushroom.world/data/fungi/Bondarzewiaberkeleyi3.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(135,'http://www.mushroom.world/data/fungi/Boletussubtomentosus7.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(136,'http://www.mushroom.world/data/fungi/Boletussatanas1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(136,'http://www.mushroom.world/data/fungi/Boletussatanas2.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus1.jpg');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(137,'http://www.mushroom.world/data/fungi/Boletuspinophilus6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(138,'http://www.mushroom.world/data/fungi/Boletusedulis6.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius1.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius2.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius3.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius4.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius5.JPG');
-INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius7.JPG');
-
-SELECT * FROM mushroom;

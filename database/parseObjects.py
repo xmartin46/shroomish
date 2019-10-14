@@ -2,12 +2,12 @@
 
 import json
 
-with open('../scraper/mushroom_classes_array.json', 'r') as json_file:
+with open('../scraper/mushroom_classes.json', 'r') as json_file:
     data = json.load(json_file)
     for i, obj in enumerate(data):
         name_eng = obj['name_eng']
         name_latin = obj['name_latin']
-        description = obj['desc']
+        description = obj['description']
         edibility = obj['edibility']
         urls = obj['img_urls']
 
@@ -19,9 +19,10 @@ with open('../scraper/mushroom_classes_array.json', 'r') as json_file:
         name_latin = name_latin.replace("'", "''")
         description = description.replace("'", "''")
         edibility = edibility.replace("'", "''")
+        #description = description.split(".", 1)
 
-        #print("(" + "'" + name_eng + "'" + "," + "'" + name_latin + "'" + "," + "'" + description + "'" + "," + "'" + edibility + "'" + "),")
+        #print("INSERT INTO mushroom(name_eng, name_latin, description, edibility) VALUES (" + "'" + name_eng + "'" + "," + "'" + name_latin + "'" + "," + "'" + description + "'" + "," + "'" + edibility + "'" + ");")
 
-        for url in urls:
-            url = url.replace("'", "''")
-            print("(" + str(i + 1) + "," + "'" + url + "'" + "),")
+        #for url in urls:
+        #    url = url.replace("'", "''")
+        #    print("INSERT INTO mushroom_image(id_mushroom, URL) VALUES(" + str(i + 1) + "," + "'" + url + "'" + ");")
