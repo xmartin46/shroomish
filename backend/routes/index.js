@@ -4,6 +4,8 @@ const express       = require('express');
 
 const mushroomCtrl  = require('../controllers/mushroom')
 const userCtrl      = require('../controllers/user')
+const passportCtrl  = require('../configuration/passport')
+const authMdlw      = require('../middlewares/auth')
 
 const api           = express.Router();
 /*const auth          = require('../middlewares/auth');*/
@@ -20,9 +22,21 @@ api.get('/heatmap/:name_latin', mushroomCtrl.getMushroomCoordinates)
 
 
 // Listener user
-api.post('/login/', userCtrl.logIn)
+//api.post('/login/', userCtrl.logIn)
+api.post('/login/', passportCtrl.authenticate('local', {
+  /*
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+  */
+}), function(req, res, info) {
+  console.log("INSIDE!!!!!! (index.js from routes)")
+  console.log(req.user)
+  console.log(req.session.passport.user)
+  res.redirect('/api/users')
+})
 api.post('/signup/', userCtrl.signUp)
-api.get('/users/', userCtrl.getUsers)
+api.get('/users/', authMdlw.checkLoggedIn, userCtrl.getUsers)
 api.get('/users/:userName', userCtrl.getUsersByName)
 api.patch('/users/:userName', userCtrl.modifyUser)
 api.delete('/users/:userName', userCtrl.deleteUser)

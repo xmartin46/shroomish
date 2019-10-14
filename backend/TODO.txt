@@ -14,3 +14,6 @@
   - In general, see if the info comes from the body, params, query...
   - Think where the info will come from (info to update in the body? params? query?)
   - Delete needs also password to confirm or what ma maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan
+
+· /configuration/passport.js
+  - Return all info from the user?
