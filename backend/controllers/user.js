@@ -1,9 +1,9 @@
 'use strict';
 
 const config   = require('../config')
-var crypto     = require('crypto')
+const crypto   = require('crypto')
 
-function logIn(req, res) {
+/*function logIn(req, res) {
   const username = req.body.username
   const password = req.body.password
 
@@ -32,7 +32,7 @@ function logIn(req, res) {
       }
     }
   })
-}
+}*/
 
 function signUp(req, res) {
   const username = req.body.username
@@ -80,6 +80,9 @@ function signUp(req, res) {
 }
 
 function getUsers(req, res) {
+  console.log("passport: " + JSON.stringify(req.session.passport))
+  console.log("user: " + JSON.stringify(req.user))
+  console.log("Authenticated?:" + req.isAuthenticated())
   config.db.query('SELECT name FROM user_account', [], (err, result) => {
     if (err) throw err
 
@@ -113,7 +116,7 @@ function deleteUser(req, res) {
 }
 
 module.exports = {
-  logIn,
+  //logIn,
   signUp,
   getUsers,
   getUsersByName,
