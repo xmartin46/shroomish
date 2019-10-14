@@ -1,6 +1,7 @@
 · index.js
   - Change "/search/" path to /gallery/?
   - Change "/heatmap/:name_latin"? And should I send the heatmap or the coordinates?
+  - Middlewares for the users!
 
 · /controllers/mushrooms.js
   - Return "message" in a json when no data is found in the DB??????? Ask Adrià and Ricardo
@@ -8,3 +9,8 @@
   - In those function in which the search is for a particular mushroom, should I put LIKE or =?
   - Do I have to add also a third column for the latlong? (See example from github example_10000 I think)
   - getMushroomCoordinates all thing inside the query? IDK man => we cannot do more queries until that is done
+
+· /controllers/user.js
+  - In general, see if the info comes from the body, params, query...
+  - Think where the info will come from (info to update in the body? params? query?)
+  - Delete needs also password to confirm or what ma maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan
