@@ -39,19 +39,19 @@ function getMushroomCoordinates(req, res) {
       if (err) throw err
 
       if (result.rows.length < 1) res.status(200).send( { message: "No objects in the database " } )
-      //if (result.rows.length >= 1) res.status(200).send(result.rows)
+      if (result.rows.length >= 1) {
+        var arr = []
+        for (var i = 0; i < result.rows.length; i++) {
+          var obj = JSON.parse("[" + result.rows[i]["latlng"] + "]")
+          arr.push(obj)
+        }
 
-      var arr = []
-      for (var i = 0; i < result.rows.length; i++) {
-        var obj = JSON.parse("[" + result.rows[i]["latlng"] + "]")
-        arr.push(obj)
+        var coords = [{
+          "coordinates": arr
+        }]
+
+        res.status(200).send(coords)
       }
-
-      var coords = [{
-        "coordinates": arr
-      }]
-
-      res.status(200).send(coords)
   })
 }
 
