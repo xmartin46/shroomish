@@ -8,10 +8,8 @@ sleep 5
 
 
 echo 'Shroomish Creating DDL Base'
-docker run -it --rm --network trippify trippify-db psql -h trippify-db -U postgres postgres -f /tmp/create_ddl_base.sql
-echo 'Shroomish DDL Base created'
-echo 'Shroomish Creating DDL Trippify'
-docker run -it --rm --network trippify trippify-db psql -h trippify-db -U trippify trippify -f /tmp/create_ddl_trippify.sql
+docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U postgres postgres -f /tmp/create_ddl_base.sql
+docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U mushroom_admin shroomish -f /tmp/create_ddl_shroomish.sql
 echo 'Shroomish DDL Trippify created'
 
 echo 'Shroomish Building Classifier backend'
