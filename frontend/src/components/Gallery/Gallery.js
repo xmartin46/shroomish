@@ -55,7 +55,6 @@ const CardList = ({ mushrooms }) => {
       url: API + '/search/'+ name
     })
     .then(res => {
-      console.log(res.data)
       return res.data
     })
     .catch(err => {
@@ -64,8 +63,8 @@ const CardList = ({ mushrooms }) => {
   }
   
   
-    const handleSearch = () => {
-      return sendQuery("");
+    const handleSearch = n => {
+      return sendQuery(n);
     }
   
     
@@ -116,28 +115,29 @@ const CardList = ({ mushrooms }) => {
         mushrooms: PropTypes.array.isRequired
       };
       
-      function getMushrooms(mushrooms){
-        if(!mushrooms){
+      function getMushrooms(id){
+        if(id == null){
           return handleSearch("")
         }
-        else {
-          return mushrooms
+        else{
+          return handleSearch(id)
         }
       }
+
     
       class Gallery extends Component {
+        
         render() {
-          console.log(this.props) 
           let params = new URLSearchParams(this.props.location.search);
-          let llista = params.get("list") 
-          console.log(llista);
-          llista = getMushrooms(llista);
-          console.log(llista);
-          if (!llista) llista = local_mushrooms
+          let id = params.get("id");
+          let llista = getMushrooms(id);
           console.log(llista)
+          if (!llista) llista = local_mushrooms;
+          llista = JSON.parse(llista)
+          // console.log(llista)
           return (
             <div className="main-class">
-            <CardList mushrooms ={local_mushrooms}></CardList>
+            <CardList mushrooms ={llista}></CardList>
             </div>
             
             );
