@@ -1566,5 +1566,3 @@ INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.wor
 INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius4.JPG');
 INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius5.JPG');
 INSERT INTO mushroom_image(id_mushroom, URL) VALUES(139,'http://www.mushroom.world/data/fungi/Boletusbadius7.JPG');
-
-SELECT * FROM mushroom;
