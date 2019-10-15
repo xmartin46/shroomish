@@ -8,7 +8,7 @@ const crypto          = require('crypto')
 
 passport.use(new LocalStrategy(
   function(username, password, done) { //username and password from the body
-    console.log("LOCALSTRATEGY!!!")
+    ///////////////////console.log("LOCALSTRATEGY!!!")
     config.db.query('SELECT user_account.id, user_account.email, user_password.password, user_password.salt FROM user_account INNER JOIN user_password ON user_password.id_user = user_account.id WHERE LOWER(user_account.name) = LOWER($1)', [username], (err, result) => {
       if (err) throw err
 
@@ -25,8 +25,8 @@ passport.use(new LocalStrategy(
             user_id: result.rows[0].id,
             user_name: username,
             user_email: result.rows[0].email,
-            user_password: password,
-            user_salt: result.rows[0].salt
+            //user_password: password,
+            //user_salt: result.rows[0].salt
           }
 
           return done(null, user)
@@ -40,13 +40,13 @@ passport.use(new LocalStrategy(
 // Sequelize needs to serialize and deserialize the user
 // Just consider this part boilerplate needed to make it all work
 passport.serializeUser(function(user, done) {
-  console.log("Serializing!!!" + JSON.stringify(user))
+  ///////////////////console.log("Serializing!!!" + JSON.stringify(user))
   done(null, user.user_id);
 });
 //
 passport.deserializeUser(function(id, done) {
   config.db.query('SELECT * FROM user_account WHERE id = $1', [id], (err, result) => {
-    console.log("Deserializing!!!" + JSON.stringify(result.rows))
+    ///////////////////console.log("Deserializing!!!" + JSON.stringify(result.rows))
     done(err, result.rows[0]);
   });
 });

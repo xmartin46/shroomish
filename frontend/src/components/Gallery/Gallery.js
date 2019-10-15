@@ -7,8 +7,10 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import { API } from '../../consts';
+import axios from 'axios'
 
-export const mushrooms = [
+export const local_mushrooms = [
   {"name_latin": "Agaricus arvensis", "name_eng": "Horse Mushroom", "url": "http://www.mushroom.world/show?n=Agaricus-arvensis", "img_urls": ["http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG"], "description": "Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter", "edibility": "edible and good "},
   {"name_latin": "Amanita muscaria", "name_eng": "Fly Amanita", "url": "http://www.mushroom.world/show?n=Amanita-muscaria", "img_urls": ["http://www.mushroom.world/data/fungi/Amanitamuscaria1.JPG"], "description": "Cap 8-10 cm diameter; stem 8-18 cm tall * 1-2 cm diameter", "edibility": "poisonous"},
   {"name_latin": "Amanita fulva", "name_eng": "Tawny grisette", "url": "http://www.mushroom.world/show?n=Amanita-fulva", "img_urls": ["http://www.mushroom.world/data/fungi/Amanitafulva1.JPG"], "description": "Cap 4-9 cm diameter, stem 7-12 cm tall * 0.8-1.2 cm diameter", "edibility": "inedible"},
@@ -34,7 +36,7 @@ const CardList = ({ mushrooms }) => {
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
-    img={mushroom.img_urls} 
+    img={mushroom.url} 
     edibility={mushroom.edibility}
     />
     ));
@@ -46,6 +48,9 @@ const CardList = ({ mushrooms }) => {
       );
     };
     
+
+
+  
     
     
     const Mushroom = ({name,name_latin,img,edibility}) => {
@@ -94,11 +99,50 @@ const CardList = ({ mushrooms }) => {
         mushrooms: PropTypes.array.isRequired
       };
       
-      class Gallery extends Component {
+    
+    
+    class Gallery extends Component {
+      constructor() {
+        super();
+        this.state = { data: [] };
+      }
+
+      componentWillMount() {
+        let params = new URLSearchParams(this.props.location.search);
+        let id = params.get("id");
+        if(id == null){
+          id = ""
+        }
+        let llista = axios({
+          method: 'GET',
+          url: API + '/search/'+ id
+        })
+          .then(res => {
+            if(res.data.message != null){
+              let llista = axios({
+                method: 'GET',
+                url: API + '/search/'
+              }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
+              .catch(err => {
+                console.error(err)
+              })
+            }
+            else{
+              this.setState({data:JSON.parse(JSON.stringify(res.data))})
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+          if (!llista) this.setState({data: local_mushrooms});
+          console.log(this.state)
+      }
+    
+        
         render() {
           return (
             <div className="main-class">
-            <CardList mushrooms ={mushrooms}></CardList>
+            <CardList mushrooms ={this.state.data}></CardList>
             </div>
             
             );

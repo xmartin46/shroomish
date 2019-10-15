@@ -8,7 +8,6 @@ class NotFound extends Component {
     
 
   render() {
-    const name_location = this.props.location.pathname
     return (
 
 <div className='main-class'>

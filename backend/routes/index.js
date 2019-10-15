@@ -29,16 +29,17 @@ api.post('/login/', passportCtrl.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
   */
-}), function(req, res, info) {
-  console.log("INSIDE!!!!!! (index.js from routes)")
-  console.log(req.user)
-  console.log(req.session.passport.user)
-  res.redirect('/api/users')
+}), function(req, res, info) { // Fa falta si poso lo de successRedirect?
+  ///////////////////console.log("INSIDE!!!!!! (index.js from routes)")
+  ///////////////////console.log(req.user)
+  ///////////////////console.log(req.session.passport.user)
+  res.redirect('/api/users') // De moment xD
 })
 api.post('/signup/', userCtrl.signUp)
-api.get('/users/', authMdlw.checkLoggedIn, userCtrl.getUsers)
+api.get('/users/', userCtrl.getUsers)
 api.get('/users/:userName', userCtrl.getUsersByName)
 api.patch('/users/:userName', userCtrl.modifyUser)
 api.delete('/users/:userName', userCtrl.deleteUser)
+api.get('/logout/', userCtrl.logOut)
 
 module.exports = api;

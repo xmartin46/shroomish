@@ -3,7 +3,7 @@
 const config = require('../config')
 
 function getMushrooms(req, res) {
-  config.db.query('SELECT mushroom.name_eng, mushroom.name_latin, mushroom.description, mushroom.edibility, mushroom_image.URL FROM mushroom INNER JOIN mushroom_image ON mushroom_image.id_mushroom = mushroom.id ORDER BY mushroom.name_eng', [], (err, result) => {
+  config.db.query('SELECT DISTINCT ON (name_eng) mushroom.name_eng, mushroom.name_latin, mushroom.description, mushroom.edibility, mushroom_image.URL FROM mushroom INNER JOIN mushroom_image ON mushroom_image.id_mushroom = mushroom.id ORDER BY mushroom.name_eng', [], (err, result) => {
       if (err) throw err
 
       if (result.rows.length < 1) res.status(200).send( { message: "No objects in the database " } )
@@ -22,9 +22,10 @@ function getMushroomsBySubstring(req, res) {
 }
 
 function getMushroomInfo(req, res) {
-  const name_latin = "%" + req.params.name_latin + "%"
+  // const name_latin = "%" + req.params.name_latin + "%"
+  const name_latin = req.params.name_latin
 
-  config.db.query('SELECT mushroom.name_eng, mushroom.name_latin, mushroom.description, mushroom.edibility, mushroom_image.URL FROM mushroom INNER JOIN mushroom_image ON mushroom_image.id_mushroom = mushroom.id WHERE LOWER(mushroom.name_latin) LIKE LOWER($1) ORDER BY mushroom.name_eng', [name_latin], (err, result) => {
+  config.db.query('SELECT mushroom.name_eng, mushroom.name_latin, mushroom.description, mushroom.edibility, mushroom_image.URL FROM mushroom INNER JOIN mushroom_image ON mushroom_image.id_mushroom = mushroom.id WHERE LOWER(mushroom.name_latin) = LOWER($1) ORDER BY mushroom.name_eng', [name_latin], (err, result) => {
       if (err) throw err
 
       if (result.rows.length < 1) res.status(200).send( { message: "No objects in the database " } )
@@ -33,9 +34,10 @@ function getMushroomInfo(req, res) {
 }
 
 function getMushroomCoordinates(req, res) {
-  const name_latin = "%" + req.params.name_latin + "%"
+  // const name_latin = "%" + req.params.name_latin + "%"
+  const name_latin = req.params.name_latin
 
-  config.db.query('SELECT mushroom_coordinate.latlng FROM mushroom INNER JOIN mushroom_coordinate ON mushroom_coordinate.id_mushroom = mushroom.id WHERE LOWER(mushroom.name_latin) LIKE LOWER($1) ORDER BY mushroom.name_eng', [name_latin], (err, result) => {
+  config.db.query('SELECT mushroom_coordinate.latlng FROM mushroom INNER JOIN mushroom_coordinate ON mushroom_coordinate.id_mushroom = mushroom.id WHERE LOWER(mushroom.name_latin) = LOWER($1) ORDER BY mushroom.name_eng', [name_latin], (err, result) => {
       if (err) throw err
 
       if (result.rows.length < 1) res.status(200).send( { message: "No objects in the database " } )

@@ -1,5 +1,6 @@
 'use strict';
 
+               require('dotenv').config()
 const config   = require('../config')
 const crypto   = require('crypto')
 
@@ -80,9 +81,9 @@ function signUp(req, res) {
 }
 
 function getUsers(req, res) {
-  console.log("passport: " + JSON.stringify(req.session.passport))
-  console.log("user: " + JSON.stringify(req.user))
-  console.log("Authenticated?:" + req.isAuthenticated())
+  ///////////////////console.log("passport: " + JSON.stringify(req.session.passport))
+  ///////////////////console.log("user: " + JSON.stringify(req.user))
+  ///////////////////console.log("Authenticated?:" + req.isAuthenticated())
   config.db.query('SELECT name FROM user_account', [], (err, result) => {
     if (err) throw err
 
@@ -115,11 +116,19 @@ function deleteUser(req, res) {
 
 }
 
+function logOut(req, res) {
+  req.session.destroy(function(err) {
+    res.clearCookie(process.env.SESSION_NAME);
+    res.status(200).send( { message: "Cy@!" } )
+  })
+}
+
 module.exports = {
   //logIn,
   signUp,
   getUsers,
   getUsersByName,
   modifyUser,
-  deleteUser
+  deleteUser,
+  logOut
 }

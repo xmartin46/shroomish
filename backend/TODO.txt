@@ -4,6 +4,7 @@
   - Middlewares for the users!
 
 · /controllers/mushrooms.js
+  - GETMUSHROOMINFO NOT WORKING WITH DOCKER?!?!??!?!?!?!?!?!??!?!?!?!?!?
   - Return "message" in a json when no data is found in the DB??????? Ask Adrià and Ricardo
   - Should I sort the data alphabetically? And sort name_eng or name_latin or both???????
   - In those function in which the search is for a particular mushroom, should I put LIKE or =?

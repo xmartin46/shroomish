@@ -3,35 +3,55 @@ import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import { API } from '../../consts';
-
-export const img = "http://www.mushroom.world/data/fungi/Albatrellusovinus1.JPG";
-export const description = "Cap 3-15 cm diameter, stem 6-15 cm tall * 0.5-1.5 cm thick. This large agaric has a convex, flattened, or wavy, olive-tinged, pale yellow-brown cap with a darker center and sparse pale scales. It grows in dense clusters on and around the stumps of leaf and coniferous trees.\n\nCap convex at first but becoming flattened, often with a central raised umbo, later becoming somewhat dish-shaped. The margins are often arched at maturity and the surface is sticky when wet. Though typically ochraceous, this fungus is rather variable in appearance and sometimes has a few dark, hairy scales near the centre somewhat radially arranged. The flesh white, thin and firm. Gills at first white, sometimes becoming pinkish-yellow or discoloured with age, broad and fairly distant, attached to the stipe at right angles or are slightly decurrent, crowded. The spore print is white. Stem at first whitish, becoming yellowish or reddish brown, more or less equal or tapering towards the base, finely wholly. The ring is yellowish, cottony or woolly, superior and fairly persistent.\n\nSimilar species The mushroom can be mistaken with Galerina marginata, which is deadly poisonous.\n\nArmillaria mellea on the First Nature Web site.\n";
-export const edibility= "edible";
-export const name="Pollazo"
-
-
-const sendQuery = name => {
-  return axios({
-    method: 'GET',
-    url: API + '/info/'+ name
-  })
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.error(err)
-  })
-}
-
+import { Redirect } from 'react-router-dom';
 
 
 class Information extends Component {
+  constructor() {
+    super();
+    this.state = { data: [], check:false };
+  }
+
+  componentWillMount() {
+    let id = this.props.match.params.id;
+    let llista = axios({
+      method: 'GET',
+      url: API + '/info/'+ id
+    })
+      .then(res => {
+        console.log(res)
+        if(res.data.message != null){
+          this.setState({check:true});
+        }
+        else{
+          this.setState({data:JSON.parse(JSON.stringify(res.data))})
+        }
+      })  
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+
     render() {
-    const name_latin = this.props.match.params.id
-    const information = sendQuery(name_latin)
-    // const name = information.name_eng
-    // const edibility = information.edibility
-    // const description = information.description
+      if(this.state.check){
+        return(<Redirect to="/gallery"/>); 
+      }
+      else{
+      
+      let img="";
+      let name_eng="";
+      let name_latin="";
+      let description="";
+      let edibility="";
+      if (this.state.data.length > 0){
+        img = this.state.data[0].url;
+        description=this.state.data[0].description;
+        edibility = this.state.data[0].edibility;
+        name_latin=this.state.data[0].name_latin;
+        name_eng = this.state.data[0].name_eng 
+      }
+
     return (
       <div className='main-class' style={{margin:"0", padding:"0"}}>
         <div className="image_container" style={{maxHeight:"50vh", maxWidth:"100%", overflow:"hidden"}}>
@@ -39,7 +59,7 @@ class Information extends Component {
         </div>
         <div className="content-wrapper" style={{padding:"3em"}}>
                       <Typography variant="headline" component="h2">
-                       {name}
+                       {name_eng}
                     </Typography>
                     <Typography variant="headline" component="h3">
                        {name_latin}
@@ -53,8 +73,8 @@ class Information extends Component {
 
         </div>
       </div>
-    
-    );
+
+    );}
   }
 }
 

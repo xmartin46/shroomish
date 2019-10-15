@@ -173,6 +173,7 @@ export default function PrimarySearchAppBar() {
     url: API + '/search/'+ name
   })
   .then(res => {
+    console.log(res.data)
     return res.data
   })
   .catch(err => {
@@ -181,10 +182,9 @@ export default function PrimarySearchAppBar() {
 }
 
 
-  const handleSearch = e => {
+const handleSearch = e => {
     if(e.keyCode == 13){
-      sendQuery(e.target.value)
-      console.log('Sending '+ e.target.value)
+      window.location.href = "/gallery?id="+e.target.value;
     }
  }
 
