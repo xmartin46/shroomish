@@ -7,8 +7,10 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import { API } from '../../consts';
+import axios from 'axios'
 
-export const mushrooms = [
+export const local_mushrooms = [
   {"name_latin": "Agaricus arvensis", "name_eng": "Horse Mushroom", "url": "http://www.mushroom.world/show?n=Agaricus-arvensis", "img_urls": ["http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG"], "description": "Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter", "edibility": "edible and good "},
   {"name_latin": "Amanita muscaria", "name_eng": "Fly Amanita", "url": "http://www.mushroom.world/show?n=Amanita-muscaria", "img_urls": ["http://www.mushroom.world/data/fungi/Amanitamuscaria1.JPG"], "description": "Cap 8-10 cm diameter; stem 8-18 cm tall * 1-2 cm diameter", "edibility": "poisonous"},
   {"name_latin": "Amanita fulva", "name_eng": "Tawny grisette", "url": "http://www.mushroom.world/show?n=Amanita-fulva", "img_urls": ["http://www.mushroom.world/data/fungi/Amanitafulva1.JPG"], "description": "Cap 4-9 cm diameter, stem 7-12 cm tall * 0.8-1.2 cm diameter", "edibility": "inedible"},
@@ -46,6 +48,26 @@ const CardList = ({ mushrooms }) => {
       );
     };
     
+
+  const sendQuery = name => {
+    return axios({
+      method: 'GET',
+      url: API + '/search/'+ name
+    })
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+  
+  
+    const handleSearch = () => {
+      return sendQuery("");
+    }
+  
     
     
     const Mushroom = ({name,name_latin,img,edibility}) => {
@@ -94,11 +116,28 @@ const CardList = ({ mushrooms }) => {
         mushrooms: PropTypes.array.isRequired
       };
       
+      function getMushrooms(mushrooms){
+        if(!mushrooms){
+          return handleSearch("")
+        }
+        else {
+          return mushrooms
+        }
+      }
+    
       class Gallery extends Component {
         render() {
+          console.log(this.props) 
+          let params = new URLSearchParams(this.props.location.search);
+          let llista = params.get("list") 
+          console.log(llista);
+          llista = getMushrooms(llista);
+          console.log(llista);
+          if (!llista) llista = local_mushrooms
+          console.log(llista)
           return (
             <div className="main-class">
-            <CardList mushrooms ={mushrooms}></CardList>
+            <CardList mushrooms ={local_mushrooms}></CardList>
             </div>
             
             );

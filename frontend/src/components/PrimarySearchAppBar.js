@@ -183,8 +183,10 @@ export default function PrimarySearchAppBar() {
 
   const handleSearch = e => {
     if(e.keyCode == 13){
-      sendQuery(e.target.value)
-      console.log('Sending '+ e.target.value)
+      const values = sendQuery(e.target.value)
+      console.log('Sending '+ e.target.value);
+      console.log(values)
+      window.location.href = "/gallery?list="+values;
     }
  }
 
