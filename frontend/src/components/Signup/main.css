@@ -1,0 +1,46 @@
+#divi{
+    text-align: center;
+
+}
+#email {
+
+  position: relative;
+  text-align: center;
+    object-position: center;
+  width: 300px;
+  top: 50px;
+  font-size: 20px;
+  margin: 0 auto;
+
+}
+.password {
+  position: relative;
+  text-align: center;
+  object-position: center;
+  width: 300px;
+  top: 75px;
+  margin-top: 10rem;
+  font-size: 20px;
+  margin: 0 auto;
+}
+#button{
+  position: relative;
+  text-align: center;
+    object-position: center;
+  width: 300px;
+  top: 100px;
+  margin-top: 10px;
+  font-size: 20px;
+  margin: 0 auto;
+
+}
+
+
+.main-class {
+    padding: 5rem;
+    right: 0;
+    left: 0;
+    width: initial;
+    height: initial;
+    position: absolute;
+}

@@ -25,6 +25,7 @@ import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios'
 import { API } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { Link } from 'react-router-dom';
 
 
 //https://www.florin-pop.com/blog/2019/02/react-movie-search-app/
@@ -211,8 +212,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Log In</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
       <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
     </Menu>
   );
@@ -228,7 +228,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -326,7 +326,7 @@ export default function PrimarySearchAppBar() {
               <ListItemText primary="Classifier" />
             </ListItem>
 
-          
+
         </List>
         </Drawer>
       {renderMobileMenu}
