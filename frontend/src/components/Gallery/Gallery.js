@@ -36,7 +36,7 @@ const CardList = ({ mushrooms }) => {
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
-    img={mushroom.img_urls} 
+    img={mushroom.url} 
     edibility={mushroom.edibility}
     />
     ));
@@ -49,23 +49,7 @@ const CardList = ({ mushrooms }) => {
     };
     
 
-  const sendQuery = name => {
-    return axios({
-      method: 'GET',
-      url: API + '/search/'+ name
-    })
-    .then(res => {
-      return res.data
-    })
-    .catch(err => {
-      console.error(err)
-    })
-  }
-  
-  
-    const handleSearch = n => {
-      return sendQuery(n);
-    }
+
   
     
     
@@ -115,29 +99,50 @@ const CardList = ({ mushrooms }) => {
         mushrooms: PropTypes.array.isRequired
       };
       
-      function getMushrooms(id){
-        if(id == null){
-          return handleSearch("")
-        }
-        else{
-          return handleSearch(id)
-        }
+    
+    
+    class Gallery extends Component {
+      constructor() {
+        super();
+        this.state = { data: [] };
       }
 
+      componentWillMount() {
+        let params = new URLSearchParams(this.props.location.search);
+        let id = params.get("id");
+        if(id == null){
+          id = ""
+        }
+        let llista = axios({
+          method: 'GET',
+          url: API + '/search/'+ id
+        })
+          .then(res => {
+            if(res.data.message != null){
+              let llista = axios({
+                method: 'GET',
+                url: API + '/search/'
+              }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
+              .catch(err => {
+                console.error(err)
+              })
+            }
+            else{
+              this.setState({data:JSON.parse(JSON.stringify(res.data))})
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+          if (!llista) this.setState({data: local_mushrooms});
+          console.log(this.state)
+      }
     
-      class Gallery extends Component {
         
         render() {
-          let params = new URLSearchParams(this.props.location.search);
-          let id = params.get("id");
-          let llista = getMushrooms(id);
-          console.log(llista)
-          if (!llista) llista = local_mushrooms;
-          llista = JSON.parse(llista)
-          // console.log(llista)
           return (
             <div className="main-class">
-            <CardList mushrooms ={llista}></CardList>
+            <CardList mushrooms ={this.state.data}></CardList>
             </div>
             
             );

@@ -7,7 +7,7 @@ function getMushrooms(req, res) {
       if (err) throw err
 
       if (result.rows.length < 1) res.status(200).send( { message: "No objects in the database " } )
-      if (result.rows.length >= 1) res.status(200).send(JSON.stringify(result.rows))
+      if (result.rows.length >= 1) res.status(200).send(result.rows)
   })
 }
 
