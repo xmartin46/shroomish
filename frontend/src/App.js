@@ -5,19 +5,24 @@ import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import theme from './components/theme';
 import { PUBLIC_URL } from './consts';
 
-const Gallery = React.lazy(() => 
+const Gallery = React.lazy(() =>
 import("./components/Gallery/Gallery"));
 
-const NotFound = React.lazy(() => 
+const NotFound = React.lazy(() =>
 import("./components/NotFound/NotFound"));
 
-const Classify = React.lazy(() => 
+const Classify = React.lazy(() =>
 import("./components/Classifier/Classify"));
 
 
-const Information = React.lazy(() => 
+const Information = React.lazy(() =>
 import("./components/Information/Information"));
 
+const Login = React.lazy(() =>
+import("./components/Login/Login"));
+
+const Signup = React.lazy(() =>
+import("./components/Signup/Signup"));
 
 const renderLoader = () => <div className="loader"></div>;
 
@@ -40,6 +45,8 @@ class App extends Component {
       <Route path={PUBLIC_URL + '/gallery/'} exact component={Gallery} />
       <Route path={PUBLIC_URL + '/info/:id'} exact component={Information} />
       <Route path={PUBLIC_URL + '/NotFound'} exact component={NotFound} />
+      <Route path={PUBLIC_URL + '/Login'} exact component={Login}/>
+      <Route path={PUBLIC_URL + '/Signup'} exact component={Signup}/>
       </div>
       </Router>
       </MuiThemeProvider>
@@ -48,6 +55,5 @@ class App extends Component {
     }
 }
 
-  
+
   export default App;
-  

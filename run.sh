@@ -13,7 +13,7 @@ docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U mus
 echo 'Shroomish DDL Trippify created'
 
 echo 'Shroomish Building Classifier backend'
-docker compuse up -d build shroomish-classifier
+docker compose up -d build shroomish-classifier
 echo 'Shroomish Building and kicking off the Frontend containers'
 docker-compose up -d --build shroomish-client-app
 echo 'Shroomish Building and kicking off the Backend containers'

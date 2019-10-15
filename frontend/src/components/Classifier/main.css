@@ -1,7 +1,7 @@
 /**
 
 General components
-**/  
+**/
 
 
 
@@ -27,7 +27,8 @@ h3{
     left: 0;
     width: initial;
     height: initial;
-    position: absolute;
+    position: relative;
+    text-align: center;
 }
 
 
