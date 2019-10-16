@@ -24,6 +24,9 @@ import("./components/Login/Login"));
 const Signup = React.lazy(() =>
 import("./components/Signup/Signup"));
 
+const Heatmap = React.lazy(() =>
+import("./components/Heatmap/example/index"));
+
 const renderLoader = () => <div className="loader"></div>;
 
 
@@ -47,6 +50,7 @@ class App extends Component {
       <Route path={PUBLIC_URL + '/NotFound'} exact component={NotFound} />
       <Route path={PUBLIC_URL + '/Login'} exact component={Login}/>
       <Route path={PUBLIC_URL + '/Signup'} exact component={Signup}/>
+      <Route path={PUBLIC_URL + '/heatmap/'} exact component={Heatmap}/>
       </div>
       </Router>
       </MuiThemeProvider>
