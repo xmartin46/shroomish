@@ -1,18 +1,18 @@
 version: '3.3'
 services:
   # Backend
-  # shroomish-backend:
-  #   image: shroomish-backend
-  #   container_name: shroomish-backend
-  #   build:
-  #     context: backend
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   networks:
-  #     - shroomish
-  #   ports:
-  #     - 5432:5432
-  #
+  shroomish-backend:
+        image: shroomish-backend
+        container_name: shroomish-backend
+        build:
+                context: backend
+                dockerfile: Dockerfile
+        restart: always
+        networks:
+                - shroomish
+        ports:
+                - 8080:8080
+  
   # # Classifier
   # shroomish-classifier:
   #   image: shroomish-classifier
@@ -38,11 +38,11 @@ services:
       - shroomish
     ports:
       - 5432:5432
-      # - 5432
 
   # Client
-  shroomish-client-app:
-        container_name: shroomish-client-app
+  shroomish-client:
+        image: shroomish-client
+        container_name: shroomish-client
         build:
                 context: frontend
                 dockerfile: Dockerfile

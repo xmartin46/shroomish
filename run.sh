@@ -12,10 +12,10 @@ docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U pos
 docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U mushroom_admin shroomish -f /tmp/create_ddl_shroomish.sql
 echo 'Shroomish DDL Trippify created'
 
-echo 'Shroomish Building Classifier backend'
-docker compose up -d build shroomish-classifier
+#echo 'Shroomish Building Classifier backend'
+#docker compose up -d build shroomish-classifier
 echo 'Shroomish Building and kicking off the Frontend containers'
-docker-compose up -d --build shroomish-client-app
+docker-compose up -d --build shroomish-client
 echo 'Shroomish Building and kicking off the Backend containers'
-docker-compose up -d --build shroomish-api-app 
+docker-compose up -d --build shroomish-backend 
 echo 'Shroomish Deployed!'
