@@ -14,7 +14,7 @@ class Information extends Component {
 
   componentWillMount() {
     let id = this.props.match.params.id;
-    let llista = axios({
+    axios({
       method: 'GET',
       url: API + '/info/'+ id
     })

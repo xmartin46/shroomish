@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import theme from './components/theme';
@@ -38,7 +38,7 @@ class App extends Component {
     return (
       <React.Suspense fallback={renderLoader()}>
       <MuiThemeProvider muitheme={theme}>
-      <Router>
+      <Switch>
       <div>
       <div>
       <PrimarySearchAppBar/>
@@ -52,7 +52,7 @@ class App extends Component {
       <Route path={PUBLIC_URL + '/Signup'} exact component={Signup}/>
       <Route path={PUBLIC_URL + '/heatmap/'} exact component={Heatmap}/>
       </div>
-      </Router>
+      </Switch>
       </MuiThemeProvider>
       </React.Suspense>
       );
