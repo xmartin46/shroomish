@@ -2,11 +2,11 @@
 const pg      = require('pg')
 
 var db = new pg.Client({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
+  host: process.env.DB_HOST || 'shroomish-db',
+  user: process.env.DB_USER || 'mushroom_admin',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'shroomish',
+  port: process.env.DB_PORT || 5432,
   // ssl: true
 })
 
