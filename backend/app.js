@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 
 
 app.use(session({
-  name: process.env.SESSION_NAME,
-  secret: process.env.SESSION_SECRET,
+  name: process.env.SESSION_NAME || 'Create a .env pls',
+  secret: process.env.SESSION_SECRET || 'Create a .env pls (x2)',
   resave: false,
   saveUninitialized: false
 }))
