@@ -3,13 +3,20 @@ import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import { API } from '../../consts';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
+import Carousel from 'nuka-carousel';
 
+
+const ImageList = ({images_list}) => {
+  {images_list.map(({value, index}) => (
+    <img src={value} alt={index}></img>
+  ))}
+}
 
 class Information extends Component {
   constructor() {
     super();
-    this.state = { data: [], check:false };
+    this.state = { data: []};//, check:false };
   }
 
   componentWillMount() {
@@ -20,12 +27,12 @@ class Information extends Component {
     })
       .then(res => {
         console.log(res)
-        if(res.data.message != null){
-          this.setState({check:true});
-        }
-        else{
+        // if(res.data.message != null){
+        //   this.setState({check:true});
+        // }
+        // else{
           this.setState({data:JSON.parse(JSON.stringify(res.data))})
-        }
+        // }
       })  
       .catch(err => {
         console.error(err)
@@ -34,29 +41,40 @@ class Information extends Component {
 
 
     render() {
-      if(this.state.check){
-        return(<Redirect to="/gallery"/>); 
-      }
-      else{
+      // if(this.state.check){
+      //   return(<Redirect to="/gallery"/>); 
+      // }
+      // else{
       
-      let img="";
+      let img=[];
       let name_eng="";
       let name_latin="";
       let description="";
       let edibility="";
       if (this.state.data.length > 0){
-        img = this.state.data[0].url;
+        let images_length = this.state.data.length;
+        console.log(images_length)
+        for(let i=0; i<images_length; ++i){
+          img.push(this.state.data[i].url);
+        }
+        // img = this.state.data[0].url;
+        console.log(img)
         description=this.state.data[0].description;
         edibility = this.state.data[0].edibility;
         name_latin=this.state.data[0].name_latin;
         name_eng = this.state.data[0].name_eng 
-      }
+      // }
 
     return (
       <div className='main-class' style={{margin:"0", padding:"0"}}>
         <div className="image_container" style={{maxHeight:"50vh", maxWidth:"100%", overflow:"hidden"}}>
+         <Carousel>
+          <ImageList>{img}</ImageList>
+         </Carousel>
+         </div>
+        {/* <div className="image_container" style={{maxHeight:"50vh", maxWidth:"100%", overflow:"hidden"}}>
           <img src={img} style={{width:"100%",objectPosition:"center",height:"100%", objectFit:"contain"}}></img>
-        </div>
+        </div> */}
         <div className="content-wrapper" style={{padding:"3em"}}>
                       <Typography variant="headline" component="h2">
                        {name_eng}
