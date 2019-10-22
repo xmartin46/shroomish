@@ -22,6 +22,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios'
+import logo from '../logo.svg'
 import { API } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
@@ -256,7 +257,7 @@ const handleSearch = e => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
-            Shroomish
+            <img src={logo} style={{height:"3.5vh"}}></img>Shroomish
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

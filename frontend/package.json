@@ -22,6 +22,7 @@
     "lodash.reduce": "^4.3.0",
     "material-kit-react": "^1.8.0",
     "material-ui": "^0.20.2",
+    "nuka-carousel": "^4.5.12",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
