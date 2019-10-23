@@ -49,7 +49,7 @@ const CardList = ({ mushrooms }) => {
       );
     };
     
-
+    
     
     
     const Mushroom = ({name,name_latin,img,edibility}) => {
@@ -59,66 +59,66 @@ const CardList = ({ mushrooms }) => {
         <Card style={{   display: 'block',
         width: '20vw', 
         transitionDuration: '0.3s'
-        }}>
-        <CardMedia style={{height: 0, paddingTop: '90%'}}
-        image={img}
-        title={name}
-        />
-        <CardContent>
-        <Typography gutterBottom variant="headline" component="h3">
-        {name}
-        </Typography>
-        <Typography gutterBottom variant='headline' component="h4">
-        {name_latin}
-        </Typography>
-        <Typography component="p">
-        {edibility}
-        </Typography>  
-        </CardContent>
-        <CardActions>
-        <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
-        Know more...
-        </Button>
-        </CardActions>
-        </Card>
-        </div>
-        </a>
-        );
-      }
-      
-      Mushroom.propTypes = {
-        name: PropTypes.string.isRequired,
-        name_latin: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        edibility: PropTypes.string.isRequired
-      };
-      
-      CardList.propTypes = {
-        mushrooms: PropTypes.array.isRequired
-      };
-      
+      }}>
+      <CardMedia style={{height: 0, paddingTop: '90%'}}
+      image={img}
+      title={name}
+      />
+      <CardContent>
+      <Typography gutterBottom variant="headline" component="h3">
+      {name}
+      </Typography>
+      <Typography gutterBottom variant='headline' component="h4">
+      {name_latin}
+      </Typography>
+      <Typography component="p">
+      {edibility}
+      </Typography>  
+      </CardContent>
+      <CardActions>
+      <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
+      Know more...
+      </Button>
+      </CardActions>
+      </Card>
+      </div>
+      </a>
+      );
+    }
+    
+    Mushroom.propTypes = {
+      name: PropTypes.string.isRequired,
+      name_latin: PropTypes.string.isRequired,
+      img: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      edibility: PropTypes.string.isRequired
+    };
+    
+    CardList.propTypes = {
+      mushrooms: PropTypes.array.isRequired
+    };
+    
     
     
     class Gallery extends Component {
       constructor() {
         super();
-        this.state = { data: [], page:1, id:"", total:139};
+        this.state = { data: [], page:1, total:139};
       }
-
+      
       handleQuery(id){
         let llista = axios({
           method: 'GET',
           url: API + '/search/'+ id
         })
-          .then(res => {
-            if(res.data.message != null){
-              axios({
-                method: 'GET',
-                url: API + '/search/1'
-              }).then(res2 => {
-                let aux = JSON.parse(JSON.stringify(res2.data))
-                this.setState({page:1, id:"", total: aux.total, data:aux.data})}
+        .then(res => {
+          if(res.data.message != null){
+            axios({
+              method: 'GET',
+              url: API + '/search/1'
+            }).then(res2 => {
+              let aux = JSON.parse(JSON.stringify(res2.data))
+              this.setState({page:1,total: aux.total, data:aux.data})}
               )
               .catch(err => {
                 console.error(err)
@@ -132,39 +132,33 @@ const CardList = ({ mushrooms }) => {
             console.error(err)
           })
           return llista
-      }
-
-      componentDidMount() {
-        let params = new URLSearchParams(this.props.location.search);
-        let id = params.get("id");
-        this.setState({id:id})
-        id = id + "/" +this.state.page;
-        let llista = this.handleQuery(id)
-        if (!llista) this.setState({data: local_mushrooms});
-      }
-    
-      handlePageChange(pageNumber) {
-        console.log('Active page is ${pageNumber}');
-        this.setState({page: pageNumber});
-        let id = this.state.id
-        if(id != ""){
-          id = id + "/" 
         }
-        id = id + this.state.page
-        this.handleQuery(id);
-      }
-
+        
+        componentDidMount() {
+          let params = new URLSearchParams(this.props.location.search);
+          let id = params.get("id");
+          id = id + "/" +this.state.page;
+          let llista = this.handleQuery(id)
+          if (!llista) this.setState({data: local_mushrooms});
+        }
+        
+        handlePageChange(pageNumber) {
+          console.log('Active page is ${pageNumber}');
+          this.setState({page: pageNumber});
+          this.componentDidMount()
+        }
+        
         render() {
           return (
             <div className="main-class">
-            <CardList mushrooms ={this.state.data.data}></CardList>
+            <CardList mushrooms ={this.state.data}></CardList>
             <Pagination
             activePage={this.state.page}
             itemsCountPerPage={16}
             totalItemsCount={this.state.total}
             pageRangeDisplayed={5}
             onChange={this.handlePageChange.bind(this)}
-          />
+            />
             </div>           
             );
           }
