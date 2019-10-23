@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import './main.css';
 import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
 import axios from 'axios';
-import skull from '../../skull.png'
+import Mushroom from '../Mushroom/Mushroom';
+
 
 export const local_mushrooms = [
   {"name_latin": "Agaricus arvensis", "name_eng": "Horse Mushroom", "url": "http://www.mushroom.world/show?n=Agaricus-arvensis", "img_urls": ["http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG"], "description": "Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter", "edibility": "edible and good "},
@@ -49,63 +44,10 @@ const CardList = ({ mushrooms }) => {
       );
     };
     
-
-
-  
+    CardList.propTypes = {
+      mushrooms: PropTypes.array.isRequired
+    };
     
-    //TODO: transform Mushroom into a component in order not to copy it all
-    const Mushroom = ({name,name_latin,img,edibility}) => {
-      function getPoisonousImage(){
-        return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
-      };
-      return(
-        <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
-        <div style={{ display:'block', margin:'1vh' }} >
-        <Card style={{   display: 'block',
-        width: '20vw', 
-        transitionDuration: '0.3s'
-        }}>
-        <CardMedia style={{height: 0, paddingTop: '90%'}}
-        image={img}
-        title={name}
-        />
-        <CardContent>
-          <div style={{display:"flex", alignItems:"center"}}>
-        {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-        <Typography gutterBottom variant="headline" component="h3">
-        {name}
-        </Typography>
-        </div>
-        <Typography gutterBottom variant='headline' component="h4">
-        {name_latin}
-        </Typography>
-        <Typography component="p">
-        {edibility}
-        </Typography> 
-        </CardContent>
-        <CardActions>
-        <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
-        Know more...
-        </Button>
-        </CardActions>
-        </Card>
-        </div>
-        </a>
-        );
-      }
-      
-      Mushroom.propTypes = {
-        name: PropTypes.string.isRequired,
-        name_latin: PropTypes.string.isRequired,
-        img: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        edibility: PropTypes.string.isRequired
-      };
-      
-      CardList.propTypes = {
-        mushrooms: PropTypes.array.isRequired
-      };
-      
     
     
     class Gallery extends Component {
@@ -113,7 +55,7 @@ const CardList = ({ mushrooms }) => {
         super();
         this.state = { data: [] };
       }
-
+      
       componentWillMount() {
         let params = new URLSearchParams(this.props.location.search);
         let id = params.get("id");
@@ -124,36 +66,36 @@ const CardList = ({ mushrooms }) => {
           method: 'GET',
           url: API + '/search/'+ id
         })
-          .then(res => {
-            if(res.data.message != null){
-              let llista = axios({
-                method: 'GET',
-                url: API + '/search/'
-              }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
-              .catch(err => {
-                console.error(err)
-              })
-            }
-            else{
-              this.setState({data:JSON.parse(JSON.stringify(res.data))})
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-          if (!llista) this.setState({data: local_mushrooms});
-          console.log(this.state)
-      }
-    
-        
-        render() {
-          return (
-            <div className="main-class">
-            <CardList mushrooms ={this.state.data}></CardList>
-            </div>
-            
-            );
+        .then(res => {
+          if(res.data.message != null){
+            let llista = axios({
+              method: 'GET',
+              url: API + '/search/'
+            }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
+            .catch(err => {
+              console.error(err)
+            })
           }
+          else{
+            this.setState({data:JSON.parse(JSON.stringify(res.data))})
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+        if (!llista) this.setState({data: local_mushrooms});
+        console.log(this.state)
+      }
+      
+      
+      render() {
+        return (
+          <div className="main-class">
+          <CardList mushrooms ={this.state.data}></CardList>
+          </div>
+          
+          );
         }
-        
-        export default Gallery
+      }
+      
+      export default Gallery

@@ -3,63 +3,8 @@ import axios from 'axios'
 import './main.css';
 import {Box} from 'grommet';
 import { API } from '../../consts';
-import Typography from '@material-ui/core/Typography'
-import skull from '../../skull.png'
-import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-
-
-const Mushroom = ({name,name_latin,img,edibility}) => {
-  function getPoisonousImage(){
-    return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
-  };
-  return(
-    <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
-    <div style={{ display:'block', margin:'1vh' }} >
-    <Card style={{   display: 'block',
-    width: '20vw', 
-    transitionDuration: '0.3s'
-    }}>
-    <CardMedia style={{height: 0, paddingTop: '90%'}}
-    image={img}
-    title={name}
-    />
-    <CardContent>
-      <div style={{display:"flex", alignItems:"center"}}>
-    {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-    <Typography gutterBottom variant="headline" component="h3">
-    {name}
-    </Typography>
-    </div>
-    <Typography gutterBottom variant='headline' component="h4">
-    {name_latin}
-    </Typography>
-    <Typography component="p">
-    {edibility}
-    </Typography> 
-    </CardContent>
-    <CardActions>
-    <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
-    Know more...
-    </Button>
-    </CardActions>
-    </Card>
-    </div>
-    </a>
-    );
-  }
-  
-  Mushroom.propTypes = {
-    name: PropTypes.string.isRequired,
-    name_latin: PropTypes.string.isRequired,
-    img: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    edibility: PropTypes.string.isRequired
-  };
+import Typography from '@material-ui/core/Typography';
+import Mushroom from '../Mushroom/Mushroom';
 
 class Classify extends Component {
   

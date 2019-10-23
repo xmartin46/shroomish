@@ -32,6 +32,16 @@ code {
   margin:auto;
 
 }
+::-moz-selection {
+  background: #ff7961;
+}
+::-webkit-selection {
+  background: #ff7961;
+}
+::selection {
+  background: #ff7961;
+}
+
 
 .loader:after {
   content: " ";
