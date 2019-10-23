@@ -25,7 +25,7 @@ const Signup = React.lazy(() =>
 import("./components/Signup/Signup"));
 
 const Heatmap = React.lazy(() =>
-import("./components/Heatmap/example/index"));
+import("./components/Heatmap/Heatmap"));
 
 const renderLoader = () => <div className="loader"></div>;
 
