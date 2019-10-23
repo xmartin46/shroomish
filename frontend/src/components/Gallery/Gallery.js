@@ -8,7 +8,9 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
-import axios from 'axios'
+import axios from 'axios';
+import Pagination from "react-js-pagination";
+require("bootstrap/less/bootstrap.less");
 
 export const local_mushrooms = [
   {"name_latin": "Agaricus arvensis", "name_eng": "Horse Mushroom", "url": "http://www.mushroom.world/show?n=Agaricus-arvensis", "img_urls": ["http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG"], "description": "Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter", "edibility": "edible and good "},
@@ -30,7 +32,6 @@ export const local_mushrooms = [
 ]
 
 
-
 const CardList = ({ mushrooms }) => {
   const cardsArray = mushrooms.map(mushroom => (
     <Mushroom
@@ -49,8 +50,6 @@ const CardList = ({ mushrooms }) => {
     };
     
 
-
-  
     
     
     const Mushroom = ({name,name_latin,img,edibility}) => {
@@ -104,25 +103,23 @@ const CardList = ({ mushrooms }) => {
     class Gallery extends Component {
       constructor() {
         super();
-        this.state = { data: [] };
+        this.state = { data: [], page:1, id:"", total:139};
       }
 
-      componentWillMount() {
-        let params = new URLSearchParams(this.props.location.search);
-        let id = params.get("id");
-        if(id == null){
-          id = ""
-        }
+      handleQuery(id){
         let llista = axios({
           method: 'GET',
           url: API + '/search/'+ id
         })
           .then(res => {
             if(res.data.message != null){
-              let llista = axios({
+              axios({
                 method: 'GET',
-                url: API + '/search/'
-              }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
+                url: API + '/search/1'
+              }).then(res2 => {
+                let aux = JSON.parse(JSON.stringify(res2.data))
+                this.setState({page:1, id:"", total: aux.total, data:aux.data})}
+              )
               .catch(err => {
                 console.error(err)
               })
@@ -134,17 +131,41 @@ const CardList = ({ mushrooms }) => {
           .catch(err => {
             console.error(err)
           })
-          if (!llista) this.setState({data: local_mushrooms});
-          console.log(this.state)
+          return llista
+      }
+
+      componentDidMount() {
+        let params = new URLSearchParams(this.props.location.search);
+        let id = params.get("id");
+        this.setState({id:id})
+        id = id + "/" +this.state.page;
+        let llista = this.handleQuery(id)
+        if (!llista) this.setState({data: local_mushrooms});
       }
     
-        
+      handlePageChange(pageNumber) {
+        console.log('Active page is ${pageNumber}');
+        this.setState({page: pageNumber});
+        let id = this.state.id
+        if(id != ""){
+          id = id + "/" 
+        }
+        id = id + this.state.page
+        this.handleQuery(id);
+      }
+
         render() {
           return (
             <div className="main-class">
-            <CardList mushrooms ={this.state.data}></CardList>
-            </div>
-            
+            <CardList mushrooms ={this.state.data.data}></CardList>
+            <Pagination
+            activePage={this.state.page}
+            itemsCountPerPage={16}
+            totalItemsCount={this.state.total}
+            pageRangeDisplayed={5}
+            onChange={this.handlePageChange.bind(this)}
+          />
+            </div>           
             );
           }
         }

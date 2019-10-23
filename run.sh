@@ -10,7 +10,7 @@ sleep 5
 echo 'Shroomish Creating DDL Base'
 docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U postgres postgres -f /tmp/create_ddl_base.sql
 docker run -it --rm --network shroomish shroomish-db psql -h shroomish-db -U mushroom_admin shroomish -f /tmp/create_ddl_shroomish.sql
-echo 'Shroomish DDL Trippify created'
+echo 'Shroomish DDL created'
 
 #echo 'Shroomish Building Classifier backend'
 #docker compose up -d build shroomish-classifier
