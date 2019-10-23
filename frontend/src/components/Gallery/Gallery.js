@@ -8,7 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
-import axios from 'axios'
+import axios from 'axios';
+import skull from '../../skull.png'
 
 export const local_mushrooms = [
   {"name_latin": "Agaricus arvensis", "name_eng": "Horse Mushroom", "url": "http://www.mushroom.world/show?n=Agaricus-arvensis", "img_urls": ["http://www.mushroom.world/data/fungi/Agaricusarvensis1.JPG"], "description": "Cap 8-20 cm diameter, stem 8-10 cm tall * 2-3 cm diameter", "edibility": "edible and good "},
@@ -52,8 +53,11 @@ const CardList = ({ mushrooms }) => {
 
   
     
-    
+    //TODO: transform Mushroom into a component in order not to copy it all
     const Mushroom = ({name,name_latin,img,edibility}) => {
+      function getPoisonousImage(){
+        return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+      };
       return(
         <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
         <div style={{ display:'block', margin:'1vh' }} >
@@ -66,15 +70,18 @@ const CardList = ({ mushrooms }) => {
         title={name}
         />
         <CardContent>
+          <div style={{display:"flex", alignItems:"center"}}>
+        {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
         <Typography gutterBottom variant="headline" component="h3">
         {name}
         </Typography>
+        </div>
         <Typography gutterBottom variant='headline' component="h4">
         {name_latin}
         </Typography>
         <Typography component="p">
         {edibility}
-        </Typography>  
+        </Typography> 
         </CardContent>
         <CardActions>
         <Button size="small" color="primary" href={"/info/" + name_latin} target="_blank">
