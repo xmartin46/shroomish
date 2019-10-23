@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom';
 import { Map, TileLayer } from 'react-leaflet';
-import HeatmapLayer from '../src/HeatmapLayer';
-// import { addressPoints } from './realworld.10000.js';
+import HeatmapLayer from './src/HeatmapLayer';
 import './main.css';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card'
@@ -11,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { API } from '../../../consts';
+import { API } from '../../consts';
 import axios from 'axios'
 
 var addressPoints = [[60.192059,24.945831]]

@@ -19,7 +19,6 @@ DESIRED_MUSHROOMS = [
 "tylopilus_felleu",
 "suillus_grevillei",
 "leccinum_scabrum",
-"suillus_luteus",
 ]
 
 llista_mushrooms = os.listdir('mushroom_img')

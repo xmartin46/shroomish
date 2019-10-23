@@ -10,9 +10,9 @@ for x in names_list:
 
 print('Number of classes inside our dataset: {}'.format(len(names_set)))
 
-arguments= {"keywords":"{}".format(','.join(names_set)), "limit":100,"print_urls":True}
+arguments= {"keywords":"{}".format(','.join(names_set)), "limit":1000,"print_urls":False, "chromedriver":"/home/jucu/chromedriver"}# "thumbnail_only":True}
 absolute_image_paths = response.download(arguments)
-print(absolute_image_paths)
+#print(absolute_image_paths)
 prefix = './downloads'
 
 if not os.path.exists("./dataset"):
