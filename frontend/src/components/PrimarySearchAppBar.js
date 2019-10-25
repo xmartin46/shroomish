@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
-root: {
+  root: {
     display: 'flex',
   },
   appBar: {
@@ -153,71 +153,71 @@ export default function PrimarySearchAppBar() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
-
-
+  
+  
   const sendQuery = name => {
-  return axios({
-    method: 'GET',
-    url: API + '/search/'+ name
-  })
-  .then(res => {
-    console.log(res.data)
-    return res.data
-  })
-  .catch(err => {
-    console.error(err)
-  })
-}
-
-
-const handleSearch = e => {
+    return axios({
+      method: 'GET',
+      url: API + '/search/'+ name
+    })
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+  
+  
+  const handleSearch = e => {
     if(e.keyCode == 13){
       window.location.href = "/gallery?id="+e.target.value;
     }
- }
-
+  }
+  
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
+  
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
+  
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
+    anchorEl={anchorEl}
+    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    id={menuId}
+    keepMounted
+    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+    open={isMenuOpen}
+    onClose={handleMenuClose}
     >
-      <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
+    <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
+    <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
     </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
+    );
+    
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
+      <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
@@ -225,80 +225,71 @@ const handleSearch = e => {
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >
-
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <MoreIcon/>
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
-  return (
-<MuiThemeProvider theme={theme}>
-    <div className={classes.grow}>
-      <AppBar position="static" style={{ background:'#f44336'}}>
+      >
+      
+      <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
+      </Menu>
+      );
+      
+      return (
+        <MuiThemeProvider theme={theme}>
+        <div className={classes.grow}>
+        <AppBar position="static" style={{ background:'#f44336'}}>
         <Toolbar>
-          <IconButton
-            edge="start"
-	  onClick={handleDrawerOpen}
-            className={classes.menuButton && open && classes.hide}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
-            <img src={logo} style={{height:"3.5vh"}}></img>Shroomish
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              onKeyDown={handleSearch}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
+        <IconButton
+        edge="start"
+        onClick={handleDrawerOpen}
+        className={classes.menuButton && open && classes.hide}
+        color="inherit"
+        aria-label="open drawer"
+        >
+        <MenuIcon />
+        </IconButton>
+        <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
+        <img src={logo} style={{height:"3.5vh"}}></img>Shroomish
+        </Typography>
+        <div className={classes.search}>
+        <div className={classes.searchIcon}>
+        <SearchIcon />
+        </div>
+        <InputBase
+        placeholder="Search…"
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+        inputProps={{ 'aria-label': 'search' }}
+        onKeyDown={handleSearch}
+        />
+        </div>
+        <div className={classes.grow} />
+        <div className={classes.sectionDesktop}>
+        <IconButton
+        edge="end"
+        aria-label="account of current user"
+        aria-controls={menuId}
+        aria-haspopup="true"
+        onClick={handleProfileMenuOpen}
+        color="inherit"
+        >
+        <AccountCircle />
+        </IconButton>
+        </div>
+        <div className={classes.sectionMobile}>
+        <IconButton
+        aria-label="show more"
+        aria-controls={mobileMenuId}
+        aria-haspopup="true"
+        onClick={handleMobileMenuOpen}
+        color="inherit"
+        >
+        <AccountCircle />
+        </IconButton>
+        </div>
         </Toolbar>
-      </AppBar>
-	  <Drawer
+        </AppBar>
+        <Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -306,30 +297,31 @@ const handleSearch = e => {
         classes={{
           paper: classes.drawerPaper,
         }}
-      >
+        >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+        <IconButton onClick={handleDrawerClose}>
+        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
         </div>
         <Divider />
         <List>
         <ListItem button component="a" href="/" key="Home">
-              <ListItemIcon> <HomeIcon/> </ListItemIcon>
-              <ListItemText primary="Home"/>
-            </ListItem>
-
-            <ListItem button component="a" href="/classify" key="Classifier">
-              <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
-              <ListItemText primary="Classifier" />
-            </ListItem>
-
-
+        <ListItemIcon> <HomeIcon/> </ListItemIcon>
+        <ListItemText primary="Home"/>
+        </ListItem>
+        
+        <ListItem button component="a" href="/classify" key="Classifier">
+        <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+        <ListItemText primary="Classifier" />
+        </ListItem>
+        
+        
         </List>
         </Drawer>
-      {renderMobileMenu}
-      {renderMenu}
-    </div>
-	    </MuiThemeProvider>
-  );
-}
+        {renderMobileMenu}
+        {renderMenu}
+        </div>
+        </MuiThemeProvider>
+        );
+      }
+      

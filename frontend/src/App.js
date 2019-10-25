@@ -2,7 +2,6 @@ import React, { Component} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
-import theme from './components/theme';
 import { PUBLIC_URL } from './consts';
 
 const Gallery = React.lazy(() =>
@@ -37,7 +36,6 @@ class App extends Component {
   render() {
     return (
       <React.Suspense fallback={renderLoader()}>
-      <MuiThemeProvider muitheme={theme}>
       <BrowserRouter>
       <Switch>
       <div>
@@ -55,7 +53,6 @@ class App extends Component {
       </div>
       </Switch>
       </BrowserRouter>
-      </MuiThemeProvider>
       </React.Suspense>
       );
     }
