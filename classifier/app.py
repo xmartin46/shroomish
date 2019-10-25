@@ -16,19 +16,25 @@ model = None
 
 #TODO check which class is each number
 output = {
-        0:"",
-        1:"",
-        2:"",
-        3:"",
-        4:"",
-        5:"",
-        6:"",
-        7:"",
-        8:"",
-        9:"",
-        10:"",
-        11:""
+        0:"Albatrellus%20ovinus",
+        1:"Amanita muscaria",
+        2:"Armillaria mellea",
+        3:"Boletus edulis",
+        4:"Cantharellus cibarius",
+        5:"Coprinus comatus",
+        6:"Cortinarius caperatus",
+        7:"Craterellus tubaeformis",
+        8:"Galerina marginata",
+        9:"Gyromitra esculenta",
+        10:"Hydnum repandum",
+        11:"Hygrophorus camarophyllus",
+        12:"Leccinum scabrum",
+        13:"Lycoperdon pyriforme",
+        14:"Suillus grevillei",
+        15:"Suillus luteus",
 }
+
+
 def start_model():
     global model
     model = load_model('classifier.h5')
