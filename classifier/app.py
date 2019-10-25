@@ -16,7 +16,7 @@ model = None
 
 #TODO check which class is each number
 output = {
-        0:"Albatrellus%20ovinus",
+        0:"Albatrellus ovinus",
         1:"Amanita muscaria",
         2:"Armillaria mellea",
         3:"Boletus edulis",
@@ -31,7 +31,7 @@ output = {
         12:"Leccinum scabrum",
         13:"Lycoperdon pyriforme",
         14:"Suillus grevillei",
-        15:"Suillus luteus",
+        15:"Suillus luteus"
 }
 
 
