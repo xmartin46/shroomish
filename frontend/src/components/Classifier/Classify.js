@@ -24,7 +24,7 @@ class Classify extends Component {
   sendImage(form) {
     return axios({
       method: 'GET',
-      url: API + '/predict',
+      url:'http://localhost:5000/api/predict',
       data: form
     })
     .then(res => {

@@ -14,17 +14,17 @@ services:
       - 8080:8080
 
   # # Classifier
-  # shroomish-classifier:
-  #   image: shroomish-classifier
-  #   container_name: shroomish-classifier
-  #   build:
-  #     context: classifier
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   networks:
-  #     - shroomish
-  #   ports:
-  #     - 5432:5432
+  shroomish-classifier:
+     image: shroomish-classifier
+     container_name: shroomish-classifier
+     build:
+       context: classifier
+       dockerfile: Dockerfile
+     restart: always
+     networks:
+       - shroomish
+     ports:
+       - 5000:5000
 
   # DB
   shroomish-db:
@@ -54,6 +54,15 @@ services:
         environment:
           - NODE_ENV=development
         restart: always
+ 
+  #Client prod
+  #client-prod:
+  #  container_name: client-prod
+  #  build:
+  #    context: frontend
+  #    dockerfile: Dockerfile-prod
+  #  ports:
+  #    - '80:80'
 
 #Shroomish network
 networks:

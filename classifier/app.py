@@ -59,4 +59,4 @@ def predict():
 
 if __name__=="__main__":
     start_model()
-    app.run(host='localhost',port=80)
+    app.run(host='0.0.0.0',port=5000)
