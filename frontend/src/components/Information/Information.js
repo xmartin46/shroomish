@@ -5,6 +5,9 @@ import axios from 'axios'
 import { API } from '../../consts';
 import Carousel from 'nuka-carousel';
 import { Redirect } from 'react-router-dom';
+import skull from '../../skull.png';
+import warning from '../../warning.png';
+import accept from '../../green_tick.png';
 
 class Information extends Component {
   constructor() {
@@ -43,6 +46,16 @@ class Information extends Component {
   
   
   render() {
+    function getPoisonousImage(){
+      return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+  };
+  function getWarningImage(){
+      return <img src={warning} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+  };
+  function getAcceptImage(){
+      return <img src={accept} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+  };
+
     if(this.state.check){
       return(<Redirect to="/gallery"/>); 
     }
@@ -78,6 +91,12 @@ class Information extends Component {
             ))}
             </Carousel>
             <div className="content-wrapper" style={{padding:"3em"}}>
+            <div style={{display:"flex", justifyContent:"flex-end"}}>
+            {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+            {edibility == "inedible" ? getWarningImage():null}
+            {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+        edibility == "edible when boiled " ? getAcceptImage():null}
+        </div>
             <Typography variant="headline" component="h2">
             {name_eng}
             </Typography>
@@ -107,6 +126,12 @@ class Information extends Component {
                 ))}
                 </Carousel>
                 <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
+                  <div style={{display:"flex", justifyContent:"flex-end"}}> 
+                {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+    {edibility == "inedible" ? getWarningImage():null}
+    {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+        edibility == "edible when boiled " ? getAcceptImage():null}
+        </div>
                 <Typography variant="headline" component="h2">
                 {name_eng}
                 </Typography>

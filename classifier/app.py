@@ -3,6 +3,7 @@ import sys
 import pickle
 import jsonify
 import numpy as np
+from PIL import Image
 from keras.models import load_model
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -39,8 +40,11 @@ def start_model():
     global model
     model = load_model('classifier.h5')
 
+def resize(input_image):
+  input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
+  return input_image
     
-@app.route('/api/predict', methods=['POST'])
+@app.route('/api/predict', methods=['POST','GET'])
 def predict():
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
@@ -49,14 +53,19 @@ def predict():
     except:
         return "FormData didn't include a file", 400
     try:
-        img = np.array(formFile)
+        print(formFile)
+        img = np.array(resize(formFile))
+        print(img.shape)
     except:
         return 'Unable to read the image file', 400
+    img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
+    print("Let's start predicting")
     value = model.predict(img)
-    return jsonify({"prediction":output[value]})
+    print("Value predicted: {}".format(output[np.argmax(value)]))
+    return jsonify({"prediction":output[np.argmax(value)]})
 
 
 if __name__=="__main__":
     start_model()
-    app.run(host='0.0.0.0',port=5000)
+    app.run(host='0.0.0.0',port=5000, threaded=False)

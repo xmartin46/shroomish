@@ -25,7 +25,7 @@ const Mushroom = ({name,name_latin,img,edibility}) => {
         <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
         <div style={{ display:'block', margin:'1vh' }} >
         <Card style={{   display: 'block',
-        width: '20vw', 
+        width: 'auto', 
         transitionDuration: '0.3s'
     }}>
     <CardMedia style={{height: 0, paddingTop: '90%'}}
@@ -33,7 +33,7 @@ const Mushroom = ({name,name_latin,img,edibility}) => {
     title={name}
     />
     <CardContent>
-    <div style={{display:"flex", alignItems:"center"}}>
+    <div style={{display:"flex"}}>
     {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
     {edibility == "inedible" ? getWarningImage():null}
     {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||

@@ -29,16 +29,17 @@ export const local_mushrooms = [
 
 const CardList = ({ mushrooms }) => {
   const cardsArray = mushrooms.map(mushroom => (
+    <div style={{minWidth:"400px"}}>
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
     img={mushroom.url} 
     edibility={mushroom.edibility}
-    />
+    /></div>
     ));
     
     return (
-      <div className="cardlist" style={{display:'flex',flexGrow:'1',flexShrink:"1",flexBasis:"100%" ,justifyContent:"space-around", flexWrap:"wrap", flexDirection:"row", alignContent:"stretch"}}>
+      <div className="cardlist" style={{display:'flex',flexGrow:'1',flexShrink:"1",flexBasis:"100%" ,justifyContent:"space-around", flexWrap:"wrap", flexDirection:"row", flexGrow: "1", alignContent:"stretch"}}>
       {cardsArray}
       </div>
       );

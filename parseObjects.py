@@ -17,7 +17,7 @@ with open('./scraper/mushroom_classes.json', 'r') as json_file:
 
         # TODO: treat name_eng = ""
         if name_eng == "":
-            name_eng = "IDKWTFISTHISSHITNIGGA                                      " + str(i)
+            name_eng = name_latin
 
         name_eng = name_eng.replace("'", "''")
         name_latin = name_latin.replace("'", "''")

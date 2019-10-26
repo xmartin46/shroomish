@@ -6,13 +6,21 @@ import { API } from '../../consts';
 import Typography from '@material-ui/core/Typography';
 import Mushroom from '../Mushroom/Mushroom';
 
-class Classify extends Component {
-  
-  state = {
+const state_init = {
     form: undefined,
     prediction: undefined,
     error: '',
-    data: []
+    data: [{}]
+  }
+
+class Classify extends Component {
+
+  
+   state = {
+    form: undefined,
+    prediction: undefined,
+    error: '',
+    data: [{}]
   }
   
   async fetchLocalFile(fileName) {
@@ -23,7 +31,7 @@ class Classify extends Component {
   
   sendImage(form) {
     return axios({
-      method: 'GET',
+      method: 'POST',
       url:'http://localhost:5000/api/predict',
       data: form
     })
@@ -42,15 +50,16 @@ class Classify extends Component {
   }
   
   handleFileChange = (e) => {
+    this.setState(state_init)
     const file = e.target.files[0]
     const form = new FormData()
     form.append('file', file)
-    this.setState({ form })
+	  this.setState({ form })
   }
   
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Sending '+ this.state.form)
+    //console.log('Sending '+ this.state.form)
     this.sendImage(this.state.form)
     .then(pred => {
       this.setState({
@@ -64,7 +73,8 @@ class Classify extends Component {
     url: API + '/search/'+ this.state.prediction
   })
     .then(res => {
-        this.setState({data:JSON.parse(JSON.stringify(res.data))}) 
+        this.setState({data:JSON.parse(JSON.stringify(res.data))})
+	    //console.log(this.state)
     })
     .catch(err => {
       console.error(err)
@@ -73,14 +83,19 @@ class Classify extends Component {
 
 
   getInformation = () => {
-    this.handleQuery();
-    return  <Mushroom
+	  if(!this.state.data[0].name_eng){
+		  this.handleQuery();
+    	}
+		  return  (
+	    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', margin:"3em"}}>
+			  <Mushroom
     name={this.state.data[0].name_eng}
     name_latin={this.state.data[0].name_latin}
     img={this.state.data[0].url} 
     edibility={this.state.data[0].edibility}
     />
-
+	    </div>
+    )
   }
 
   
@@ -88,7 +103,7 @@ class Classify extends Component {
     const { prediction, error} = this.state
     const namePred = "unknown"
     return (
-      <div className="main-class" style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"10rem"}}>
+      <div className="main-class" style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
       <Box className ='box'>
       <Typography component="p" style={{fontSize:"2em"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
@@ -98,7 +113,8 @@ class Classify extends Component {
       Our technology will automagically return which type of mushroom is:
       </Typography>
       <Typography component="p">
-      {prediction != undefined ? this.getInformation(): <p>Prediction: unknown</p>}
+{prediction != undefined ? this.getInformation():
+      <p>Prediction: unknown</p>}
       { error ? 
         <p>Error: { error }</p>:
         null
@@ -113,7 +129,8 @@ class Classify extends Component {
       </div>
       
       )
-    }
+	 	 }
+  
   }
   
   export default Classify;
