@@ -6,6 +6,9 @@
   </a>
 </p>
 
+### 🏠 [Homepage](https://github.com/xmartin46/mushroomClassifier)
+### ✨ [Demo](shroomish.ml)
+
 ## Frontend 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
