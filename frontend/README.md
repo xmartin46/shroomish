@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to Shroomish 👋</h1>
+<h1 align="center">Welcome to Shroomish Frontend👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/xmartin46/mushroomClassifier/blob/master/README.md" target="_blank">
@@ -26,15 +26,14 @@ npm start
 
 ## Run tests
 
-​```sh
+```sh
 npm run test
-```
+````
 
-## Author
+## Authors
 
-👤 **Xavier Martin, Adrià Cabeza, Ricardo Longares**
+👤 **Xavier Martin, Adrià Cabeza and Ricardo Longares**
 
-* Github:
 -  [@xmartin46](https://github.com/xmartin46)
 
 - [@adriacabeza](https://github.com/adriacabeza)
