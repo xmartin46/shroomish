@@ -8,8 +8,6 @@
 
 > The goal of our service is to offer a web page where people can obtain more knowledge about mushrooms or check about the mushrooms obtained. Hence, our site will be divided between a gallery containing mushrooms where the user will be able to access for more knowledge about specific mushrooms and a machine learning image classifier.
 
-### 🏠 [Homepage](shroomish.ml)
-
 ### ✨ [Demo](shroomish.ml)
 
 ## Install
