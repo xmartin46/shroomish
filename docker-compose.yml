@@ -12,6 +12,8 @@ services:
       - shroomish
     ports:
       - 8080:8080
+    volumes:
+      - './backend:/home/node/app'
 
   # # Classifier
   shroomish-classifier:
@@ -54,7 +56,7 @@ services:
         environment:
           - NODE_ENV=development
         restart: always
- 
+
   #Client prod
   #client-prod:
   #  container_name: client-prod

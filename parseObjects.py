@@ -5,6 +5,7 @@ import os
 
 mushroom = ''
 images = ''
+locations = ''
 
 with open('./scraper/mushroom_classes.json', 'r') as json_file:
     data = json.load(json_file)
@@ -30,6 +31,10 @@ with open('./scraper/mushroom_classes.json', 'r') as json_file:
         for url in urls:
             url = url.replace("'", "''")
             images = images + "INSERT INTO mushroom_image(id_mushroom, URL) VALUES(" + str(i + 1) + "," + "'" + url + "'" + ");"
+
+
+with open('locations.txt', 'r') as file:
+    locations = file.read()
 
 f = open("./database/create_ddl_base.sql", "w")
 f.write("""
@@ -146,5 +151,5 @@ f.write("""CREATE SCHEMA shroomish AUTHORIZATION mushroom_admin;
             TABLESPACE pg_default;
 
             ALTER TABLE mushroom_image
-                OWNER to mushroom_admin;""" + mushroom + images)
+                OWNER to mushroom_admin;""" + mushroom + images + locations)
 f.close()
