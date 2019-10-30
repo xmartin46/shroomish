@@ -13,14 +13,14 @@ import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
 import axios from 'axios'
 
-var addressPoints = [[60.192059,24.945831]]
-
 class MapExample extends React.Component {
 
   state = {
-    addressPoints,
-    radius: 25,
-    blur: 15,
+    latitude: '',
+    longitude: '',
+    data: [],
+    radius: 20,
+    blur: 20,
     max: 0.5,
     limitAddressPoints: true
   };
@@ -28,18 +28,18 @@ class MapExample extends React.Component {
   /**
    * Toggle limiting the address points to test behavior with refocusing/zooming when data points change
    */
-  toggleLimitedAddressPoints() {
-    if (this.state.limitAddressPoints) {
-      this.setState({ addressPoints: addressPoints.slice(500, 1000), limitAddressPoints: false });
-    } else {
-      this.setState({ addressPoints, limitAddressPoints: true });
-    }
-  }
+  // toggleLimitedAddressPoints() {
+  //   if (this.state.limitAddressPoints) {
+  //     this.setState({ addressPoints: addressPoints.slice(500, 1000), limitAddressPoints: false });
+  //   } else {
+  //     this.setState({ addressPoints, limitAddressPoints: true });
+  //   }
+  // }
 
   componentWillMount() {
     let params = new URLSearchParams(this.props.location.search);
+    console.log("params: " + params)
     let id = params.get("id");
-    console.log(id)
     if(id == null){
       id = ""
     }
@@ -58,14 +58,37 @@ class MapExample extends React.Component {
           })
         }
         else{
-          this.setState({data:JSON.parse(JSON.stringify(res.data))})
+          this.setState({data:res.data[0].coordinates})
         }
       })
       .catch(err => {
         console.error(err)
       })
       if (!llista) this.setState({data: this.state.coordinates});
-      console.log(this.state)
+
+
+
+      this.getMyLocation()
+  }
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation
+
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+
+  }
+
+  handleClick(e) {
+    console.log(e.latlng)
   }
 
   render() {
@@ -74,13 +97,13 @@ class MapExample extends React.Component {
       0.6: '#FAF3A5', 0.8: '#F5D98B', '1.0': '#DE9A96'
     };
 
-    const position = [60.192059,24.945831]
+    const { latitude, longitude } = this.state
 
     return (
       <div>
-        <Map center={position} zoom={13}>
+        <Map center={[latitude, longitude]} zoom={8} onClick={this.handleClick}>
           <HeatmapLayer
-            points={this.state.addressPoints}
+            points={this.state.data}
             longitudeExtractor={m => m[1]}
             latitudeExtractor={m => m[0]}
             gradient={gradient}
@@ -94,41 +117,41 @@ class MapExample extends React.Component {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
         </Map>
-
-        <div>
-          Radius
-          <input
-            type="range"
-            min={1}
-            max={40}
-            value={this.state.radius}
-            onChange={(e) => this.setState({ radius: e.currentTarget.value })}
-          /> {this.state.radius}
-        </div>
-
-        <div>
-          Blur
-          <input
-            type="range"
-            min={1}
-            max={20}
-            value={this.state.blur}
-            onChange={(e) => this.setState({ blur: e.currentTarget.value })}
-          /> {this.state.blur}
-        </div>
-
-        <div>
-          Max
-          <input
-            type="range"
-            min={0.1}
-            max={3}
-            step={0.1}
-            value={this.state.max}
-            onChange={(e) => this.setState({ max: e.currentTarget.value })}
-          /> {this.state.max}
-        </div>
       </div>
+        // <div>
+        //   Radius
+        //   <input
+        //     type="range"
+        //     min={1}
+        //     max={40}
+        //     value={this.state.radius}
+        //     onChange={(e) => this.setState({ radius: e.currentTarget.value })}
+        //   /> {this.state.radius}
+        // </div>
+        //
+        // <div>
+        //   Blur
+        //   <input
+        //     type="range"
+        //     min={1}
+        //     max={20}
+        //     value={this.state.blur}
+        //     onChange={(e) => this.setState({ blur: e.currentTarget.value })}
+        //   /> {this.state.blur}
+        // </div>
+        //
+        // <div>
+        //   Max
+        //   <input
+        //     type="range"
+        //     min={0.1}
+        //     max={3}
+        //     step={0.1}
+        //     value={this.state.max}
+        //     onChange={(e) => this.setState({ max: e.currentTarget.value })}
+        //   /> {this.state.max}
+        // </div>
+
     );
   }
 

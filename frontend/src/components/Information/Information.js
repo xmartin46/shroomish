@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
-import { API } from '../../consts';
+import { API, PUBLIC_URL } from '../../consts';
 import Carousel from 'nuka-carousel';
 import { Redirect } from 'react-router-dom';
 import skull from '../../skull.png';
@@ -14,15 +14,15 @@ class Information extends Component {
     super();
     this.state = { data: [], check:false };
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
-  
+
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
-  
+
   componentWillMount() {
     window.addEventListener('resize', this.handleWindowSizeChange);
     let id = this.props.match.params.id;
@@ -38,13 +38,18 @@ class Information extends Component {
       else{
         this.setState({data:JSON.parse(JSON.stringify(res.data))})
       }
-    })  
+    })
     .catch(err => {
       console.error(err)
     })
   }
-  
-  
+
+  handleClick() {
+    var url = window.location.href.split("/");
+    var name = url[url.length - 1];
+    window.location.href = PUBLIC_URL + "/heatmap?id=" + name;
+  }
+
   render() {
     function getPoisonousImage(){
       return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
@@ -57,7 +62,7 @@ class Information extends Component {
   };
 
     if(this.state.check){
-      return(<Redirect to="/gallery"/>); 
+      return(<Redirect to="/gallery"/>);
     }
     else{
       let name_eng="";
@@ -76,13 +81,13 @@ class Information extends Component {
         description=this.state.data[0].description;
         edibility = this.state.data[0].edibility;
         name_latin=this.state.data[0].name_latin;
-        name_eng = this.state.data[0].name_eng 
+        name_eng = this.state.data[0].name_eng
       }
       const width = this.state.width;
       const isMobile = width <= 600;
-      
+
       if (isMobile) {
-        return (  
+        return (
           <div className='main-class' style={{margin:"0", padding:"0"}}>
           <div style={{textAlign:"justify"}}>
           <Carousel style={{height:"40vh"}}>
@@ -106,14 +111,16 @@ class Information extends Component {
             <Typography variant="headline" component="h3" style={{marginTop:"2%"}}>
             Edibility: {edibility}
             </Typography>
-            <Typography component="p" style={{marginTop:"0.5%"}}> 
+            <Typography component="p" style={{marginTop:"0.5%"}}>
             {description}
             </Typography>
-            
+            <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
+              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
             </div>
             </div>
             </div>
-            
+            </div>
+
             );
           }
           else{
@@ -126,7 +133,7 @@ class Information extends Component {
                 ))}
                 </Carousel>
                 <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
-                  <div style={{display:"flex", justifyContent:"flex-end"}}> 
+                  <div style={{display:"flex", justifyContent:"flex-end"}}>
                 {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
     {edibility == "inedible" ? getWarningImage():null}
     {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
@@ -141,16 +148,19 @@ class Information extends Component {
                 <Typography variant="headline" component="h3" style={{marginTop:"2%"}}>
                 Edibility: {edibility}
                 </Typography>
-                <Typography component="p" style={{marginTop:"0.5%"}}> 
+                <Typography component="p" style={{marginTop:"0.5%"}}>
                 {description}
                 </Typography>
+                <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
+                  <button onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
                 </div>
                 </div>
                 </div>
-                );   
+                </div>
+                );
               }
             }
           }
         }
-        
+
         export default Information;
