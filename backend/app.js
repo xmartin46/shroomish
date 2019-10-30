@@ -8,8 +8,11 @@ const session       = require("express-session");
 
 const app           = express();
 const api           = require('./routes');
+const cors 	     = require("cors");
+
 
 //add midelware bodyparse to express app
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
