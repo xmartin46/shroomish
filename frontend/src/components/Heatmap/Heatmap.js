@@ -1,14 +1,7 @@
-import React, { Component } from 'react'
-import { render } from 'react-dom';
+import React from 'react'
 import { Map, TileLayer } from 'react-leaflet';
 import HeatmapLayer from './src/HeatmapLayer';
 import './main.css';
-import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
 import axios from 'axios'

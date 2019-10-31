@@ -16,7 +16,6 @@ cors = CORS(app)
 
 model = None
 
-#TODO check which class is each number
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -39,7 +38,7 @@ output = {
 
 def start_model():
     global model
-    model = load_model('best_model.hdf5')
+    model = load_model('classifier.h5')
 
 def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)

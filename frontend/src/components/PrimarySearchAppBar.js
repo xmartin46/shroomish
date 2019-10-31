@@ -18,7 +18,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios'
@@ -165,23 +164,8 @@ export default function PrimarySearchAppBar() {
   };
   
   
-  const sendQuery = name => {
-    return axios({
-      method: 'GET',
-      url: API + '/search/'+ name
-    })
-    .then(res => {
-      console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.error(err)
-    })
-  }
-  
-  
   const handleSearch = e => {
-    if(e.keyCode == 13){
+    if(e.keyCode === 13){
       window.location.href = "/gallery?id="+e.target.value;
     }
   }

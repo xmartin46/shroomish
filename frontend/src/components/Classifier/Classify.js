@@ -14,7 +14,7 @@ const state_init = {
   }
 
 const API_C = 'https://classifier.shroomish.ml/api'
-const LOCAL_API_C = 'localhost:5000/api'
+//const LOCAL_API_C = 'localhost:5000/api'
 
 class Classify extends Component {
 
@@ -35,7 +35,7 @@ class Classify extends Component {
   sendImage(form) {
     return axios({
       method: 'POST',
-      url:API_C + '/predict',
+      url:LOCAL_API_C + '/predict',
       data: form
     })
     .then(res => {
@@ -104,7 +104,7 @@ class Classify extends Component {
   
   render() {
     const { prediction, error} = this.state
-    const namePred = "unknown"
+    //const namePred = "unknown"
     return (
       <div className="main-class" style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
       <Box className ='box'>

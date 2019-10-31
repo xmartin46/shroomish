@@ -22,7 +22,7 @@ class NotFound extends Component {
                     <Typography variant="headline" component="h1">
                         No match found.
                     </Typography>
-                <img style={{height:"auto", width:"100%", padding:"2em"}}  src="https://i.kym-cdn.com/photos/images/original/001/416/688/925.jpg_large"></img>
+                <img style={{height:"auto", width:"100%", padding:"2em"}} alt={{"notfound"}} src="https://i.kym-cdn.com/photos/images/original/001/416/688/925.jpg_large"></img>
         </div>   
       </div>
     </div>
