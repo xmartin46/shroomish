@@ -11,7 +11,7 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app)
 
 
 model = None
@@ -39,7 +39,7 @@ output = {
 
 def start_model():
     global model
-    model = load_model('classifier.h5')
+    model = load_model('best_model.hdf5')
 
 def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
