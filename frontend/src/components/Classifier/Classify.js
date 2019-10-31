@@ -32,7 +32,7 @@ class Classify extends Component {
   sendImage(form) {
     return axios({
       method: 'POST',
-      url:'http://localhost:5000/api/predict',
+      url:'http://classifier.shroomish.ml/api/predict',
       data: form
     })
     .then(res => {
