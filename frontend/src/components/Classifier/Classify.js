@@ -14,7 +14,7 @@ const state_init = {
   }
 
 const API_C = 'https://classifier.shroomish.ml/api'
-//const LOCAL_API_C = 'localhost:5000/api'
+const LOCAL_API_C = 'localhost:5000/api'
 
 class Classify extends Component {
 
