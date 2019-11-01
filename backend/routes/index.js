@@ -19,6 +19,9 @@ api.get('/search/:substr/', mushroomCtrl.getMushroomsBySubstring)
 api.get('/info/:name_latin', mushroomCtrl.getMushroomInfo)
 // Get heatmap of the mushroom called name_latin in latin
 api.get('/heatmap/:name_latin', mushroomCtrl.getMushroomCoordinates)
+// Insert location in heatmap of mushroom called name_latin in latin
+api.post('/heatmap/:name_latin/:latlng', /* MIDDLEWARE OF USER!!!!!!, */ mushroomCtrl.postMushroomCoordinate)
+
 
 
 // Listener user
