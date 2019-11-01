@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import skull from '../../skull.png';
 import warning from '../../warning.png';
 import accept from '../../green_tick.png';
@@ -13,13 +13,13 @@ import Typography from '@material-ui/core/Typography';
 
 const Mushroom = ({name,name_latin,img,edibility}) => {
     function getPoisonousImage(){
-        return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={skull} alt={"poisonous"} style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     function getWarningImage(){
-        return <img src={warning} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={warning} alt={"warning"}  style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     function getAcceptImage(){
-        return <img src={accept} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={accept}  alt={"accept"} style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     return(
         <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
@@ -34,10 +34,10 @@ const Mushroom = ({name,name_latin,img,edibility}) => {
     />
     <CardContent>
     <div style={{display:"flex"}}>
-    {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-    {edibility == "inedible" ? getWarningImage():null}
-    {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
-        edibility == "edible when boiled " ? getAcceptImage():null}
+    {edibility === "poisonous" || edibility === "lethally poisonous" ? getPoisonousImage():null}
+    {edibility === "inedible" ? getWarningImage():null}
+    {edibility === "edible " || edibility === "edible and good " || edibility === "edible and excellent " ||
+        edibility === "edible when boiled " ? getAcceptImage():null}
     <Typography gutterBottom variant="headline" component="h3">
     {name}
     </Typography>
@@ -64,7 +64,6 @@ Mushroom.propTypes = {
     name: PropTypes.string.isRequired,
     name_latin: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     edibility: PropTypes.string.isRequired
 };
 

@@ -3,6 +3,7 @@ import sys
 import pickle
 import jsonify
 import numpy as np
+from keras import backend as K
 from PIL import Image
 from keras.models import load_model
 from flask import Flask, request, jsonify
@@ -10,12 +11,11 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app)
 
 
 model = None
 
-#TODO check which class is each number
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -62,6 +62,7 @@ def predict():
     img = preprocess_input(img)
     print("Let's start predicting")
     value = model.predict(img)
+    K.clear_session()
     print("Value predicted: {}".format(output[np.argmax(value)]))
     return jsonify({"prediction":output[np.argmax(value)]})
 

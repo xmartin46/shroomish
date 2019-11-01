@@ -12,7 +12,7 @@ import accept from '../../green_tick.png';
 class Information extends Component {
   constructor() {
     super();
-    this.state = { data: [], check:false };
+    this.state = { data: [], check:false, width: window.innerWidth };
   }
 
   componentWillUnmount() {
@@ -84,7 +84,7 @@ class Information extends Component {
         name_eng = this.state.data[0].name_eng
       }
       const width = this.state.width;
-      const isMobile = width <= 600;
+      let isMobile = width <= 1000;
 
       if (isMobile) {
         return (
