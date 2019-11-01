@@ -15,15 +15,18 @@ import axios from 'axios'
 
 class MapExample extends React.Component {
 
-  state = {
-    latitude: '',
-    longitude: '',
-    data: [],
-    radius: 20,
-    blur: 20,
-    max: 0.5,
-    limitAddressPoints: true
-  };
+  constructor() {
+    super();
+    this.state = {
+      latitude: '',
+      longitude: '',
+      data: [],
+      radius: 20,
+      blur: 20,
+      max: 0.5,
+      limitAddressPoints: true
+    };
+  }
 
   /**
    * Toggle limiting the address points to test behavior with refocusing/zooming when data points change
@@ -87,8 +90,27 @@ class MapExample extends React.Component {
 
   }
 
-  handleClick(e) {
-    console.log(e.latlng)
+  handleClick = (e) => {
+    const lat = e.latlng["lat"]
+    const lng = e.latlng["lng"]
+    var latlng = "[" + lat + ", " + lng + "]"
+
+    let params = new URLSearchParams(this.props.location.search);
+    let id = params.get("id");
+    if(id == null){
+      id = ""
+    }
+
+    var llista = axios({
+      method: 'POST',
+      url: API + '/heatmap/'+ id + "/" + latlng
+    })
+      .then(res => {
+        console.log("Inserted!")
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   render() {
