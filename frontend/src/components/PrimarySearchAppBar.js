@@ -164,24 +164,9 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
   
-  
-  const sendQuery = name => {
-    return axios({
-      method: 'GET',
-      url: API + '/search/'+ name
-    })
-    .then(res => {
-      console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.error(err)
-    })
-  }
-  
-  
+   
   const handleSearch = e => {
-    if(e.keyCode == 13){
+    if(e.keyCode === 13){
       window.location.href = "/gallery?id="+e.target.value;
     }
   }

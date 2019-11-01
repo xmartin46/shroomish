@@ -8,12 +8,12 @@ const session       = require("express-session");
 
 const app           = express();
 const api           = require('./routes');
+const cors 	    = require('cors')
 
+app.use(cors());
 //add midelware bodyparse to express app
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-
 app.use(session({
   name: process.env.SESSION_NAME || 'Create a .env pls',
   secret: process.env.SESSION_SECRET || 'Create a .env pls (x2)',

@@ -84,7 +84,7 @@ class Information extends Component {
         name_eng = this.state.data[0].name_eng
       }
       const width = this.state.width;
-      const isMobile = width <= 600;
+      const isMobile = width <= 500;
 
       if (isMobile) {
         return (

@@ -10,12 +10,11 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app)
 
 
 model = None
 
-#TODO check which class is each number
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
