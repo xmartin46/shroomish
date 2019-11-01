@@ -163,7 +163,7 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
   
-  
+   
   const handleSearch = e => {
     if(e.keyCode === 13){
       window.location.href = "/gallery?id="+e.target.value;

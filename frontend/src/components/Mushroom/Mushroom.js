@@ -13,13 +13,13 @@ import Typography from '@material-ui/core/Typography';
 
 const Mushroom = ({name,name_latin,img,edibility}) => {
     function getPoisonousImage(){
-        return <img src={skull} alt={{"poisonous"}} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={skull} alt={"poisonous"} style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     function getWarningImage(){
-        return <img src={warning} alt={{"warning"}} }style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={warning} alt={"warning"}  style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     function getAcceptImage(){
-        return <img src={accept} alt={{"accept"}} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+        return <img src={accept}  alt={"accept"} style={{marginRight:"5px", marginBottom:"20px"}}></img>
     };
     return(
         <a href={"/info/" + name_latin} style={{textDecoration:"none"}}>
@@ -64,7 +64,6 @@ Mushroom.propTypes = {
     name: PropTypes.string.isRequired,
     name_latin: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     edibility: PropTypes.string.isRequired
 };
 

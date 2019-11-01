@@ -26,7 +26,6 @@ export const local_mushrooms = [
 ]
 
 
-
 const CardList = ({ mushrooms }) => {
   const cardsArray = mushrooms.map(mushroom => (
     <div style={{minWidth:"400px"}}>
