@@ -27,6 +27,8 @@ services:
        - shroomish
      ports:
        - 5000:5000
+     volumes:
+       - './classifier:/deploy'
 
   # DB
   shroomish-db:
