@@ -3,6 +3,7 @@ import './main.css';
 import PropTypes from 'prop-types';
 import { API } from '../../consts';
 import axios from 'axios';
+import CookieConsent from "react-cookie-consent";
 import Mushroom from '../Mushroom/Mushroom';
 
 
@@ -28,7 +29,7 @@ export const local_mushrooms = [
 
 const CardList = ({ mushrooms }) => {
   const cardsArray = mushrooms.map(mushroom => (
-    <div style={{minWidth:"400px"}}>
+    <div style={{minWidth:"350px"}}>
     <Mushroom
     name={mushroom.name_eng}
     name_latin={mushroom.name_latin}
@@ -91,6 +92,9 @@ const CardList = ({ mushrooms }) => {
       render() {
         return (
           <div className="main-class">
+            	    <CookieConsent>
+    	This website uses cookies to enhance the user experience.
+	</CookieConsent>
           <CardList mushrooms ={this.state.data}></CardList>
           </div>
           
