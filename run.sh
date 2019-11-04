@@ -11,10 +11,10 @@ sleep 5
 python3 createDB_insertDATA.py
 
 
-#echo 'Shroomish Building Classifier backend'
-docker-compose up -d --build shroomish-classifier
 echo 'Shroomish Building and kicking off the Frontend containers'
 docker-compose up -d --build shroomish-client
 echo 'Shroomish Building and kicking off the Backend containers'
 docker-compose up -d --build shroomish-backend
+echo 'Shroomish Building Classifier backend'
+docker-compose up -d --build shroomish-classifier
 echo 'Shroomish Deployed!'

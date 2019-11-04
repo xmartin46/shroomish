@@ -15,6 +15,7 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 model = None
 
+TH = 0.65 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -41,6 +42,7 @@ def start_model():
 
 def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
+  input_image = input_image.convert('RGB')
   return input_image
     
 @app.route('/api/predict', methods=['POST','GET'])
@@ -49,6 +51,8 @@ def predict():
         return "Content-Type wasn't 'multipart/form-data'", 400
     try:
         formFile = request.files['file']
+        if not formFile:
+            formFile = request.files['image']
     except:
         return "FormData didn't include a file", 400
     try:
@@ -62,8 +66,9 @@ def predict():
     print("Let's start predicting")
     value = model.predict(img)
     K.clear_session()
-    print("Value predicted: {}".format(output[np.argmax(value)]))
-    return jsonify({"prediction":output[np.argmax(value)]})
+    prediction = output[np.argmax(value)] if np.max(value) > TH else None
+    print("Value predicted: {}".format(prediction))
+    return jsonify({"prediction":prediction})
 
 
 if __name__=="__main__":

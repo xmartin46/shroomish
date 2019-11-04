@@ -21,8 +21,6 @@ h3{
 
 
 .main-class {
-
-    padding: 5rem;
     right: 0;
     left: 0;
     width: initial;
@@ -32,17 +30,3 @@ h3{
 }
 
 
-@media only screen and (max-width: 600px) {
-
-
-    .background {
-        background-size: auto 100%;
-    }
-
-    .main-class {
-        padding: 0.5em;
-        width: min-content;
-        height: -webkit-fill-available;
-    }
-
-  }

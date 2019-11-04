@@ -115,7 +115,7 @@ class Information extends Component {
             {description}
             </Typography>
             <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
+              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} >Go to Heatmap!</button>
             </div>
             </div>
             </div>
@@ -152,7 +152,7 @@ class Information extends Component {
                 {description}
                 </Typography>
                 <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-                  <button onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
+		<button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
                 </div>
                 </div>
                 </div>

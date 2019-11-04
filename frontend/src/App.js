@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import PrimarySearchAppBar from './components/PrimarySearchAppBar';
 import { PUBLIC_URL } from './consts';
 

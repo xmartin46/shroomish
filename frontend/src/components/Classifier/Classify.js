@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import './main.css';
-import {Box} from 'grommet';
 import { API } from '../../consts';
 import Typography from '@material-ui/core/Typography';
 import Mushroom from '../Mushroom/Mushroom';
 
 const state_init = {
     form: undefined,
-    prediction: undefined,
+    prediction:undefined,
     error: '',
     data: [{}]
   }
 
 const API_C = 'https://classifier.shroomish.ml/api'
 const LOCAL_API_C = 'http://localhost:5000/api'
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 84ef9d2cc785eef0e5ad368b74e7e360f97adebe
 
 class Classify extends Component {
   
@@ -22,9 +26,23 @@ class Classify extends Component {
     form: undefined,
     prediction: undefined,
     error: '',
-    data: [{}]
+    data: [{}],
+    width: window.innerWidth
   }
   
+
+handleWindowSizeChange = () => {
+  this.setState({ width: window.innerWidth });
+};
+
+
+
+componentWillMount() {
+  window.addEventListener('resize', this.handleWindowSizeChange);
+}
+
+
+
   async fetchLocalFile(fileName) {
     return fetch(window.location.origin + fileName)
     .then(res => res.blob())
@@ -63,11 +81,14 @@ class Classify extends Component {
     e.preventDefault()
     //console.log('Sending '+ this.state.form)
     this.sendImage(this.state.form)
-    .then(pred => {
+    .then(pred =>{{
       this.setState({
         prediction: pred
       })
-    })
+    if(pred == undefined) alert('The prediction was not confident enough. Please, try again with another photo.')
+    }
+    }
+    )
   }
   handleQuery(){
   axios({
@@ -102,20 +123,24 @@ class Classify extends Component {
 
   
   render() {
+    const width = this.state.width;
+    let isMobile = width <= 700;
     const { prediction, error} = this.state
-    //const namePred = "unknown"
-    return (
-      <div className="main-class" style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
-      <Box className ='box'>
-      <Typography component="p" style={{fontSize:"2em"}}>
+	
+	
+	if (isMobile) {
+	return (
+	  <div className="main-class" style={{display:"inline-block"}}>	
+    <div style={{padding:"2.5em"}}>
+      <Typography component="p" style={{fontSize:"1.2em", textAlign:"center"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
       </Typography>
       <br></br>
-      <Typography component="p" style={{fontSize:"1.2em"}}>
+      <Typography component="p" style={{fontSize:"0.8em", textAlign:"center"}}>
       Our technology will automagically return which type of mushroom is:
       </Typography>
       <Typography component="p">
-{prediction != undefined ? this.getInformation():
+	{prediction != undefined ? this.getInformation():
       <p>Prediction: unknown</p>}
       { error ? 
         <p>Error: { error }</p>:
@@ -127,12 +152,49 @@ class Classify extends Component {
       <input type="file" onChange={this.handleFileChange}/>
       <button type="submit"> <Typography>Submit</Typography></button>
       </form>
-      </Box>
+
+      <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
+      Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
+      </Typography>
       </div>
-      
+      </div>
       )
-	 	 }
+		  }
+		  else{
+			  return(
+				<div className="main-class" style={{display:"inline-block", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
+				<Typography component="p" style={{fontSize:"2em"}}>
+				Click a mushroom picture or upload a picture and send it to server for prediction!
+				</Typography>
+				<br></br>
+				<Typography component="p" style={{fontSize:"1.2em"}}>
+				Our technology will automagically return which type of mushroom is:
+				</Typography>
+				<Typography component="p">
+			  {prediction != undefined ? this.getInformation():
+				<p>Prediction: unknown</p>}
+				{ error ? 
+				  <p>Error: { error }</p>:
+				  null
+				}
+				</Typography>
+				
+				<form onSubmit={this.handleSubmit}>
+				<input type="file" onChange={this.handleFileChange}/>
+				<button type="submit"> <Typography>Submit</Typography></button>
+				</form>
+		  
+				<Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
+				Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
+				</Typography>
+				</div>
+
+			  )
+
+			  
+		  }
   
-  }
+  }}
+
   
   export default Classify;
