@@ -14,14 +14,9 @@ const state_init = {
 
 const API_C = 'https://classifier.shroomish.ml/api'
 const LOCAL_API_C = 'http://localhost:5000/api'
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 84ef9d2cc785eef0e5ad368b74e7e360f97adebe
 
 class Classify extends Component {
-  
+
    state = {
     form: undefined,
     prediction: undefined,
@@ -29,7 +24,7 @@ class Classify extends Component {
     data: [{}],
     width: window.innerWidth
   }
-  
+
 
 handleWindowSizeChange = () => {
   this.setState({ width: window.innerWidth });
@@ -48,7 +43,7 @@ componentWillMount() {
     .then(res => res.blob())
     .then(blob => new File([blob], fileName))
   }
-  
+
   sendImage(form) {
     return axios({
       method: 'POST',
@@ -68,7 +63,7 @@ componentWillMount() {
       })
     })
   }
-  
+
   handleFileChange = (e) => {
     this.setState(state_init)
     const file = e.target.files[0]
@@ -76,7 +71,7 @@ componentWillMount() {
     form.append('file', file)
 	  this.setState({ form })
   }
-  
+
   handleSubmit = (e) => {
     e.preventDefault()
     //console.log('Sending '+ this.state.form)
@@ -114,23 +109,23 @@ componentWillMount() {
 			  <Mushroom
     name={this.state.data[0].name_eng}
     name_latin={this.state.data[0].name_latin}
-    img={this.state.data[0].url} 
+    img={this.state.data[0].url}
     edibility={this.state.data[0].edibility}
     />
 	    </div>
     )
   }
 
-  
+
   render() {
     const width = this.state.width;
     let isMobile = width <= 700;
     const { prediction, error} = this.state
-	
-	
+
+
 	if (isMobile) {
 	return (
-	  <div className="main-class" style={{display:"inline-block"}}>	
+	  <div className="main-class" style={{display:"inline-block"}}>
     <div style={{padding:"2.5em"}}>
       <Typography component="p" style={{fontSize:"1.2em", textAlign:"center"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
@@ -142,12 +137,12 @@ componentWillMount() {
       <Typography component="p">
 	{prediction != undefined ? this.getInformation():
       <p>Prediction: unknown</p>}
-      { error ? 
+      { error ?
         <p>Error: { error }</p>:
         null
       }
       </Typography>
-      
+
       <form onSubmit={this.handleSubmit}>
       <input type="file" onChange={this.handleFileChange}/>
       <button type="submit"> <Typography>Submit</Typography></button>
@@ -173,17 +168,17 @@ componentWillMount() {
 				<Typography component="p">
 			  {prediction != undefined ? this.getInformation():
 				<p>Prediction: unknown</p>}
-				{ error ? 
+				{ error ?
 				  <p>Error: { error }</p>:
 				  null
 				}
 				</Typography>
-				
+
 				<form onSubmit={this.handleSubmit}>
 				<input type="file" onChange={this.handleFileChange}/>
 				<button type="submit"> <Typography>Submit</Typography></button>
 				</form>
-		  
+
 				<Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
 				Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
 				</Typography>
@@ -191,10 +186,10 @@ componentWillMount() {
 
 			  )
 
-			  
+
 		  }
-  
+
   }}
 
-  
+
   export default Classify;
