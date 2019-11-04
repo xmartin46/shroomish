@@ -1,10 +1,24 @@
 import React from 'react'
-import { Map, TileLayer } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import HeatmapLayer from './src/HeatmapLayer';
 import './main.css';
 import Typography from '@material-ui/core/Typography'
 import { API } from '../../consts';
 import axios from 'axios'
+import L from 'leaflet'
+
+const pointerIcon = new L.Icon({
+  // iconUrl: 'http://leafletjs.com/examples/custom-icons/leaf-green.png',
+  // iconRetinaUrl: require('../assets/pointerIcon.svg'),
+  // shadowUrl: 'http://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+  iconUrl: require('./assets/icon.png'),
+  iconAnchor: [5, 55],
+  popupAnchor: [10, -44],
+  iconSize: [25, 55],
+  // shadowUrl: './assets/icon.png',
+  shadowSize: [68, 95],
+  shadowAnchor: [20, 92],
+})
 
 class MapExample extends React.Component {
 
@@ -17,13 +31,14 @@ class MapExample extends React.Component {
       radius: 20,
       blur: 20,
       max: 0.5,
-      limitAddressPoints: true
+      limitAddressPoints: true,
+      markers: []
     };
   }
 
   /**
-   * Toggle limiting the address points to test behavior with refocusing/zooming when data points change
-   */
+  * Toggle limiting the address points to test behavior with refocusing/zooming when data points change
+  */
   // toggleLimitedAddressPoints() {
   //   if (this.state.limitAddressPoints) {
   //     this.setState({ addressPoints: addressPoints.slice(500, 1000), limitAddressPoints: false });
@@ -43,28 +58,28 @@ class MapExample extends React.Component {
       method: 'GET',
       url: API + '/heatmap/'+ id
     })
-      .then(res => {
-        if(res.data.message != null){
-          let llista = axios({
-            method: 'GET',
-            url: API + '/search/'
-          }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
-          .catch(err => {
-            console.error(err)
-          })
-        }
-        else{
-          this.setState({data:res.data[0].coordinates})
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
-      if (!llista) this.setState({data: this.state.coordinates});
+    .then(res => {
+      if(res.data.message != null){
+        let llista = axios({
+          method: 'GET',
+          url: API + '/search/'
+        }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
+        .catch(err => {
+          console.error(err)
+        })
+      }
+      else{
+        this.setState({data:res.data[0].coordinates})
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+    if (!llista) this.setState({data: this.state.coordinates});
 
 
 
-      this.getMyLocation()
+    this.getMyLocation()
   }
 
   getMyLocation() {
@@ -84,26 +99,53 @@ class MapExample extends React.Component {
   }
 
   handleClick = (e) => {
-    const lat = e.latlng["lat"]
-    const lng = e.latlng["lng"]
-    var latlng = "[" + lat + ", " + lng + "]"
+    const {markers} = this.state
+    markers.push(e.latlng)
+    this.setState({markers})
+  }
 
-    let params = new URLSearchParams(this.props.location.search);
-    let id = params.get("id");
-    if(id == null){
-      id = ""
+  handleSendButton = (e) => {
+    const { markers } = this.state
+    if (markers.length > 0) {
+      for (var i = 0; i < markers.length; i++) {
+        console.log(markers[i])
+        const lat = markers[i]["lat"]
+        const lng = markers[i]["lng"]
+        var latlng = "[" + lat + ", " + lng + "]"
+        console.log("Maker " + i + " => latlng: " + latlng)
+
+        let params = new URLSearchParams(this.props.location.search);
+        let id = params.get("id");
+        if(id == null){
+          id = ""
+        }
+
+        var llista = axios({
+          method: 'POST',
+          url: API + '/heatmap/'+ id + "/" + latlng
+        })
+        .then(res => {
+          console.log("Inserted!")
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
+
+      while (markers.length > 0) {
+        markers.pop()
+      }
+      this.setState({ markers })
+      window.location.reload();
     }
+  }
 
-    var llista = axios({
-      method: 'POST',
-      url: API + '/heatmap/'+ id + "/" + latlng
-    })
-      .then(res => {
-        console.log("Inserted!")
-      })
-      .catch(err => {
-        console.error(err)
-      })
+  handleMarker = (e, idx) => {
+    const { markers } = this.state
+    for(var i = markers.length - 1; i >= 0; i--) {
+      if(i == e) markers.splice(i, 1);
+    }
+    this.setState({markers})
   }
 
   render() {
@@ -116,56 +158,65 @@ class MapExample extends React.Component {
 
     return (
       <div>
-        <Map center={[latitude, longitude]} zoom={8} onClick={this.handleClick}>
-          <HeatmapLayer
-            points={this.state.data}
-            longitudeExtractor={m => m[1]}
-            latitudeExtractor={m => m[0]}
-            gradient={gradient}
-            intensityExtractor={m => parseFloat(m[2])}
-            radius={Number(this.state.radius)}
-            blur={Number(this.state.blur)}
-            max={Number.parseFloat(this.state.max)}
-          />
-          <TileLayer
-            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-        </Map>
+      <div>
+      <Map center={[latitude, longitude]} zoom={8} onClick={this.handleClick}>
+      <HeatmapLayer
+      points={this.state.data}
+      longitudeExtractor={m => m[1]}
+      latitudeExtractor={m => m[0]}
+      gradient={gradient}
+      intensityExtractor={m => parseFloat(m[2])}
+      radius={Number(this.state.radius)}
+      blur={Number(this.state.blur)}
+      max={Number.parseFloat(this.state.max)}
+      />
+      <TileLayer
+      url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      />
+      {this.state.markers.map((position, idx) =>
+        <Marker key={`marker-${idx}`} position={position} icon={pointerIcon} onClick={this.handleMarker.bind(this, idx)}>
+        </Marker>
+      )}
+      </Map>
       </div>
-        // <div>
-        //   Radius
-        //   <input
-        //     type="range"
-        //     min={1}
-        //     max={40}
-        //     value={this.state.radius}
-        //     onChange={(e) => this.setState({ radius: e.currentTarget.value })}
-        //   /> {this.state.radius}
-        // </div>
-        //
-        // <div>
-        //   Blur
-        //   <input
-        //     type="range"
-        //     min={1}
-        //     max={20}
-        //     value={this.state.blur}
-        //     onChange={(e) => this.setState({ blur: e.currentTarget.value })}
-        //   /> {this.state.blur}
-        // </div>
-        //
-        // <div>
-        //   Max
-        //   <input
-        //     type="range"
-        //     min={0.1}
-        //     max={3}
-        //     step={0.1}
-        //     value={this.state.max}
-        //     onChange={(e) => this.setState({ max: e.currentTarget.value })}
-        //   /> {this.state.max}
-        // </div>
+      <div onClick={(e) => this.handleSendButton(e)} style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
+      <button style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"95%"}}>Send locations!</button>
+      </div>
+      </div>
+      // <div>
+      //   Radius
+      //   <input
+      //     type="range"
+      //     min={1}
+      //     max={40}
+      //     value={this.state.radius}
+      //     onChange={(e) => this.setState({ radius: e.currentTarget.value })}
+      //   /> {this.state.radius}
+      // </div>
+      //
+      // <div>
+      //   Blur
+      //   <input
+      //     type="range"
+      //     min={1}
+      //     max={20}
+      //     value={this.state.blur}
+      //     onChange={(e) => this.setState({ blur: e.currentTarget.value })}
+      //   /> {this.state.blur}
+      // </div>
+      //
+      // <div>
+      //   Max
+      //   <input
+      //     type="range"
+      //     min={0.1}
+      //     max={3}
+      //     step={0.1}
+      //     value={this.state.max}
+      //     onChange={(e) => this.setState({ max: e.currentTarget.value })}
+      //   /> {this.state.max}
+      // </div>
 
     );
   }
