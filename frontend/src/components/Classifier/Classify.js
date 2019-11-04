@@ -127,7 +127,8 @@ componentWillMount() {
 	
 	if (isMobile) {
 	return (
-	  <div className="main-class" style={{padding:"0.3", verticalAlign:"middle"}}>	
+	  <div className="main-class" style={{display:"inline-block"}}>	
+    <div style={{padding:"2.5em"}}>
       <Typography component="p" style={{fontSize:"1.2em", textAlign:"center"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
       </Typography>
@@ -153,12 +154,12 @@ componentWillMount() {
       Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
       </Typography>
       </div>
-      
+      </div>
       )
 		  }
 		  else{
 			  return(
-				<div className="main-class" style={{display:"inlineBlock", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
+				<div className="main-class" style={{display:"inline-block", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
 				<Typography component="p" style={{fontSize:"2em"}}>
 				Click a mushroom picture or upload a picture and send it to server for prediction!
 				</Typography>
