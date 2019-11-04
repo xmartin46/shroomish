@@ -11,8 +11,7 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app)
-
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 model = None
 
