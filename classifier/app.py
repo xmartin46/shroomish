@@ -50,6 +50,7 @@ def predict():
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
     try:
+        print(request.files)
         formFile = request.files['file']
         if not formFile:
             formFile = request.files['image']
