@@ -15,7 +15,7 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 model = None
 
-TH = 0.65 # CONFIDENCE
+TH = 0.40 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
