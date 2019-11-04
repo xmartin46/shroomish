@@ -127,7 +127,7 @@ componentWillMount() {
 	
 	if (isMobile) {
 	return (
-      <div className="main-class" style={{padding:"0.3", paddingTop:"2"}}>	
+	  <div className="main-class" style={{padding:"0.3", verticalAlign:"middle"}}>	
       <Typography component="p" style={{fontSize:"1.2em", textAlign:"center"}}>
       Click a mushroom picture or upload a picture and send it to server for prediction!
       </Typography>

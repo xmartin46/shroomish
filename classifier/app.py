@@ -15,7 +15,7 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 model = None
 
-TH = 0.55 # CONFIDENCE
+TH = 0.65 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -66,7 +66,6 @@ def predict():
     print("Let's start predicting")
     value = model.predict(img)
     K.clear_session()
-    print(np.max(value))
     prediction = output[np.argmax(value)] if np.max(value) > TH else None
     print("Value predicted: {}".format(prediction))
     return jsonify({"prediction":prediction})
