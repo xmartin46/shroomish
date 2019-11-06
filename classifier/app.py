@@ -3,6 +3,7 @@ import sys
 import pickle
 import jsonify
 import numpy as np
+from keras import backend as K
 from PIL import Image
 from keras.models import load_model
 from flask import Flask, request, jsonify
@@ -12,10 +13,9 @@ from keras.applications.resnet import preprocess_input
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
-
 model = None
 
-#TODO check which class is each number
+TH = 0.40 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -42,6 +42,7 @@ def start_model():
 
 def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
+  input_image = input_image.convert('RGB')
   return input_image
     
 @app.route('/api/predict', methods=['POST','GET'])
@@ -49,7 +50,10 @@ def predict():
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
     try:
+        print(request.files)
         formFile = request.files['file']
+        if not formFile:
+            formFile = request.files['image']
     except:
         return "FormData didn't include a file", 400
     try:
@@ -62,8 +66,10 @@ def predict():
     img = preprocess_input(img)
     print("Let's start predicting")
     value = model.predict(img)
-    print("Value predicted: {}".format(output[np.argmax(value)]))
-    return jsonify({"prediction":output[np.argmax(value)]})
+    K.clear_session()
+    prediction = output[np.argmax(value)] if np.max(value) > TH else None
+    print("Value predicted: {}".format(prediction))
+    return jsonify({"prediction":prediction})
 
 
 if __name__=="__main__":

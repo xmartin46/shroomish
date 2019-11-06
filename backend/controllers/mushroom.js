@@ -57,9 +57,19 @@ function getMushroomCoordinates(req, res) {
   })
 }
 
+function postMushroomCoordinate(req, res) {
+  const name_latin = req.params.name_latin
+  const latlng = req.params.latlng
+
+  config.db.query('INSERT INTO mushroom_coordinate(id_mushroom, latlng) VALUES ((SELECT id FROM mushroom WHERE LOWER(name_latin) = LOWER($1)), $2)', [name_latin, latlng], (err, result) => {
+      if (err) throw err
+  })
+}
+
 module.exports = {
   getMushrooms,
   getMushroomsBySubstring,
   getMushroomInfo,
-  getMushroomCoordinates
+  getMushroomCoordinates,
+  postMushroomCoordinate
 }

@@ -12,7 +12,7 @@ import accept from '../../green_tick.png';
 class Information extends Component {
   constructor() {
     super();
-    this.state = { data: [], check:false };
+    this.state = { data: [], check:false, width: window.innerWidth };
   }
 
   componentWillUnmount() {
@@ -84,7 +84,7 @@ class Information extends Component {
         name_eng = this.state.data[0].name_eng
       }
       const width = this.state.width;
-      const isMobile = width <= 600;
+      let isMobile = width <= 1000;
 
       if (isMobile) {
         return (
@@ -115,7 +115,7 @@ class Information extends Component {
             {description}
             </Typography>
             <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
+              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} >Go to Heatmap!</button>
             </div>
             </div>
             </div>
@@ -152,7 +152,7 @@ class Information extends Component {
                 {description}
                 </Typography>
                 <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-                  <button onClick={(e) => this.handleClick(e)} style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"2000px"}}>Go to Heatmap!</button>
+		<button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
                 </div>
                 </div>
                 </div>
