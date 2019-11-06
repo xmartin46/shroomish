@@ -3,6 +3,8 @@ import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import { API } from '../../consts';
+import { Redirect } from 'react-router-dom';
+
 
 
 
@@ -29,19 +31,15 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    const { email, password } = this.state;
+    axios({
+      method: 'POST',
+      url: API + '/login',
+      data: {
+        username: this.state.username,
+        password: this.state.password
 
-    axios
-      .post(
-        "http://localhost:3001/sessions",
-        {
-          user: {
-            email: email,
-            password: password
-          }
-        },
-        { withCredentials: true }
-      )
+      }
+    })
       .then(response => {
         if (response.data.logged_in) {
           this.props.handleSuccessfulAuth(response.data);

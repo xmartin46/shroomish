@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
-import { API } from '../../consts';
+import { API, PUBLIC_URL } from '../../consts';
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -16,11 +17,12 @@ class Signup extends Component {
 
 
     this.state = {
+      username: "",
       email: "",
       password: "",
+      password2: "",
       loginErrors: ""
     };
-    this.password2 ="";
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -32,38 +34,42 @@ class Signup extends Component {
   }
 
   handleSubmit(event) {
-    const password2 = this.password2;
-    const { email, password } = this.state;
-    if(!password.equals(password2)){prompt("Password and confirmation not equal")}
-    else{
-
-    /*axios
-      .post(
-        "http://localhost:3001/sessions",
-        {
-          user: {
-            email: email,
-            password: password
-          }
-        },
-        { withCredentials: true }
-      )
+      axios({
+        method: 'POST',
+        url: API + '/signup',
+        data: {
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password,
+          password2: this.state.password2
+        }
+      })
       .then(response => {
         if (response.data.logged_in) {
           this.props.handleSuccessfulAuth(response.data);
+
         }
       })
       .catch(error => {
-        console.log("login error", error);
+        console.log("Sign up error", error);
       });
     event.preventDefault();
-    */
-  }
 }
   render() {
     return (
       <div id="divi">
         <form onSubmit={this.handleSubmit}>
+        <div>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={this.handleChange}
+            required
+          />
+            </div>
         <div>
           <input
             id="email"
@@ -98,7 +104,7 @@ class Signup extends Component {
           />
           </div>
           <div>
-          <button id="button" type="submit">Login</button>
+          <button id="button" type="submit">Sign up</button>
 
           </div>
         </form>
