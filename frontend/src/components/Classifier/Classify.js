@@ -22,7 +22,7 @@ class Classify extends Component {
     prediction: undefined,
     error: '',
     data: [{}],
-    width: window.innerWidth
+    width: window.innerWidth,
   }
 
 
@@ -47,7 +47,7 @@ componentWillMount() {
   sendImage(form) {
     return axios({
       method: 'POST',
-      url: LOCAL_API_C + '/predict',
+      url: API_C + '/predict',
       data: form
     })
     .then(res => {
@@ -66,10 +66,10 @@ componentWillMount() {
 
   handleFileChange = (e) => {
     this.setState(state_init)
-    const file = e.target.files[0]
-    const form = new FormData()
+    let file = e.target.files[0]
+    let form = new FormData()
     form.append('file', file)
-	  this.setState({ form })
+    this.setState({ form: form})
   }
 
   handleSubmit = (e) => {
@@ -121,14 +121,17 @@ componentWillMount() {
     const width = this.state.width;
     let isMobile = width <= 700;
     const { prediction, error} = this.state
-
+	navigator.getMedia = ( navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia);
 
 	if (isMobile) {
 	return (
 	  <div className="main-class" style={{display:"inline-block"}}>
     <div style={{padding:"2.5em"}}>
       <Typography component="p" style={{fontSize:"1.2em", textAlign:"center"}}>
-      Click a mushroom picture or upload a picture and send it to server for prediction!
+      Upload a picture and send it to server for prediction!
       </Typography>
       <br></br>
       <Typography component="p" style={{fontSize:"0.8em", textAlign:"center"}}>
@@ -144,7 +147,7 @@ componentWillMount() {
       </Typography>
 
       <form onSubmit={this.handleSubmit}>
-      <input type="file" onChange={this.handleFileChange}/>
+      <input type="file" accept="image/*" onChange={this.handleFileChange}/>
       <button type="submit"> <Typography>Submit</Typography></button>
       </form>
 
@@ -157,9 +160,9 @@ componentWillMount() {
 		  }
 		  else{
 			  return(
-				<div className="main-class" style={{display:"inline-block", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
+				<div className="main-class" style={{display:"block", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
 				<Typography component="p" style={{fontSize:"2em"}}>
-				Click a mushroom picture or upload a picture and send it to server for prediction!
+				Upload a picture and send it to server for prediction!
 				</Typography>
 				<br></br>
 				<Typography component="p" style={{fontSize:"1.2em"}}>
@@ -175,7 +178,7 @@ componentWillMount() {
 				</Typography>
 
 				<form onSubmit={this.handleSubmit}>
-				<input type="file" onChange={this.handleFileChange}/>
+				<input type="file" accept="image/*" onChange={this.handleFileChange}/>
 				<button type="submit"> <Typography>Submit</Typography></button>
 				</form>
 
