@@ -61,7 +61,7 @@ class Classify extends Component {
   handleFileChange = (e) => {
     this.setState(state_init)
     let file = e.target.files[0]
-    this.setState({ file: file})
+    this.setState({file: file})
   }
 
   handleSubmit = (e) => {
@@ -133,8 +133,10 @@ class Classify extends Component {
               </Typography>
 
               <form onSubmit={this.handleSubmit}>
-                <input type="file" accept="image/*" onChange={this.handleFileChange}/>
+                <input id="myFileInput" type="file" accept="image/*;capture=camera" onChange={this.handleFileChange}/>
                 <button type="submit"> <Typography>Submit</Typography></button>
+                {/* <input type="file" accept="image/*" onChange={this.handleFileChange}/>
+                <button type="submit"> <Typography>Submit</Typography></button> */}
               </form>
 
               <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
@@ -150,7 +152,8 @@ class Classify extends Component {
             <Typography component="p" style={{fontSize:"2em"}}>
               Upload a picture and send it to server for prediction!
             </Typography>
-            <br></br>
+            <br>
+            </br>
             <Typography component="p" style={{fontSize:"1.2em"}}>
               Our technology will automagically return which type of mushroom is:
             </Typography>
