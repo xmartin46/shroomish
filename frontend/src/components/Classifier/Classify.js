@@ -69,7 +69,7 @@ componentWillMount() {
     let file = e.target.files[0]
     let form = new FormData()
     form.append('file', file)
-    this.setState({ form: form})
+    this.setState({ form: form, file: file.name})
   }
 
   handleSubmit = (e) => {
@@ -181,7 +181,9 @@ componentWillMount() {
 				<input type="file" accept="image/*" onChange={this.handleFileChange}/>
 				<button type="submit"> <Typography>Submit</Typography></button>
 				</form>
-
+        <Typography component="p" style={{fontSize:"1.2em"}}>
+				{this.state.file}
+				</Typography>
 				<Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
 				Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
 				</Typography>
