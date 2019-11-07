@@ -37,7 +37,7 @@ class Classify extends Component {
   }
 
 
-  sendImage(form) {
+  sendImage = (form) => {
     return axios({
       method: 'POST',
       url: API_C + '/predict',
@@ -61,7 +61,7 @@ class Classify extends Component {
   handleFileChange = (e) => {
     this.setState(state_init)
     let file = e.target.files[0]
-    this.setState({ file: file})
+    this.setState({file: file})
   }
 
   handleSubmit = (e) => {
@@ -78,7 +78,7 @@ class Classify extends Component {
     }})
   }
 
-  handleQuery(){
+  handleQuery = () => {
     axios({
       method: 'GET',
       url: API + '/search/'+ this.state.prediction
@@ -133,7 +133,7 @@ class Classify extends Component {
               </Typography>
 
               <form onSubmit={this.handleSubmit}>
-                <input type="file" accept="image/*" onChange={this.handleFileChange}/>
+                <input id="myFileInput" type="file" accept="image/*;capture=camera" onChange={this.handleFileChange}/>
                 <button type="submit"> <Typography>Submit</Typography></button>
               </form>
 
@@ -150,7 +150,8 @@ class Classify extends Component {
             <Typography component="p" style={{fontSize:"2em"}}>
               Upload a picture and send it to server for prediction!
             </Typography>
-            <br></br>
+            <br>
+            </br>
             <Typography component="p" style={{fontSize:"1.2em"}}>
               Our technology will automagically return which type of mushroom is:
             </Typography>
