@@ -31,75 +31,75 @@ const CardList = ({ mushrooms }) => {
   const cardsArray = mushrooms.map(mushroom => (
     <div style={{minWidth:"350px"}}>
     <Mushroom
-    name={mushroom.name_eng}
-    name_latin={mushroom.name_latin}
-    img={mushroom.url} 
-    edibility={mushroom.edibility}
-    /></div>
-    ));
+      name={mushroom.name_eng}
+      name_latin={mushroom.name_latin}
+      img={mushroom.url} 
+      edibility={mushroom.edibility}
+    />
+    </div>
+  ));
     
-    return (
-      <div className="cardlist" style={{display:'flex',flexGrow:'1',flexShrink:"1",flexBasis:"100%" ,justifyContent:"space-around", flexWrap:"wrap", flexDirection:"row", flexGrow: "1", alignContent:"stretch"}}>
+  return (
+    <div className="cardlist" style={{display:'flex',flexGrow:'1',flexShrink:"1",flexBasis:"100%" ,justifyContent:"space-around", flexWrap:"wrap", flexDirection:"row", flexGrow: "1", alignContent:"stretch"}}>
       {cardsArray}
-      </div>
-      );
-    };
+    </div>
+  );
+};
     
-    CardList.propTypes = {
-      mushrooms: PropTypes.array.isRequired
-    };
+CardList.propTypes = {
+  mushrooms: PropTypes.array.isRequired
+};
     
     
     
-    class Gallery extends Component {
-      constructor() {
-        super();
-        this.state = { data: [] };
-      }
+class Gallery extends Component {
+  constructor() {
+    super();
+    this.state = { data: [] };
+  }
       
-      componentWillMount() {
-        let params = new URLSearchParams(this.props.location.search);
-        let id = params.get("id");
-        if(id == null){
-          id = ""
-        }
+  componentWillMount() {
+    let params = new URLSearchParams(this.props.location.search);
+    let id = params.get("id");
+    if(id == null){
+      id = ""
+    }
+    let llista = axios({
+      method: 'GET',
+      url: API + '/search/'+ id
+    })
+    .then(res => {
+      if(res.data.message != null){
         let llista = axios({
           method: 'GET',
-          url: API + '/search/'+ id
-        })
-        .then(res => {
-          if(res.data.message != null){
-            let llista = axios({
-              method: 'GET',
-              url: API + '/search/'
-            }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
-            .catch(err => {
-              console.error(err)
-            })
-          }
-          else{
-            this.setState({data:JSON.parse(JSON.stringify(res.data))})
-          }
-        })
+          url: API + '/search/'
+        }).then(res2 => this.setState({data:JSON.parse(JSON.stringify(res2.data))}))
         .catch(err => {
           console.error(err)
         })
-        if (!llista) this.setState({data: local_mushrooms});
-        console.log(this.state)
       }
+      else{
+        this.setState({data:JSON.parse(JSON.stringify(res.data))})
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+    if (!llista) this.setState({data: local_mushrooms});
+    console.log(this.state)
+  }
+  
       
-      
-      render() {
-        return (
-          <div className="main-class">
-            	    <CookieConsent>
-    	This website uses cookies to enhance the user experience.
-	</CookieConsent>
-          <CardList mushrooms ={this.state.data}></CardList>
-          </div>
+  render() {
+    return (
+      <div className="main-class">
+        <CookieConsent>
+        	This website uses cookies to enhance the user experience.
+	      </CookieConsent>
+        <CardList mushrooms ={this.state.data}></CardList>
+      </div>
           
-          );
-        }
-      }
-      
-      export default Gallery
+    );
+  }
+}      
+export default Gallery
