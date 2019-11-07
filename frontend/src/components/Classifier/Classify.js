@@ -37,7 +37,7 @@ class Classify extends Component {
   }
 
 
-  sendImage(form) {
+  sendImage = (form) => {
     return axios({
       method: 'POST',
       url: API_C + '/predict',
@@ -78,7 +78,7 @@ class Classify extends Component {
     }})
   }
 
-  handleQuery(){
+  handleQuery = () => {
     axios({
       method: 'GET',
       url: API + '/search/'+ this.state.prediction
@@ -135,8 +135,6 @@ class Classify extends Component {
               <form onSubmit={this.handleSubmit}>
                 <input id="myFileInput" type="file" accept="image/*;capture=camera" onChange={this.handleFileChange}/>
                 <button type="submit"> <Typography>Submit</Typography></button>
-                {/* <input type="file" accept="image/*" onChange={this.handleFileChange}/>
-                <button type="submit"> <Typography>Submit</Typography></button> */}
               </form>
 
               <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
