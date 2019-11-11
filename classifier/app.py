@@ -11,7 +11,7 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app)
 
 model = None
 
@@ -35,6 +35,12 @@ output = {
         15:"Suillus luteus"
 }
 
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
 
 def start_model():
     global model

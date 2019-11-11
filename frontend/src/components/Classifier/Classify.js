@@ -36,27 +36,25 @@ class Classify extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
+  
 
   sendImage = (form) => {
-    return axios({
-      method: 'POST',
-      url: API_C + '/predict',
-      data: form
-    })
-    .then(res => {
-      this.setState({
-        error: ''
-      })
-      return res.data.prediction
-    })
-    .catch(err => {
-      console.error(err)
-      this.setState({
-        error: err.response
-      })
+    return fetch(API_C + '/predict', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        // 'Content-Type': '*/*'
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: form // body data type must match "Content-Type" header
+    }).then(res => res.json()).then(data => {
+      const {prediction} = data 
+      return prediction
+    }).catch(err => {
+      this.setState({error: JSON.stringify(err)})
     })
   }
-
   
   handleFileChange = (e) => {
     this.setState(state_init)
@@ -133,7 +131,7 @@ class Classify extends Component {
               </Typography>
 
               <form onSubmit={this.handleSubmit}>
-                <input id="myFileInput" type="file" accept="image/*;capture=camera" onChange={this.handleFileChange}/>
+                <input id="myFileInput" type="file" accept="image/*" onChange={this.handleFileChange}/>
                 <button type="submit"> <Typography>Submit</Typography></button>
               </form>
 
