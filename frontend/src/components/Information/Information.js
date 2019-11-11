@@ -119,29 +119,28 @@ class Information extends Component {
         );
       }
 		  else{
-			  return(
-				<div className="main-class" style={{display:"block", alignItems:"center", justifyContent:"center", padding:"7rem"}}>
-				  <Typography component="p" style={{fontSize:"2em"}}>
-				    Upload a picture and send it to server for prediction!
-				  </Typography>
-				  <br></br>
-				  <Typography component="p" style={{fontSize:"1.2em"}}>
-				    Our technology will automagically return which type of mushroom is:
-				  </Typography>
-				  <Typography component="p">
-			      {prediction != undefined ? this.getInformation(): <p>Prediction: unknown</p>}
-            { error ? <p>Error: { error }</p>: null }
-				  </Typography>
-          <form onSubmit={this.handleSubmit}>
-            <input type="file" accept="image/*" onChange={this.handleFileChange}/>
-            <button type="submit"> <Typography>Submit</Typography></button>
-          </form>
-				  <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
-				    Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
-				  </Typography>
-				</div>
-			)}
-    }
+        return (
+          <div className='main-class' style={{margin:"0", padding:"0"}}>
+            <div className="content-wrapper" style={{ marginTop:"3em",marginBottom:"5em", paddingBottom:"5em",  marginLeft:"15em", marginRight:"15em", textAlign:"justify",boxShadow: "0px 0px 30px #9E9E9E"}}>
+              <Carousel style={{height:"70vh"}}>
+                {img.map((value, index) => (
+                  <img src={value} style={{objectFit:"cover"}}></img>
+                ))}
+              </Carousel>
+            <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
+              <div style={{display:"flex", justifyContent:"flex-end"}}>
+                {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+                {edibility == "inedible" ? getWarningImage():null}
+                {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+                  edibility == "edible when boiled " ? getAcceptImage():null}
+              </div>
+              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
+            </div>
+          </div>
+        </div>
+        );
+      }
+    }    
   } 
 }
 
