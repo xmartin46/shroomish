@@ -76,8 +76,6 @@ class Information extends Component {
         for(let i=0; i<images_length; ++i){
           img.push(this.state.data[i].url);
         }
-        // img = this.state.data[0].url;
-        // console.log(img)
         description=this.state.data[0].description;
         edibility = this.state.data[0].edibility;
         name_latin=this.state.data[0].name_latin;
@@ -89,56 +87,17 @@ class Information extends Component {
       if (isMobile) {
         return (
           <div className='main-class' style={{margin:"0", padding:"0"}}>
-          <div style={{textAlign:"justify"}}>
-          <Carousel style={{height:"40vh"}}>
-          {img.map((value, index) => (
-            <img src={value}></img>
-            ))}
-            </Carousel>
-            <div className="content-wrapper" style={{padding:"3em"}}>
-            <div style={{display:"flex", justifyContent:"flex-end"}}>
-            {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-            {edibility == "inedible" ? getWarningImage():null}
-            {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
-        edibility == "edible when boiled " ? getAcceptImage():null}
-        </div>
-            <Typography variant="headline" component="h2">
-            {name_eng}
-            </Typography>
-            <Typography variant="headline" component="h3">
-            {name_latin}
-            </Typography>
-            <Typography variant="headline" component="h3" style={{marginTop:"2%"}}>
-            Edibility: {edibility}
-            </Typography>
-            <Typography component="p" style={{marginTop:"0.5%"}}>
-            {description}
-            </Typography>
-            <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} >Go to Heatmap!</button>
-            </div>
-            </div>
-            </div>
-            </div>
-
-            );
-          }
-          else{
-            return (
-              <div className='main-class' style={{margin:"0", padding:"0"}}>
-              <div className="content-wrapper" style={{ marginTop:"3em",marginBottom:"5em", paddingBottom:"5em",  marginLeft:"15em", marginRight:"15em", textAlign:"justify",boxShadow: "0px 0px 30px #9E9E9E"}}>
-              <Carousel style={{height:"70vh"}}>
-              {img.map((value, index) => (
-                <img src={value} style={{objectFit:"cover"}}></img>
-                ))}
-                </Carousel>
-                <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
-                  <div style={{display:"flex", justifyContent:"flex-end"}}>
-                {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-    {edibility == "inedible" ? getWarningImage():null}
-    {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
-        edibility == "edible when boiled " ? getAcceptImage():null}
-        </div>
+            <div style={{textAlign:"justify"}}>
+              <Carousel style={{height:"40vh"}}>
+                {img.map((value, index) => (<img src={value}></img>))}
+              </Carousel>
+              <div className="content-wrapper" style={{padding:"3em"}}>
+                <div style={{display:"flex", justifyContent:"flex-end"}}>
+                  {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+                  {edibility == "inedible" ? getWarningImage():null}
+                  {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+                  edibility == "edible when boiled " ? getAcceptImage():null}
+                </div>
                 <Typography variant="headline" component="h2">
                 {name_eng}
                 </Typography>
@@ -152,15 +111,37 @@ class Information extends Component {
                 {description}
                 </Typography>
                 <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
-		<button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
+                  <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} >Go to Heatmap!</button>
                 </div>
-                </div>
-                </div>
-                </div>
-                );
-              }
-            }
-          }
-        }
+              </div>
+            </div>
+          </div>
+        );
+      }
+		  else{
+        return (
+          <div className='main-class' style={{margin:"0", padding:"0"}}>
+            <div className="content-wrapper" style={{ marginTop:"3em",marginBottom:"5em", paddingBottom:"5em",  marginLeft:"15em", marginRight:"15em", textAlign:"justify",boxShadow: "0px 0px 30px #9E9E9E"}}>
+              <Carousel style={{height:"70vh"}}>
+                {img.map((value, index) => (
+                  <img src={value} style={{objectFit:"cover"}}></img>
+                ))}
+              </Carousel>
+            <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
+              <div style={{display:"flex", justifyContent:"flex-end"}}>
+                {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+                {edibility == "inedible" ? getWarningImage():null}
+                {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+                  edibility == "edible when boiled " ? getAcceptImage():null}
+              </div>
+              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
+            </div>
+          </div>
+        </div>
+        );
+      }
+    }    
+  } 
+}
 
-        export default Information;
+export default Information;
