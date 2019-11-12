@@ -10,11 +10,11 @@ function checkLoggedIn (req, res, next) {
 }
 
 function checkLoggedOut (req, res, next) {
-    if (!req.isAuthenticated()) {
+    /*if (!req.isAuthenticated()) {
         return next()
     } else {
         return res.redirect('/api/user/profile')
-    }
+    }*/
 }
 
 module.exports = {

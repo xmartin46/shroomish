@@ -22,7 +22,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios'
 import logo from '../logo.svg'
-import { API } from '../consts';
+import { API, PUBLIC_URL } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 
@@ -152,37 +152,52 @@ export default function PrimarySearchAppBar() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
+
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
-  
-   
+
+
   const handleSearch = e => {
     if(e.keyCode === 13){
       window.location.href = "/gallery?id="+e.target.value;
     }
   }
-  
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+
+    axios({
+      method: 'GET',
+      url: API + '/logout',
+      withCredentials: true
+    })
+    .then(response => {
+      window.location.href = ""
+      // if (response.data.logged_in) {
+      //   this.props.handleSuccessfulAuth(response.data);
+      // }
+    })
+    .catch(error => {
+      console.log("login error", error);
+    });
   };
-  
+
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -195,117 +210,116 @@ export default function PrimarySearchAppBar() {
     onClose={handleMenuClose}
     >
     <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
-    <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
+    <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
     </Menu>
-    );
-    
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-      <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-      >
-      
-      <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
-      </Menu>
-      );
-      
-      return (
-        <MuiThemeProvider theme={theme}>
-        <div className={classes.grow}>
-        <AppBar position="static" style={{ background:'#f44336'}}>
-        <Toolbar>
-        <IconButton
-        edge="start"
-        onClick={handleDrawerOpen}
-        className={classes.menuButton && open && classes.hide}
-        color="inherit"
-        aria-label="open drawer"
-        >
-        <MenuIcon />
-        </IconButton>
-        <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
-        <img src={logo} style={{height:"3.5vh"}}></img>Shroomish
-        </Typography>
-        <div className={classes.search}>
-        <div className={classes.searchIcon}>
-        <SearchIcon />
-        </div>
-        <InputBase
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ 'aria-label': 'search' }}
-        onKeyDown={handleSearch}
-        />
-        </div>
-        <div className={classes.grow} />
-        <div className={classes.sectionDesktop}>
-        <IconButton
-        edge="end"
-        aria-label="account of current user"
-        aria-controls={menuId}
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit"
-        >
-        <AccountCircle />
-        </IconButton>
-        </div>
-        <div className={classes.sectionMobile}>
-        <IconButton
-        aria-label="show more"
-        aria-controls={mobileMenuId}
-        aria-haspopup="true"
-        onClick={handleMobileMenuOpen}
-        color="inherit"
-        >
-        <AccountCircle />
-        </IconButton>
-        </div>
-        </Toolbar>
-        </AppBar>
-        <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        >
-        <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
-        </div>
-        <Divider />
-        <List>
-        <ListItem button component="a" href="/" key="Home">
-        <ListItemIcon> <HomeIcon/> </ListItemIcon>
-        <ListItemText primary="Home"/>
-        </ListItem>
-        
-        <ListItem button component="a" href="/classify" key="Classifier">
-        <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
-        <ListItemText primary="Classifier" />
-        </ListItem>
-        
-        
-        </List>
-        </Drawer>
-        {renderMobileMenu}
-        {renderMenu}
-        </div>
-        </MuiThemeProvider>
-        );
-      }
-      
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+    anchorEl={mobileMoreAnchorEl}
+    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    id={mobileMenuId}
+    keepMounted
+    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+    open={isMobileMenuOpen}
+    onClose={handleMobileMenuClose}
+    >
+
+    <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
+    <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+    </Menu>
+  );
+
+  return (
+    <MuiThemeProvider theme={theme}>
+    <div className={classes.grow}>
+    <AppBar position="static" style={{ background:'#f44336'}}>
+    <Toolbar>
+    <IconButton
+    edge="start"
+    onClick={handleDrawerOpen}
+    className={classes.menuButton && open && classes.hide}
+    color="inherit"
+    aria-label="open drawer"
+    >
+    <MenuIcon />
+    </IconButton>
+    <Typography className={classes.title} variant="h6" noWrap  component="a" style={{ textDecoration: 'none', color : "#ffff"}} href="/" key="Home">
+    <img src={logo} style={{height:"3.5vh"}}></img>Shroomish
+    </Typography>
+    <div className={classes.search}>
+    <div className={classes.searchIcon}>
+    <SearchIcon />
+    </div>
+    <InputBase
+    placeholder="Search…"
+    classes={{
+      root: classes.inputRoot,
+      input: classes.inputInput,
+    }}
+    inputProps={{ 'aria-label': 'search' }}
+    onKeyDown={handleSearch}
+    />
+    </div>
+    <div className={classes.grow} />
+    <div className={classes.sectionDesktop}>
+    <IconButton
+    edge="end"
+    aria-label="account of current user"
+    aria-controls={menuId}
+    aria-haspopup="true"
+    onClick={handleProfileMenuOpen}
+    color="inherit"
+    >
+    <AccountCircle />
+    </IconButton>
+    </div>
+    <div className={classes.sectionMobile}>
+    <IconButton
+    aria-label="show more"
+    aria-controls={mobileMenuId}
+    aria-haspopup="true"
+    onClick={handleMobileMenuOpen}
+    color="inherit"
+    >
+    <AccountCircle />
+    </IconButton>
+    </div>
+    </Toolbar>
+    </AppBar>
+    <Drawer
+    className={classes.drawer}
+    variant="persistent"
+    anchor="left"
+    open={open}
+    classes={{
+      paper: classes.drawerPaper,
+    }}
+    >
+    <div className={classes.drawerHeader}>
+    <IconButton onClick={handleDrawerClose}>
+    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+    </IconButton>
+    </div>
+    <Divider />
+    <List>
+    <ListItem button component="a" href="/" key="Home">
+    <ListItemIcon> <HomeIcon/> </ListItemIcon>
+    <ListItemText primary="Home"/>
+    </ListItem>
+
+    <ListItem button component="a" href="/classify" key="Classifier">
+    <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+    <ListItemText primary="Classifier" />
+    </ListItem>
+
+
+    </List>
+    </Drawer>
+    {renderMobileMenu}
+    {renderMenu}
+    </div>
+    </MuiThemeProvider>
+  );
+}
