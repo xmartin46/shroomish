@@ -2,20 +2,15 @@ import React, { Component } from 'react';
 import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
-import { API } from '../../consts';
+import { API, PUBLIC_URL } from '../../consts';
 import { Redirect } from 'react-router-dom';
-
-
-
-
-
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
+      username: "",
       password: "",
       loginErrors: ""
     };
@@ -31,24 +26,25 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     axios({
       method: 'POST',
       url: API + '/login',
+      withCredentials: true,
       data: {
         username: this.state.username,
         password: this.state.password
-
       }
     })
       .then(response => {
-        if (response.data.logged_in) {
-          this.props.handleSuccessfulAuth(response.data);
-        }
+        this.props.history.go(-1)
+        // if (response.data.logged_in) {
+        //   this.props.handleSuccessfulAuth(response.data);
+        // }
       })
       .catch(error => {
         console.log("login error", error);
       });
-    event.preventDefault();
   }
 
 
@@ -58,11 +54,11 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
         <div>
           <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={this.state.email}
+            id="username"
+            type="text"
+            name="username"
+            placeholder="username"
+            value={this.state.username}
             onChange={this.handleChange}
             required
           />

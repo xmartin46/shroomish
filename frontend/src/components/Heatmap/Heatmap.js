@@ -20,6 +20,24 @@ const pointerIcon = new L.Icon({
   shadowAnchor: [20, 92],
 })
 
+async function getData (id, latlng) {
+  try {
+    var llista = await axios({
+        method: 'POST',
+        withCredentials: true,
+        url: API + '/heatmap/'+ id + "/" + latlng
+      })
+      .then(res => {
+        console.log("Inserted!")
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    } catch (err) {
+      console.error(err);
+  }
+}
+
 class MapExample extends React.Component {
 
   constructor() {
@@ -54,6 +72,7 @@ class MapExample extends React.Component {
     if(id == null){
       id = ""
     }
+    console.log(id)
     let llista = axios({
       method: 'GET',
       url: API + '/heatmap/'+ id
@@ -92,7 +111,7 @@ class MapExample extends React.Component {
           longitude: position.coords.longitude,
         })
       }, (error) => {
-        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+        this.setState({ latitude: '60.192059', longitude: '24.945831' })
       })
     }
 
@@ -120,23 +139,13 @@ class MapExample extends React.Component {
           id = ""
         }
 
-        var llista = axios({
-          method: 'POST',
-          url: API + '/heatmap/'+ id + "/" + latlng
-        })
-        .then(res => {
-          console.log("Inserted!")
-        })
-        .catch(err => {
-          console.error(err)
-        })
+        getData(id, latlng).then(function(result) {})
       }
 
       while (markers.length > 0) {
         markers.pop()
       }
       this.setState({ markers })
-      window.location.reload();
     }
   }
 

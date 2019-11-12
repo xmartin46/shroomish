@@ -15,7 +15,7 @@ cors = CORS(app)
 
 model = None
 
-TH = 0.40 # CONFIDENCE
+TH = 0.0 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -50,7 +50,7 @@ def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
   input_image = input_image.convert('RGB')
   return input_image
-    
+
 @app.route('/api/predict', methods=['POST','GET'])
 def predict():
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
