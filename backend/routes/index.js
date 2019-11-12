@@ -18,7 +18,7 @@ api.get('/search/:substr/', mushroomCtrl.getMushroomsBySubstring)
 // Get information only about one specific type of mushroom whose name in latin is the parameter name_latin
 api.get('/info/:name_latin', mushroomCtrl.getMushroomInfo)
 // Get heatmap of the mushroom called name_latin in latin
-api.get('/heatmap/:name_latin', mushroomCtrl.getMushroomCoordinates)
+api.get('/heatmap/:name_latin', authMdlw.checkLoggedIn, mushroomCtrl.getMushroomCoordinates)
 // Insert location in heatmap of mushroom called name_latin in latin
 api.post('/heatmap/:name_latin/:latlng', /* MIDDLEWARE OF USER!!!!!!, */ mushroomCtrl.postMushroomCoordinate)
 

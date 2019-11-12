@@ -92,7 +92,7 @@ class MapExample extends React.Component {
           longitude: position.coords.longitude,
         })
       }, (error) => {
-        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+        this.setState({ latitude: '60.192059', longitude: '24.945831' })
       })
     }
 

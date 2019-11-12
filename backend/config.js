@@ -10,14 +10,14 @@ var db = new pg.Client({
   // ssl: true
 })
 
-/*var db = new pg.Client({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'postgres',
-  port: process.env.DB_PORT || 5432,
-  // ssl: true
-})*/
+// var db = new pg.Client({
+//   host: process.env.DB_HOST || 'localhost',
+//   user: process.env.DB_USER || 'postgres',
+//   password: process.env.DB_PASSWORD || '',
+//   database: process.env.DB_DATABASE || 'postgres',
+//   port: process.env.DB_PORT || 5432,
+//   // ssl: true
+// })
 
 module.exports = {
     port: process.env.PORT || 8080,

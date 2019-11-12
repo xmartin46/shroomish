@@ -12,7 +12,6 @@ const cors 	    = require('cors')
 
 app.use(cors());
 //add midelware bodyparse to express app
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({

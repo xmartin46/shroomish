@@ -118,7 +118,7 @@ function deleteUser(req, res) {
 
 function logOut(req, res) {
   req.session.destroy(function(err) {
-    res.clearCookie(process.env.SESSION_NAME);
+    res.clearCookie(process.env.SESSION_NAME || 'Create a .env pls');
     res.status(200).send( { message: "Cy@!" } )
   })
 }
