@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import { API, PUBLIC_URL } from '../../consts';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 class Login extends Component {
   constructor(props) {
@@ -43,16 +45,41 @@ class Login extends Component {
         // }
       })
       .catch(error => {
-        console.log("login error", error);
+        alert("User does not exist or password do not match!");
       });
   }
 
-
   render() {
     return (
-      <div id="divi">
+      <div id="divi" /*className={classes.container}*/>
         <form onSubmit={this.handleSubmit}>
-        <div>
+          <div>
+	    <TextField
+              label="Name"
+              id="outlined-margin-dense"
+  //          className={classes.textField}
+              helperText="Some important text"
+              margin="dense"
+              variant="outlined"
+	      style = {{margin:"auto", width:"50%"}}
+            />
+  	  </div>
+	  <div>
+            <button id="button" type="submit">Login</button>
+          </div>
+          <div>
+            <a id="signuplink" href="../Signup" >Lacking an account?, Create one now, sign up!</a>
+          </div>
+        </form>
+      </div>
+
+
+
+    );
+  }
+}
+/*
+<div>
           <input
             id="username"
             type="text"
@@ -73,22 +100,6 @@ class Login extends Component {
             onChange={this.handleChange}
             required
           />
-          </div>
-          <div>
-          <button id="button" type="submit">Login</button>
-          </div>
-          <div>
-          <p id="signuplink">Lacking an account?, Create one now,
-            <a  href="../Signup" > sign up!</a>
-          </p>
-          </div>
-        </form>
-      </div>
-
-
-
-    );
-  }
-}
+          <div>*/
 
 export default Login;

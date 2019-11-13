@@ -52,7 +52,7 @@ class Classify extends Component {
     this.setState({loading:true})
     axios({
       method: 'POST',
-      url: LOCAL_API_C + '/predict',
+      url: API_C + '/predict',
       data: form,
       headers:{
         'Content-Type':'multipart/form-data',
