@@ -231,23 +231,7 @@ export default function PrimarySearchAppBar() {
     </Menu>
     );
 
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-      <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-      >
-
-      <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
-      </Menu>
-      );
-
+  
       return (
         <MuiThemeProvider theme={theme}>
         <div className={classes.grow}>
