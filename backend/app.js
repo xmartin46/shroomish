@@ -1,6 +1,6 @@
 'use strict';
 
-                    require('dotenv').config()
+                      require('dotenv').config()
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const passport      = require('passport')
@@ -8,18 +8,24 @@ const session       = require("express-session");
 
 const app           = express();
 const api           = require('./routes');
-const cors 	    = require('cors')
+const cors 	        = require('cors')
 
-app.use(cors());
+app.use(cors({credentials: true, origin: 'https://shroomish.ml'}));
 //add midelware bodyparse to express app
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(session({
   name: process.env.SESSION_NAME || 'Create a .env pls',
   secret: process.env.SESSION_SECRET || 'Create a .env pls (x2)',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+      httpOnly: false,
+      secure: false,
+      domain: 'shroomish.ml',
+      expires: new Date(new Date().getTime() + (1000*60*60*24*365*10))
+    }
 }))
 
 app.use(passport.initialize());

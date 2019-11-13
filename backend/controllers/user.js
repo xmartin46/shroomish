@@ -1,6 +1,6 @@
 'use strict';
 
-               require('dotenv').config()
+                 require('dotenv').config()
 const config   = require('../config')
 const crypto   = require('crypto')
 
@@ -39,9 +39,16 @@ function signUp(req, res) {
   const username = req.body.username
   const email = req.body.email
   const password = req.body.password
+  const password2 = req.body.password2
 
   // creating a unique salt for a particular user
   const salt = crypto.randomBytes(16).toString('hex')
+
+  // console.log(username)
+  // console.log(email)
+  // console.log(password)
+  // console.log(password2)
+  // console.log()
 
   // hashing user's salt and password with 1000 iterations,
   // 64 length and sha512 digest
@@ -118,7 +125,7 @@ function deleteUser(req, res) {
 
 function logOut(req, res) {
   req.session.destroy(function(err) {
-    res.clearCookie(process.env.SESSION_NAME);
+    res.clearCookie(process.env.SESSION_NAME || 'Create a .env pls', { domain: '.shroomish.ml' });
     res.status(200).send( { message: "Cy@!" } )
   })
 }

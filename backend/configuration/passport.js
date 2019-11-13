@@ -8,7 +8,6 @@ const crypto          = require('crypto')
 
 passport.use(new LocalStrategy(
   function(username, password, done) { //username and password from the body
-    ///////////////////console.log("LOCALSTRATEGY!!!")
     config.db.query('SELECT user_account.id, user_account.email, user_password.password, user_password.salt FROM user_account INNER JOIN user_password ON user_password.id_user = user_account.id WHERE LOWER(user_account.name) = LOWER($1)', [username], (err, result) => {
       if (err) throw err
 

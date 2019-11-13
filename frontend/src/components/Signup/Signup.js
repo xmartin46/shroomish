@@ -5,12 +5,6 @@ import axios from 'axios'
 import { API, PUBLIC_URL } from '../../consts';
 import { Redirect } from 'react-router-dom';
 
-
-
-
-
-
-
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +28,7 @@ class Signup extends Component {
   }
 
   handleSubmit(event) {
+    if (this.state.password === this.state.password2) {
       axios({
         method: 'POST',
         url: API + '/signup',
@@ -53,6 +48,9 @@ class Signup extends Component {
       .catch(error => {
         console.log("Sign up error", error);
       });
+    } else {
+      alert('Passwords do not match!')
+    }
     event.preventDefault();
 }
   render() {

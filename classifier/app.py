@@ -11,11 +11,11 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 model = None
 
-TH = 0.40 # CONFIDENCE
+TH = 0.4444 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -35,12 +35,6 @@ output = {
         15:"Suillus luteus"
 }
 
-@app.after_request
-def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', '*')
-  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  return response
 
 def start_model():
     global model
@@ -50,16 +44,16 @@ def resize(input_image):
   input_image = Image.open(input_image).resize((224,224),Image.LANCZOS)
   input_image = input_image.convert('RGB')
   return input_image
-    
+
 @app.route('/api/predict', methods=['POST','GET'])
 def predict():
+    #print('Recibo mierdas')
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
+    print(request)
     try:
         print(request.files)
         formFile = request.files['file']
-        if not formFile:
-            formFile = request.files['image']
     except:
         return "FormData didn't include a file", 400
     try:
@@ -70,11 +64,11 @@ def predict():
         return 'Unable to read the image file', 400
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
-    print("Let's start predicting")
+    #print("Let's start predicting")
     value = model.predict(img)
     K.clear_session()
     prediction = output[np.argmax(value)] if np.max(value) > TH else None
-    print("Value predicted: {}".format(prediction))
+    #print("Value predicted: {}".format(prediction))
     return jsonify({"prediction":prediction})
 
 

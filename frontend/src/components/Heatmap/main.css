@@ -4,8 +4,25 @@ h1, h2, p {
 .leaflet-container {
   height: 500px;
   width: 95%;
-  margin: 50px auto;
+  margin: 20px auto;
 }
-.heatmapButton {
-  height: 100px;
+
+.mapButton{
+  width: 100px;
+background: #f44336;
+color: white;
+border: 0 none;
+  border-radius: 45px;
+  font-weight: 500;
+cursor: pointer;
+  padding: 10px 5px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+margin: 10px 5px;
 }
+
+.mapButton:hover, .mapButton:focus{
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #7C0A02;
+}
+
+
+

@@ -22,7 +22,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios'
 import logo from '../logo.svg'
-import { API } from '../consts';
+import { API, PUBLIC_URL } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 
@@ -177,6 +177,22 @@ export default function PrimarySearchAppBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+
+    axios({
+      method: 'GET',
+      url: API + '/logout',
+      withCredentials: 'true'
+    })
+    .then(response => {
+	console.log(response)
+//      window.location.href = ""
+      // if (response.data.logged_in) {
+      //   this.props.handleSuccessfulAuth(response.data);
+      // }
+    })
+    .catch(error => {
+      console.log("login error", error);
+    });
   };
 
   const handleMobileMenuOpen = event => {
@@ -195,7 +211,24 @@ export default function PrimarySearchAppBar() {
     onClose={handleMenuClose}
     >
     <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
-    <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
+    <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+    anchorEl={mobileMoreAnchorEl}
+    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    id={mobileMenuId}
+    keepMounted
+    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+    open={isMobileMenuOpen}
+    onClose={handleMobileMenuClose}
+    >
+
+    <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
+    <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
     </Menu>
     );
 

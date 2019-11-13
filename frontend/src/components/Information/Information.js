@@ -98,7 +98,7 @@ class Information extends Component {
                   {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
                   edibility == "edible when boiled " ? getAcceptImage():null}
                 </div>
-                <Typography variant="headline" component="h2">
+                <Typography variant="headline" component="subtitle1">
                 {name_eng}
                 </Typography>
                 <Typography variant="headline" component="h3">
@@ -127,21 +127,35 @@ class Information extends Component {
                   <img src={value} style={{objectFit:"cover"}}></img>
                 ))}
               </Carousel>
-            <div style={{paddingRight:"5em", paddingLeft:"5em", paddingTop:"3em"}}>
-              <div style={{display:"flex", justifyContent:"flex-end"}}>
-                {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
-                {edibility == "inedible" ? getWarningImage():null}
-                {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
+              <div className="content-wrapper" style={{padding:"3em"}}>
+                <div style={{display:"flex", justifyContent:"flex-end"}}>
+                  {edibility == "poisonous" || edibility == "lethally poisonous" ? getPoisonousImage():null}
+                  {edibility == "inedible" ? getWarningImage():null}
+                  {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
                   edibility == "edible when boiled " ? getAcceptImage():null}
+                </div>
+                <Typography variant="headline" component="h2">
+                {name_eng}
+                </Typography>
+                <Typography variant="headline" component="h3">
+                {name_latin}
+                </Typography>
+                <Typography variant="headline" component="h3" style={{marginTop:"2%"}}>
+                Edibility: {edibility}
+                </Typography>
+                <Typography component="p" style={{marginTop:"0.5%"}}>
+                {description}
+                </Typography>
+                <div style={{display:"flex", justifyContent:"flex-end", marginTop:"20px"}}>
+                  <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)} >Go to Heatmap!</button>
+                </div>
               </div>
-              <button className={"heatmapButton"} onClick={(e) => this.handleClick(e)}>Go to Heatmap!</button>
-            </div>
           </div>
         </div>
         );
       }
-    }    
-  } 
+    }
+  }
 }
 
 export default Information;
