@@ -1,16 +1,23 @@
 <h1 align="center">Welcome to Shroomish👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/xmartin46/mushroomClassifier/blob/master/README.md" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-</p>
+[![HitCount](http://hits.dwyl.io/xmartin46/mushroomClassifier.svg)](http://hits.dwyl.io/xmartin46/mushroomClassifier) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/xmartin46/mushroomClassifier) [![GitHub stars](https://img.shields.io/github/stars/xmartin46/mushroomClassifier.svg)](https://GitHub.com/xmartin46/mushroomClassifier/stargazers/)
 
-### 🏠 [Homepage](https://github.com/xmartin46/mushroomClassifier)
 ### ✨ [Demo](shroomish.ml)
 
 ## Frontend 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The frontend uses React (was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)  and axios to deal with the requests to the our different APIs.
+
+To run it you can use Docker Compose: 
+
+```bash
+docker-compose up -d --build shroomish-client
+```
+## Backend
+Our backend is mainly separated in two main parts: the main one which uses Nodejs and Express for the API along with a PostgreSQL database and the second one, which deals with the classifier, which is made with Flask.
+
+To run it you can use Docker Compose: 
+```bash
+docker-compose up -d --build shroomish-backend
+```
 
 ## Dataset
 
@@ -26,27 +33,27 @@ pip install -r requirements.txt
 ```
 
 To get information from Mushroom World:
-```bash
+​```bash
 cd scraper
 scrapy crawl mushroom_scraper
 ```
 Also, in order to increase our dataset (139 classes of mushrooms) we will use google images to scrape more images (this must be done afterwards the Mushroom World scraping).
 
 To get images from Google Images:
-```bash
+​```bash
 python google_images.py
 ```
 You will find a folder called downloads with subfolders(one for each class) with the images inside. Also there will be a dataset folder with all the images merged with the class in their name.
 
 ## Classifier
 
-We do not have GPU power enough to train a model locally so we will use **Google Colab**. Our main idea is to use Keras as a framework and fine-tune a ResNet50 that was trained with Imagenet weights.
+We do not have GPU power enough to train a model locally so we will use **Google Colab**. We have used Keras as our main framework to fine-tune a ResNet50 that was trained with Imagenet weights. To run it you can use [this notebook](./classifier/MushroomClassifier.ipynb).
 
 ## Authors
 
 👤 **Xavier Martin, Adrià Cabeza and Ricardo Longares**
 
--  [@xmartin46](https://github.com/xmartin46)
+- [@xmartin46](https://github.com/xmartin46)
 
 - [@adriacabeza](https://github.com/adriacabeza)
 
@@ -59,39 +66,3 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-# Yo esto lo borraría
-### Members
-
-<table align="center">
-    <tr>
-        <td align="center"><img src="./docs/images/ricardo.jpeg"   height="200"></td>
-        <td align="center"><b>Ricardo María Longares Díez</b>
-        <br>
-        	784957
-        <br>
-        	ricardomaria.longaresdiez@aalto.fi
-        </td>
-    </tr>
-    <tr>
-        <td align="center"><img src="./docs/images/xavier.jpeg"  height="150"></td>
-        <td align="center"><b>Xavier Martín Ballesteros</b> 
-        <br>
-        	785066 
-        <br>
-        	xavier.martinballesteros@aalto.fi
-        </td>
-    </tr>
-     <tr>
-        <td align="center"><img src="./docs/images/adria.jpeg"   height="150"></td>
-      	<td align="center"><b>Adrià Cabeza Sant'Anna</b> 
-        <br>
-        	784546 
-        <br>
-        	adria.cabezasantanna@aalto.fi
-        </td>
-    </tr>
-</table>
-
-
-***
