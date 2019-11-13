@@ -1,5 +1,6 @@
 <h1 align="center">Welcome to Shroomish👋</h1>
-[![HitCount](http://hits.dwyl.io/xmartin46/mushroomClassifier.svg)](http://hits.dwyl.io/xmartin46/mushroomClassifier) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/xmartin46/mushroomClassifier) [![GitHub stars](https://img.shields.io/github/stars/xmartin46/mushroomClassifier.svg)](https://GitHub.com/xmartin46/mushroomClassifier/stargazers/)
+
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/xmartin46/mushroomClassifier) [![GitHub stars](https://img.shields.io/github/stars/xmartin46/mushroomClassifier.svg)](https://GitHub.com/xmartin46/mushroomClassifier/stargazers/) [![HitCount](http://hits.dwyl.io/xmartin46/mushroomClassifier.svg)](http://hits.dwyl.io/xmartin46/mushroomClassifier)
 
 ### ✨ [Demo](shroomish.ml)
 

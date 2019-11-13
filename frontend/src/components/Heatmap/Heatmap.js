@@ -118,9 +118,14 @@ class MapExample extends React.Component {
   }
 
   handleClick = (e) => {
-    const {markers} = this.state
-    markers.push(e.latlng)
-    this.setState({markers})
+    if (document.cookie.includes("Create a .env pls")) {
+        const {markers} = this.state
+        markers.push(e.latlng)
+        this.setState({markers})
+    } else {
+	// Talk about how to say it to the clients
+        alert("You have to be logged in in order to be able to add some points!")
+    }
   }
 
   handleSendButton = (e) => {

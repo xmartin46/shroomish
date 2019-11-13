@@ -1,0 +1,13 @@
+#section {
+  margin: 30px;
+}
+
+
+.main-class {
+    padding: 5rem;
+    right: 0;
+    left: 0;
+    width: initial;
+    height: initial;
+    position: absolute;
+}

@@ -3,7 +3,7 @@ import axios from 'axios'
 import './main.css';
 import { API } from '../../consts';
 import Typography from '@material-ui/core/Typography';
-import Mushroom from '../Mushroom/Mushroom';  
+import Mushroom from '../Mushroom/Mushroom';
 
 const state_init = {
     file: undefined,
@@ -19,14 +19,14 @@ const LOCAL_API_C = 'http://localhost:5000/api'
 class Classify extends Component {
   constructor() {
     super();
-    this.state = {   
+    this.state = {
       file: undefined,
       prediction: undefined,
       error: '',
       data: [{}],
       width: window.innerWidth,};
   }
-  
+
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
@@ -37,7 +37,7 @@ class Classify extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
-  
+
   handleFileChange = (e) => {
     this.setState(state_init)
     let file = e.target.files[0]
@@ -52,7 +52,7 @@ class Classify extends Component {
     this.setState({loading:true})
     axios({
       method: 'POST',
-      url: LOCAL_API_C + '/predict',
+      url: API_C + '/predict',
       data: form,
       headers:{
         'Content-Type':'multipart/form-data',
@@ -161,7 +161,7 @@ class Classify extends Component {
                 <p>Error: { error }</p>:null
               }
             </Typography>
-            {loading ? <div class="lds-dual-ring"></div>: null} 
+            {loading ? <div class="lds-dual-ring"></div>: null}
             <form onSubmit={this.handleSubmit}>
               <input type="file" accept="image/*" onChange={this.handleFileChange}/>
               <button type="submit"> <Typography>Submit</Typography></button>
@@ -169,6 +169,7 @@ class Classify extends Component {
             <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
               Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
             </Typography>
+            <p > Here you have our policy about <a href="../PrivacyPolicy">privacy</a>  in detail.</p>
           </div>
 
         )

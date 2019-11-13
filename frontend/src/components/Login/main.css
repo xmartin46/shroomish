@@ -1,51 +1,29 @@
-#divi{
-    text-align: center;
-
+#divi {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 15vh;
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
-#username {
 
-  position: relative;
-  text-align: center;
-    object-position: center;
-  width: 300px;
-  top: 50px;
-  font-size: 20px;
-  margin: 0 auto;
-
-}
-#password {
-  position: relative;
-  text-align: center;
-  object-position: center;
-  width: 300px;
-  top: 75px;
-  margin-top: 10rem;
-  font-size: 20px;
-  margin: 0 auto;
-}
 #button{
-  position: relative;
-  text-align: center;
-    object-position: center;
-  width: 300px;
-  top: 100px;
-  margin-top: 10px;
-  font-size: 20px;
-  margin: 0 auto;
-
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
+
 #signuplink{
   position: relative;
   object-position: center;
-    margin-top: 10px;
-  top: 110px;
+  margin-top: 10px;
 }
 
 .main-class {
-    padding: 5rem;
-    right: 0;
-    left: 0;
-    width: initial;
-    height: initial;
-    position: absolute;
+  padding: 5rem;
+  right: 0;
+  left: 0;
+  width: initial;
+  height: initial;
+  position: absolute;
 }

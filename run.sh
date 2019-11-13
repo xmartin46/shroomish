@@ -18,3 +18,4 @@ docker-compose up -d --build shroomish-backend
 echo 'Shroomish Building Classifier backend'
 docker-compose up -d --build shroomish-classifier
 echo 'Shroomish Deployed!'
+  
