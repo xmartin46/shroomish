@@ -11,11 +11,11 @@ from flask_cors import CORS
 from keras.applications.resnet import preprocess_input
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 model = None
 
-TH = 0.0 # CONFIDENCE
+TH = 0.4444 # CONFIDENCE
 output = {
         0:"Albatrellus ovinus",
         1:"Amanita muscaria",
@@ -35,12 +35,6 @@ output = {
         15:"Suillus luteus"
 }
 
-@app.after_request
-def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', '*')
-  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  return response
 
 def start_model():
     global model
@@ -53,13 +47,13 @@ def resize(input_image):
 
 @app.route('/api/predict', methods=['POST','GET'])
 def predict():
+    print('Recibo mierdas')
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
+    print(request)
     try:
         print(request.files)
         formFile = request.files['file']
-        if not formFile:
-            formFile = request.files['image']
     except:
         return "FormData didn't include a file", 400
     try:

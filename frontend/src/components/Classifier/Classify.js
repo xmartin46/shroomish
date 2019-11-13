@@ -37,25 +37,6 @@ class Classify extends Component {
   }
 
   
-
-  sendImage = (form) => {
-    return fetch(API_C + '/predict', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      headers: {
-        // 'Content-Type': '*/*'
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: form // body data type must match "Content-Type" header
-    }).then(res => res.json()).then(data => {
-      const {prediction} = data 
-      return prediction
-    }).catch(err => {
-      this.setState({error: JSON.stringify(err)})
-    })
-  }
-  
   handleFileChange = (e) => {
     this.setState(state_init)
     let file = e.target.files[0]
@@ -67,13 +48,32 @@ class Classify extends Component {
     let form = new FormData()
     console.log(this.state)
     form.append('file', this.state.file)
-    this.sendImage(form)
-    .then(pred =>{{ 
+    axios({
+      method: 'POST',
+      url: API_C + '/predict',
+      data: form,
+	headers:{
+		'Content-Type':'multipart/form-data',
+		'Access-Control-Allow-Origin':"https://classifier.shroomish.ml",
+		'Content-Type':'application/x-www-form-urlencoded'
+	}
+    })
+    .then(res => {
       this.setState({
-        prediction: pred
+        error: '',
+	prediction: res.data.prediction
       })
-      if(pred == undefined) alert('The prediction was not confident enough. Please, try again with another photo.')
-    }})
+    })
+    .catch(err => {
+      console.error(err)
+      this.setState({
+        error: err.response
+      })
+  
+      if(this.state.prediction == undefined) alert('The prediction was not confident enough. Please, try again with another photo.')
+
+})
+   
   }
 
   handleQuery = () => {

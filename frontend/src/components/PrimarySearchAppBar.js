@@ -181,10 +181,11 @@ export default function PrimarySearchAppBar() {
     axios({
       method: 'GET',
       url: API + '/logout',
-      withCredentials: true
+      withCredentials: 'true'
     })
     .then(response => {
-      window.location.href = ""
+	console.log(response)
+//      window.location.href = ""
       // if (response.data.logged_in) {
       //   this.props.handleSuccessfulAuth(response.data);
       // }

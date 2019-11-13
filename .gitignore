@@ -1,6 +1,6 @@
 dataset*
 scraper/mushroom_img*
-
+*.h5
 # Python
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -10,7 +10,7 @@ const app           = express();
 const api           = require('./routes');
 const cors 	        = require('cors')
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({credentials: true, origin: 'https://shroomish.ml'}));
 //add midelware bodyparse to express app
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -23,6 +23,7 @@ app.use(session({
   cookie: {
       httpOnly: false,
       secure: false,
+      domain: 'shroomish.ml',
       expires: new Date(new Date().getTime() + (1000*60*60*24*365*10))
     }
 }))

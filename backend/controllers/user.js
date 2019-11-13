@@ -125,7 +125,7 @@ function deleteUser(req, res) {
 
 function logOut(req, res) {
   req.session.destroy(function(err) {
-    res.clearCookie(process.env.SESSION_NAME || 'Create a .env pls');
+    res.clearCookie(process.env.SESSION_NAME || 'Create a .env pls', { domain: '.shroomish.ml' });
     res.status(200).send( { message: "Cy@!" } )
   })
 }
