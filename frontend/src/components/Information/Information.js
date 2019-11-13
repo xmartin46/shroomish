@@ -98,7 +98,7 @@ class Information extends Component {
                   {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
                   edibility == "edible when boiled " ? getAcceptImage():null}
                 </div>
-                <Typography variant="headline" component="h2">
+                <Typography variant="headline" component="subtitle1">
                 {name_eng}
                 </Typography>
                 <Typography variant="headline" component="h3">
