@@ -25,6 +25,12 @@ import("./components/Signup/Signup"));
 const Heatmap = React.lazy(() =>
 import("./components/Heatmap/Heatmap"));
 
+const AboutUs = React.lazy(() =>
+import("./components/AboutUs/AboutUs"));
+
+const PrivacyPolicy= React.lazy(() =>
+import("./components/PrivacyPolicy/PrivacyPolicy"));
+
 const renderLoader = () => <div className="loader"></div>;
 
 
@@ -48,7 +54,10 @@ class App extends Component {
       <Route path={PUBLIC_URL + '/NotFound'} exact component={NotFound} />
       <Route path={PUBLIC_URL + '/Login'} exact component={Login}/>
       <Route path={PUBLIC_URL + '/Signup'} exact component={Signup}/>
+      <Route path={PUBLIC_URL + '/AboutUs/'} exact component={AboutUs}/>
+      <Route path={PUBLIC_URL + '/PrivacyPolicy/'} exact component={PrivacyPolicy}/>
       <Route path={PUBLIC_URL + '/heatmap/'} exact component={Heatmap}/>
+
       </div>
       </Switch>
       </BrowserRouter>

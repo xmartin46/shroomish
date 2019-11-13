@@ -103,7 +103,8 @@ class Signup extends Component {
             required
           />
           </div>
-          <div>
+          <div >
+            <p id="PrivacyLink"> By clicking Sign Up, you agree to our <a href="/PrivacyPolicy">Terms</a>.</p>
           <button id="button" type="submit">Sign up</button>
 
           </div>

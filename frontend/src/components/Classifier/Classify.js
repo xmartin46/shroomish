@@ -3,7 +3,7 @@ import axios from 'axios'
 import './main.css';
 import { API } from '../../consts';
 import Typography from '@material-ui/core/Typography';
-import Mushroom from '../Mushroom/Mushroom';  
+import Mushroom from '../Mushroom/Mushroom';
 
 const state_init = {
     file: undefined,
@@ -18,14 +18,14 @@ const LOCAL_API_C = 'http://localhost:5000/api'
 class Classify extends Component {
   constructor() {
     super();
-    this.state = {   
+    this.state = {
       file: undefined,
       prediction: undefined,
       error: '',
       data: [{}],
       width: window.innerWidth,};
   }
-  
+
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
@@ -36,7 +36,7 @@ class Classify extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
-  
+
 
   sendImage = (form) => {
     return fetch(API_C + '/predict', {
@@ -49,13 +49,13 @@ class Classify extends Component {
       },
       body: form // body data type must match "Content-Type" header
     }).then(res => res.json()).then(data => {
-      const {prediction} = data 
+      const {prediction} = data
       return prediction
     }).catch(err => {
       this.setState({error: JSON.stringify(err)})
     })
   }
-  
+
   handleFileChange = (e) => {
     this.setState(state_init)
     let file = e.target.files[0]
@@ -68,7 +68,7 @@ class Classify extends Component {
     console.log(this.state)
     form.append('file', this.state.file)
     this.sendImage(form)
-    .then(pred =>{{ 
+    .then(pred =>{{
       this.setState({
         prediction: pred
       })
@@ -168,6 +168,7 @@ class Classify extends Component {
             <Typography component="p" style={{fontSize:"0.5em", padding:"10px"}}>
               Please notice that our predictions are not perfect, check with an expert before eating any mushroom. We are not responsible from the predictions made by our engine.
             </Typography>
+            <p > Here you have our policy about <a href="../PrivacyPolicy">privacy</a>  in detail.</p>
           </div>
 
         )

@@ -82,7 +82,9 @@ class Login extends Component {
           <button id="button" type="submit">Login</button>
           </div>
           <div>
-          <a id="signuplink" href="../Signup" >Lacking an account?, Create one now, sign up!</a>
+          <p id="signuplink">Lacking an account?, Create one now,
+            <a  href="../Signup" > sign up!</a>
+          </p>
           </div>
         </form>
       </div>

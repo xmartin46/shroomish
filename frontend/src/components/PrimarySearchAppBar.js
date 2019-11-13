@@ -152,37 +152,37 @@ export default function PrimarySearchAppBar() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  
+
   const handleDrawerClose = () => {
     setOpen(false);
   };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
+
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
-  
-   
+
+
   const handleSearch = e => {
     if(e.keyCode === 13){
       window.location.href = "/gallery?id="+e.target.value;
     }
   }
-  
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-  
+
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -198,7 +198,7 @@ export default function PrimarySearchAppBar() {
     <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
     </Menu>
     );
-    
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
       <Menu
@@ -210,12 +210,12 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
       >
-      
+
       <MenuItem button component="a" href="/Login" key="Login">Log In</MenuItem>
       <MenuItem onClick={handleMenuClose}>Sign out</MenuItem>
       </Menu>
       );
-      
+
       return (
         <MuiThemeProvider theme={theme}>
         <div className={classes.grow}>
@@ -293,13 +293,18 @@ export default function PrimarySearchAppBar() {
         <ListItemIcon> <HomeIcon/> </ListItemIcon>
         <ListItemText primary="Home"/>
         </ListItem>
-        
+
         <ListItem button component="a" href="/classify" key="Classifier">
         <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
         <ListItemText primary="Classifier" />
         </ListItem>
-        
-        
+
+        <ListItem button component="a" href="/AboutUs" key="AboutUs">
+        <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+        <ListItemText primary="About Us" />
+        </ListItem>
+
+
         </List>
         </Drawer>
         {renderMobileMenu}
@@ -308,4 +313,3 @@ export default function PrimarySearchAppBar() {
         </MuiThemeProvider>
         );
       }
-      
