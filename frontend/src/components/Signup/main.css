@@ -1,9 +1,17 @@
 #divi{
-  position: absolute;
-  left: 50%;
-  top: 33%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 15vh;
 }
+
+/*
+position: absolute;
+left: 50%;
+top: 30%;
+transform: translate(-50%, -50%);
+*/
+
 /*#username {
 
   position: relative;
