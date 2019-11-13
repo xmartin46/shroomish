@@ -1,0 +1,60 @@
+#divi{
+
+    margin: 15px;
+    text-align: center;
+
+}
+#username {
+
+  position: relative;
+  text-align: center;
+  object-position: center;
+  width: 300px;
+  top: 50px;
+  margin-bottom: 1em;
+  font-size: 20px;
+  margin: 10 auto;
+
+}
+#email {
+
+  position: relative;
+  text-align: center;
+  object-position: center;
+  width: 300px;
+  top: 50px;
+  margin-bottom: 1em;
+  font-size: 20px;
+  margin: 10 auto;
+
+}
+.password {
+  position: relative;
+  text-align: center;
+  object-position: center;
+  width: 300px;
+  top: 50px;
+  margin-bottom: 1em;
+  font-size: 20px;
+  margin: 0 auto;
+}
+#button{
+  position: relative;
+  text-align: center;
+    object-position: center;
+  width: 300px;
+  top: 100px;
+  font-size: 20px;
+  margin: 0 auto;
+
+}
+
+
+.main-class {
+    padding: 5rem;
+    right: 0;
+    left: 0;
+    width: initial;
+    height: initial;
+    position: absolute;
+}
