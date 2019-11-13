@@ -195,7 +195,7 @@ class MapExample extends React.Component {
       </Map>
       </div>
       <div onClick={(e) => this.handleSendButton(e)} style={{display:"flex", justifyContent:"center", marginTop:"20px"}}>
-      <button style={{height:"30px", backgroundColor:"#F1BC13", borderRadius:"10px", width:"95%"}}>Send locations!</button>
+      <button className={"mapButton"} >Send locations!</button>
       </div>
       </div>
       // <div>

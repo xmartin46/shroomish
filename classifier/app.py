@@ -47,7 +47,7 @@ def resize(input_image):
 
 @app.route('/api/predict', methods=['POST','GET'])
 def predict():
-    print('Recibo mierdas')
+    #print('Recibo mierdas')
     if 'Content-Type' not in request.headers or 'multipart/form-data' not in request.headers['Content-Type']:
         return "Content-Type wasn't 'multipart/form-data'", 400
     print(request)
@@ -64,11 +64,11 @@ def predict():
         return 'Unable to read the image file', 400
     img = np.expand_dims(img, axis=0)
     img = preprocess_input(img)
-    print("Let's start predicting")
+    #print("Let's start predicting")
     value = model.predict(img)
     K.clear_session()
     prediction = output[np.argmax(value)] if np.max(value) > TH else None
-    print("Value predicted: {}".format(prediction))
+    #print("Value predicted: {}".format(prediction))
     return jsonify({"prediction":prediction})
 
 

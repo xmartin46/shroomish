@@ -9,6 +9,7 @@ const state_init = {
     file: undefined,
     prediction:undefined,
     error: '',
+    loading:false,
     data: [{}]
   }
 
@@ -48,32 +49,32 @@ class Classify extends Component {
     let form = new FormData()
     console.log(this.state)
     form.append('file', this.state.file)
+    this.setState({loading:true})
     axios({
       method: 'POST',
-      url: API_C + '/predict',
+      url: LOCAL_API_C + '/predict',
       data: form,
-	headers:{
-		'Content-Type':'multipart/form-data',
-		'Access-Control-Allow-Origin':"https://classifier.shroomish.ml",
-		'Content-Type':'application/x-www-form-urlencoded'
-	}
+      headers:{
+        'Content-Type':'multipart/form-data',
+        'Access-Control-Allow-Origin':"https://classifier.shroomish.ml",
+        'Content-Type':'application/x-www-form-urlencoded'
+      }
     })
     .then(res => {
+      this.setState({loading:false})
       this.setState({
         error: '',
-	prediction: res.data.prediction
+	      prediction: res.data.prediction
       })
     })
     .catch(err => {
-      console.error(err)
+      console.log(err)
       this.setState({
         error: err.response
       })
-  
-      if(this.state.prediction == undefined) alert('The prediction was not confident enough. Please, try again with another photo.')
-
-})
-   
+      if(this.state.prediction == null) alert('The prediction was not confident enough. Please, try again with another photo.')
+      this.setState({loading:false})
+    })
   }
 
   handleQuery = () => {
@@ -109,7 +110,7 @@ class Classify extends Component {
     render() {
       const width = this.state.width;
       let isMobile = width <= 700;
-      const { prediction, error} = this.state
+      const { prediction, error, loading} = this.state
 
       if (isMobile) {
         return (
@@ -129,7 +130,7 @@ class Classify extends Component {
                     <p>Error: { error }</p>:null
                   }
               </Typography>
-
+                {loading ? <div class="lds-dual-ring"></div>: null}
               <form onSubmit={this.handleSubmit}>
                 <input id="myFileInput" type="file" accept="image/*" onChange={this.handleFileChange}/>
                 <button type="submit"> <Typography>Submit</Typography></button>
@@ -160,7 +161,7 @@ class Classify extends Component {
                 <p>Error: { error }</p>:null
               }
             </Typography>
-
+            {loading ? <div class="lds-dual-ring"></div>: null} 
             <form onSubmit={this.handleSubmit}>
               <input type="file" accept="image/*" onChange={this.handleFileChange}/>
               <button type="submit"> <Typography>Submit</Typography></button>
