@@ -40,13 +40,14 @@ class Signup extends Component {
         }
       })
       .then(response => {
-        if (response.data.logged_in) {
-          this.props.handleSuccessfulAuth(response.data);
-
-        }
+//        if (response.data.logged_in) {
+//         this.props.handleSuccessfulAuth(response.data);
+//        }
+	  console.log("HIIIIIIIIIII", response)
+	  this.props.history.go(-1)
       })
       .catch(error => {
-        console.log("Sign up error", error);
+        alert("User or email are already taken");
       });
     } else {
       alert('Passwords do not match!')

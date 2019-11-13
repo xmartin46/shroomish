@@ -184,8 +184,7 @@ export default function PrimarySearchAppBar() {
       withCredentials: 'true'
     })
     .then(response => {
-	console.log(response)
-//      window.location.href = ""
+      window.location.href = ""
       // if (response.data.logged_in) {
       //   this.props.handleSuccessfulAuth(response.data);
       // }
