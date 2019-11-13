@@ -45,6 +45,13 @@
   width: 100%;
 }
 
+#PrivacyLink{
+  /*position: relative;
+  object-position: center;
+  margin-top: 10px;
+  top: 90px;*/
+}
+
 .main-class {
     padding: 5rem;
     right: 0;

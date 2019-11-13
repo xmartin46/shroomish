@@ -182,6 +182,7 @@ class Signup extends Component {
         margin="dense"
         variant="outlined"
         style = {{margin:"auto", width:"100%"}}
+        helperText="*Required"
         required
         />
 
@@ -195,6 +196,7 @@ class Signup extends Component {
         margin="dense"
         variant="outlined"
         style = {{margin:"auto", width:"100%"}}
+        helperText="*Required"
         required
         />
         </div>
@@ -205,6 +207,7 @@ class Signup extends Component {
         value={this.state.password}
         onChange={this.handleChange}
         style = {{marginTop:"3vh", width:"100%"}}
+        helperText="*Required"
         required
         />
 
@@ -214,12 +217,16 @@ class Signup extends Component {
         value={this.state.password2}
         onChange={this.handleChange}
         style = {{marginTop:"3vh", width:"100%"}}
+        helperText="*Required"
         required
         />
         <div id="button" style = {{marginTop:"10px"}} onClick={this.handleSubmit}>
           <ButtonInput
           onClick={this.handleSubmit}
           />
+        </div>
+        <div >
+          <p id="PrivacyLink"> By clicking Sign Up, you agree to our <a href="/PrivacyPolicy">Terms</a>.</p>
         </div>
         </form>
         <br/>
