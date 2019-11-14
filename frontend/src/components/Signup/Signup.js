@@ -46,16 +46,16 @@ class ButtonInput extends Component {
       aria-label="add"
       style = {{width: '100px'}}
       className={classes.margin}>
-        Sign Up
+      Sign Up
       </Fab>
     );
   }
 }
 
 /*PasswordInput.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
-  value: PropTypes.func.isRequired,
+classes: PropTypes.object.isRequired,
+onClick: PropTypes.func.isRequired,
+value: PropTypes.func.isRequired,
 };*/
 
 ButtonInput = withStyles(useStyles)(ButtonInput);
@@ -129,7 +129,11 @@ class Signup extends Component {
       email: "",
       password: "",
       password2: "",
-      loginErrors: ""
+      loginErrors: "",
+      nameError: false,
+      emailError: false,
+      passwordsMatchError: false,
+      firstTime: true
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -141,8 +145,14 @@ class Signup extends Component {
     });
   }
 
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    this.setState({emailError: !re.test(String(email).toLowerCase())})
+    return re.test(String(email).toLowerCase());
+  }
+
   handleSubmit(event) {
-    if (this.state.password === this.state.password2) {
+    if (!this.state.nameError && !this.state.emailError && !this.state.passwordsMatchError && !this.state.firstTime) {
       axios({
         method: 'POST',
         url: API + '/signup',
@@ -154,83 +164,89 @@ class Signup extends Component {
         }
       })
       .then(response => {
-//        if (response.data.logged_in) {
-//         this.props.handleSuccessfulAuth(response.data);
-//        }
-	  console.log("HIIIIIIIIIII", response)
-	  this.props.history.go(-1)
+        //        if (response.data.logged_in) {
+        //         this.props.handleSuccessfulAuth(response.data);
+        //        }
+        console.log("HIIIIIIIIIII", response)
+        this.props.history.go(-1)
       })
       .catch(error => {
         console.log("Error: ", error)
-        alert("User or email are already taken");
+        //alert("User or email are already taken");
       });
     } else {
-      alert('Passwords do not match!')
+      this.validateEmail(this.state.email)
+      this.setState({firstTime: false, passwordsMatchError: this.state.password !== this.state.password2, nameError: this.state.username == ""})
     }
+
     event.preventDefault();
-}
+  }
   render() {
     return (
       <div id="divi">
-        <form onSubmit={this.handleSubmit}>
-        <TextField
-        label="Username"
-        type="text"
-        name="username"
-        value={this.state.username}
-        onChange={this.handleChange}
-        margin="dense"
-        variant="outlined"
-        style = {{margin:"auto", width:"100%"}}
-        helperText="*Required"
-        required
-        />
+      <form onSubmit={this.handleSubmit}>
+      <TextField
+      error={this.state.nameError}
+      label="Username"
+      type="text"
+      name="username"
+      value={this.state.username}
+      onChange={this.handleChange}
+      margin="dense"
+      variant="outlined"
+      style = {{margin:"auto", width:"100%"}}
+      helperText={this.state.nameError ? "Empty username." : "*Required"}
+      required
+      />
 
-        <div style={{marginTop:"3vh"}}>
-        <TextField
-        label="Email"
-        type="email"
-        name="email"
-        value={this.state.email}
-        onChange={this.handleChange}
-        margin="dense"
-        variant="outlined"
-        style = {{margin:"auto", width:"100%"}}
-        helperText="*Required"
-        required
-        />
-        </div>
+      <div style={{marginTop:"3vh"}}>
+      <TextField
+      error={this.state.emailError}
+      label="Email"
+      type="email"
+      name="email"
+      value={this.state.email}
+      onChange={this.handleChange}
+      margin="dense"
+      variant="outlined"
+      style = {{margin:"auto", width:"100%"}}
+      helperText={this.state.emailError ? "Invalid email." : "*Required"}
+      required
+      />
+      </div>
 
-        <PasswordInput
-        label="Password"
-        name="password"
-        value={this.state.password}
-        onChange={this.handleChange}
-        style = {{marginTop:"3vh", width:"100%"}}
-        helperText="*Required"
-        required
-        />
+      <PasswordInput
+      error={this.state.passwordsMatchError}
+      label="Password"
+      name="password"
+      value={this.state.password}
+      onChange={this.handleChange}
+      style = {{marginTop:"3vh", width:"100%"}}
+      helperText={this.state.passwordsMatchError ? "TODO: Regex + lengthCount." : "*Required"}
+      required
+      />
 
-        <PasswordInput
-        label="Confirm password"
-        name="password2"
-        value={this.state.password2}
-        onChange={this.handleChange}
-        style = {{marginTop:"3vh", width:"100%"}}
-        helperText="*Required"
-        required
-        />
-        <div id="button" style = {{marginTop:"10px"}} onClick={this.handleSubmit}>
-          <ButtonInput
-          onClick={this.handleSubmit}
-          />
-        </div>
-        <div >
-          <p id="PrivacyLink"> By clicking Sign Up, you agree to our <a href="/PrivacyPolicy">Terms</a>.</p>
-        </div>
-        </form>
-        <br/>
-        </div>
+      <PasswordInput
+      error={this.state.passwordsMatchError}
+      label="Confirm password"
+      name="password2"
+      value={this.state.password2}
+      onChange={this.handleChange}
+      style = {{marginTop:"3vh", width:"100%"}}
+      helperText={this.state.passwordsMatchError ? "Password do not match." : "*Required"}
+      required
+      />
+      <div id="button" style = {{marginTop:"10px"}} onClick={this.handleSubmit}>
+      <ButtonInput
+      onClick={this.handleSubmit}
+      />
+      </div>
+      <div >
+      <p id="PrivacyLink"> By clicking Sign Up, you agree to our <a href="/PrivacyPolicy">Terms</a>.</p>
+      </div>
+      </form>
+      <br/>
+      </div>
 
     );
   }
