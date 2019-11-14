@@ -55,7 +55,7 @@ class Information extends Component {
       return <img src={skull} style={{marginRight:"5px", marginBottom:"20px"}}></img>
   };
   function getWarningImage(){
-      return <img src={warning} style={{marginRight:"5px", marginBottom:"20px"}}></img>
+      return <img src={warning} style={{marginRight:"5px"}}></img>
   };
   function getAcceptImage(){
       return <img src={accept} style={{marginRight:"5px", marginBottom:"20px"}}></img>
@@ -98,9 +98,9 @@ class Information extends Component {
                   {edibility == "edible " || edibility == "edible and good " || edibility == "edible and excellent " ||
                   edibility == "edible when boiled " ? getAcceptImage():null}
                 </div>
-                <Typography variant="headline" component="subtitle1">
+                <p className="mysubtitle">
                 {name_eng}
-                </Typography>
+                </p>
                 <Typography variant="headline" component="h3">
                 {name_latin}
                 </Typography>
