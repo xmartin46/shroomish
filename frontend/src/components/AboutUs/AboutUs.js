@@ -17,6 +17,11 @@ class AboutUs extends Component {
   constructor(props) {
     super(props);
   }
+  
+  
+  componentDidMount(){
+    document.title = `Shroomish - The Team`;
+  }
 
 
   render() {
