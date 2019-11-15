@@ -142,7 +142,7 @@ class Signup extends Component {
   }
 
   componentDidMount(){
-    document.title = `shroomish-signup`;
+    document.title = `Shroomish-signup`;
   }
 
   handleChange(event) {

@@ -28,7 +28,7 @@ class Information extends Component {
 
   componentDidMount(){
     let id = this.props.match.params.id;
-    document.title = `shroomish-${id}`;
+    document.title = `Shroomish-${id}`;
   }
 
   

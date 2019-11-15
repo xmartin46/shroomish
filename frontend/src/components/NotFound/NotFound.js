@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 class NotFound extends Component {
   
   componentDidMount(){
-    document.title = `shroomish-notfound`;
+    document.title = `Shroomish-notfound`;
   }
 
   render() {

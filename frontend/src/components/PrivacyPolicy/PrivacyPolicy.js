@@ -11,7 +11,7 @@ class PrivacyPolicy extends Component {
   }
 
   componentDidMount(){
-    document.title = `shroomish-privacypolicy`;
+    document.title = `Shroomish-privacypolicy`;
   }
 
   render() {

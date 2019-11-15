@@ -443,7 +443,7 @@ export default function PrimarySearchAppBar() {
           </ListItem>
 
           <ListItem button component="a" href="/AboutUs" key="AboutUs">
-          <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+          <ListItemIcon> <PeopleIcon/> </ListItemIcon>
           <ListItemText primary="About Us" />
           </ListItem>
 
