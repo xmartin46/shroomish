@@ -175,8 +175,9 @@ export default function PrimarySearchAppBar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+  }
 
+  const signOut = () => {
     axios({
       method: 'GET',
       url: API + '/logout',
@@ -184,14 +185,11 @@ export default function PrimarySearchAppBar() {
     })
     .then(response => {
       window.location.href = ""
-      // if (response.data.logged_in) {
-      //   this.props.handleSuccessfulAuth(response.data);
-      // }
     })
     .catch(error => {
       console.log("login error", error);
     });
-  };
+  }
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -223,7 +221,7 @@ export default function PrimarySearchAppBar() {
     open={isMenuOpen}
     onClose={handleMenuClose}
     >
-    <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+    <MenuItem onClick={signOut}>Sign Out</MenuItem>
     </Menu>
   );
 
@@ -256,7 +254,7 @@ export default function PrimarySearchAppBar() {
         onClose={handleMobileMenuClose}
         >
 
-        <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
+        <MenuItem onClick={signOut}>Sign Out</MenuItem>
         </Menu>
         );
 
