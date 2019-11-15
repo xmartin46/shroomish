@@ -10,6 +10,10 @@ class PrivacyPolicy extends Component {
     super(props);
   }
 
+  componentDidMount(){
+    document.title = `shroomish-privacypolicy`;
+  }
+
   render() {
     return (
       <section id="section">

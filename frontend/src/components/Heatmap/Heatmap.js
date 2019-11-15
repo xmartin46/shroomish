@@ -65,6 +65,10 @@ class MapExample extends React.Component {
   //   }
   // }
 
+  componentDidMount(){
+    document.title = `shroomish-heatmap`;
+  }
+
   componentWillMount() {
     let params = new URLSearchParams(this.props.location.search);
     console.log("params: " + params)

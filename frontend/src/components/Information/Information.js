@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './main.css';
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
@@ -8,6 +8,9 @@ import { Redirect } from 'react-router-dom';
 import skull from '../../skull.png';
 import warning from '../../warning.png';
 import accept from '../../green_tick.png';
+
+
+
 
 class Information extends Component {
   constructor() {
@@ -23,6 +26,12 @@ class Information extends Component {
     this.setState({ width: window.innerWidth });
   };
 
+  componentDidMount(){
+    let id = this.props.match.params.id;
+    document.title = `shroomish-${id}`;
+  }
+
+  
   componentWillMount() {
     window.addEventListener('resize', this.handleWindowSizeChange);
     let id = this.props.match.params.id;

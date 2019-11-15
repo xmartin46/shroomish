@@ -8,6 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import List from '@material-ui/core/List';
 import Menu from '@material-ui/core/Menu';
+import PeopleIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import HomeIcon from '@material-ui/icons/Home';
@@ -25,8 +26,6 @@ import logo from '../logo.svg'
 import { API, PUBLIC_URL } from '../consts';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
-
-//https://www.florin-pop.com/blog/2019/02/react-movie-search-app/
 
 const drawerWidth = 240;
 
@@ -347,7 +346,7 @@ export default function PrimarySearchAppBar() {
         </ListItem>
 
         <ListItem button component="a" href="/AboutUs" key="AboutUs">
-        <ListItemIcon> <InsertPhotoIcon/> </ListItemIcon>
+        <ListItemIcon> <PeopleIcon/> </ListItemIcon>
         <ListItemText primary="About Us" />
         </ListItem>
 

@@ -135,6 +135,10 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount(){
+    document.title = `shroomish-login`;
+  }
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value

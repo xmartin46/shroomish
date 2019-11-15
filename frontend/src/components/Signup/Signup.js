@@ -36,6 +36,8 @@ class ButtonInput extends Component {
     };
   }
 
+  
+
   render() {
     const { classes } = this.props;
 
@@ -133,6 +135,10 @@ class Signup extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount(){
+    document.title = `shroomish-signup`;
   }
 
   handleChange(event) {

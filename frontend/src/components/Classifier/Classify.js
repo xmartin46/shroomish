@@ -37,6 +37,11 @@ class Classify extends Component {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 
+  componentDidMount(){
+    document.title = `shroomish-classify`;
+  }
+
+
 
   handleFileChange = (e) => {
     this.setState(state_init)
