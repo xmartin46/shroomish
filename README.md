@@ -1,6 +1,10 @@
 <h1 align="center">Welcome to Shroomish👋</h1>
 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/xmartin46/mushroomClassifier) [![GitHub stars](https://img.shields.io/github/stars/xmartin46/mushroomClassifier.svg)](https://GitHub.com/xmartin46/mushroomClassifier/stargazers/) [![HitCount](http://hits.dwyl.io/xmartin46/mushroomClassifier.svg)](http://hits.dwyl.io/xmartin46/mushroomClassifier)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/xmartin46/shroomish) [![GitHub stars](https://img.shields.io/github/stars/xmartin46/shroomish.svg)](https://GitHub.com/xmartin46/shroomish/stargazers/) [![HitCount](http://hits.dwyl.io/xmartin46/shroomish.svg)](http://hits.dwyl.io/xmartin46/shroomish)
+
+This is the repository of **shroomish.ml**, website where people can obtain more knowledge about mushrooms, their location or classify the mushrooms obtained using deep learning.
+
+
 
 ### ✨ [Demo](shroomish.ml)
 
@@ -18,6 +22,7 @@ Our backend is mainly separated in two main parts: the main one which uses Nodej
 To run it you can use Docker Compose: 
 ```bash
 docker-compose up -d --build shroomish-backend
+docker-compose up -d --build shroomish-classifier
 ```
 
 ## Dataset
