@@ -141,21 +141,7 @@ class Login extends Component {
   }
 
   handleChange = (event) => {
-    console.log(this.state.firstTime)
     this.setState({[event.target.name]: event.target.value});
-    //if (this.state.firstTime) {
-      /*if (event.target.name == 'username' && this.state.username == "") {
-        this.setState({firstTime: this.state.password == ""})
-      } else {
-        this.setState({firstTime: this.state.username == ""})
-      }*/
-    /*} else {
-      if (event.target.name == 'username') {
-        this.setState({firstTime: this.state.username == ""})
-      } else {
-        this.setState({firstTime: this.state.password == ""})
-      }
-    }*/
   }
 
   handleSubmit = (event) => {
@@ -174,7 +160,7 @@ class Login extends Component {
       })
       .then(response => {
         if (response.data == "No user found") {
-          this.setState({nameError: true})
+          this.setState({nameError: true, passwordError: false})
         } else if (response.data == "Incorrect password") {
           this.setState({nameError: false, passwordError: true})
         } else {
@@ -186,8 +172,6 @@ class Login extends Component {
         console.log("Error: ", JSON.stringify(error))
         alert("User does not exist or password do not match!");
       });
-    } else {
-      this.setState({nameError: this.state.username == "", passwordError: this.state.password == ""})
     }
   }
 

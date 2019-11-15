@@ -149,6 +149,24 @@ class Signup extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+
+    if (event.target.name == 'username' && event.target.value != "") {
+      this.setState({nameError: false})
+    } else if (event.target.name == 'username' && event.target.value == "") {
+      this.setState({nameError: true})
+    } else if (event.target.name == 'password2' && event.target.value == this.state.password) {
+      this.setState({passwordsMatchError: false})
+    } else if (event.target.name == 'password2' && event.target.value != this.state.password2) {
+      this.setState({passwordsMatchError: true})
+    } else if (event.target.name == 'password' && !this.validatePassword(event.target.value)) {
+      this.setState({passwordError: true})
+    } else if (event.target.name == 'password' && this.validatePassword(event.target.value)) {
+      this.setState({passwordError: false})
+    } else if (event.target.name == 'email' && !this.validateEmail(event.target.value)) {
+      this.setState({emailError: true})
+    } else if (event.target.name == 'email' && !this.validateEmail(event.target.value)) {
+      this.setState({emailError: false})
+    }
   }
 
   validateEmail(email) {
@@ -164,9 +182,13 @@ class Signup extends Component {
   }
 
   handleSubmit(event) {
-    var firstTime = this.state.username == "" || this.state.email == "" || this.state.password == "" || this.state.password2 == "" || this.state.password !== this.state.password2
+    //var firstTime = this.state.username == "" || this.state.email == "" || this.state.password == "" || this.state.password2 == "" || this.state.password !== this.state.password2
 
-    if (!firstTime) {
+    this.setState({nameError: this.state.username == "", emailError: this.state.email == "" || !this.validateEmail(this.state.email), passwordError: this.state.password == "" || !this.validatePassword(this.state.password), passwordsMatchError: this.state.password2 == "" || this.state.password !== this.state.password2})
+
+    var errors = this.state.username == "" || this.state.email == "" || !this.validateEmail(this.state.email) || this.state.password == "" || !this.validatePassword(this.state.password) || this.state.password2 == "" || this.state.password !== this.state.password2
+
+    if (!errors) {
       axios({
         method: 'POST',
         url: API + '/signup',
@@ -183,14 +205,11 @@ class Signup extends Component {
       .catch(error => {
         console.log("Error: ", error)
       });
-    } else {
-      this.validateEmail(this.state.email)
-      this.validatePassword(this.state.password)
-      this.setState({passwordsMatchError: this.state.password !== this.state.password2 || this.state.password2 == "", nameError: this.state.username == ""})
     }
 
     event.preventDefault();
   }
+
   render() {
     return (
       <div id="divi">
