@@ -38,7 +38,7 @@ class Classify extends Component {
   }
 
   componentDidMount(){
-    document.title = `Shroomish-classify`;
+    document.title = `Shroomish - Classify`;
   }
 
 

@@ -66,7 +66,7 @@ class MapExample extends React.Component {
   // }
 
   componentDidMount(){
-    document.title = `Shroomish-heatmap`;
+    document.title = `Shroomish - Heatmap`;
   }
 
   componentWillMount() {

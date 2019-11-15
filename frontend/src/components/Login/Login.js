@@ -136,7 +136,7 @@ class Login extends Component {
   }
 
   componentDidMount(){
-    document.title = `Shroomish-login`;
+    document.title = `Shroomish - Login`;
   }
 
   handleChange = (event) => {

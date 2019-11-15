@@ -57,6 +57,12 @@ class Gallery extends Component {
     super();
     this.state = { data: [] };
   }
+  
+
+  componentDidMount(){
+    document.title = `Shroomish`;
+  }
+
       
   componentWillMount() {
     let params = new URLSearchParams(this.props.location.search);
