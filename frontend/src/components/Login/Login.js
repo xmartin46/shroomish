@@ -127,7 +127,8 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      loginErrors: "",
+      nameError: false,
+      passwordError: false,
       showPassword: false
     };
 
@@ -140,32 +141,54 @@ class Login extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+    console.log(this.state.firstTime)
+    this.setState({[event.target.name]: event.target.value});
+    //if (this.state.firstTime) {
+      /*if (event.target.name == 'username' && this.state.username == "") {
+        this.setState({firstTime: this.state.password == ""})
+      } else {
+        this.setState({firstTime: this.state.username == ""})
+      }*/
+    /*} else {
+      if (event.target.name == 'username') {
+        this.setState({firstTime: this.state.username == ""})
+      } else {
+        this.setState({firstTime: this.state.password == ""})
+      }
+    }*/
   }
 
   handleSubmit = (event) => {
-    console.log("BAAH", this.state)
-    event.preventDefault();
-    axios({
-      method: 'POST',
-      url: API + '/login',
-      withCredentials: true,
-      data: {
-        username: this.state.username,
-        password: this.state.password
-      }
-    })
-    .then(response => {
-      this.props.history.go(-1)
-      // if (response.data.logged_in) {
-      //   this.props.handleSuccessfulAuth(response.data);
-      // }
-    })
-    .catch(error => {
-      alert("User does not exist or password do not match!");
-    });
+    var firstTime = this.state.username == "" || this.state.password == ""
+
+    if (!firstTime) {
+      event.preventDefault();
+      axios({
+        method: 'POST',
+        url: API + '/login',
+        withCredentials: true,
+        data: {
+          username: this.state.username,
+          password: this.state.password
+        }
+      })
+      .then(response => {
+        if (response.data == "No user found") {
+          this.setState({nameError: true})
+        } else if (response.data == "Incorrect password") {
+          this.setState({nameError: false, passwordError: true})
+        } else {
+          this.setState({nameError: false, passwordError: false})
+          this.props.history.go(-1)
+        }
+      })
+      .catch(error => {
+        console.log("Error: ", JSON.stringify(error))
+        alert("User does not exist or password do not match!");
+      });
+    } else {
+      this.setState({nameError: this.state.username == "", passwordError: this.state.password == ""})
+    }
   }
 
   render() {
@@ -175,6 +198,7 @@ class Login extends Component {
       <div id="divi">
       <form onSubmit={this.handleSubmit}>
       <TextField
+      error={this.state.nameError}
       label="Username"
       type="text"
       name="username"
@@ -184,16 +208,18 @@ class Login extends Component {
       margin="dense"
       variant="outlined"
       style = {{margin:"auto", width:"100%"}}
+      helperText={this.state.nameError ? ("The username you have introduced does not match with any of the accounts. Sign Up to create an account now.") : "*Required"}
       required
       />
 
       <PasswordInput
+      error={this.state.passwordError}
       label="Password"
       name="password"
       value={this.state.password}
       onChange={this.handleChange}
       style = {{marginTop:"3vh", width:"100%"}}
-      helperText="*Required"
+      helperText={this.state.passwordError ? ("Password invalid. ¿Have you forgotten your password?") : "*Required"}
       required
       />
 

@@ -36,7 +36,7 @@ class ButtonInput extends Component {
     };
   }
 
-  
+
 
   render() {
     const { classes } = this.props;
@@ -134,8 +134,8 @@ class Signup extends Component {
       loginErrors: "",
       nameError: false,
       emailError: false,
-      passwordsMatchError: false,
-      firstTime: true
+      passwordError: false,
+      passwordsMatchError: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -157,8 +157,16 @@ class Signup extends Component {
     return re.test(String(email).toLowerCase());
   }
 
+  validatePassword(password) {
+    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    this.setState({passwordError: !re.test(String(password))})
+    return re.test(String(password))
+  }
+
   handleSubmit(event) {
-    if (!this.state.nameError && !this.state.emailError && !this.state.passwordsMatchError && !this.state.firstTime) {
+    var firstTime = this.state.username == "" || this.state.email == "" || this.state.password == "" || this.state.password2 == "" || this.state.password !== this.state.password2
+
+    if (!firstTime) {
       axios({
         method: 'POST',
         url: API + '/signup',
@@ -170,19 +178,15 @@ class Signup extends Component {
         }
       })
       .then(response => {
-        //        if (response.data.logged_in) {
-        //         this.props.handleSuccessfulAuth(response.data);
-        //        }
-        console.log("HIIIIIIIIIII", response)
         this.props.history.go(-1)
       })
       .catch(error => {
         console.log("Error: ", error)
-        //alert("User or email are already taken");
       });
     } else {
       this.validateEmail(this.state.email)
-      this.setState({firstTime: false, passwordsMatchError: this.state.password !== this.state.password2, nameError: this.state.username == ""})
+      this.validatePassword(this.state.password)
+      this.setState({passwordsMatchError: this.state.password !== this.state.password2 || this.state.password2 == "", nameError: this.state.username == ""})
     }
 
     event.preventDefault();
@@ -222,13 +226,13 @@ class Signup extends Component {
       </div>
 
       <PasswordInput
-      error={this.state.passwordsMatchError}
+      error={this.state.passwordError}
       label="Password"
       name="password"
       value={this.state.password}
       onChange={this.handleChange}
       style = {{marginTop:"3vh", width:"100%"}}
-      helperText={this.state.passwordsMatchError ? "TODO: Regex + lengthCount." : "*Required"}
+      helperText={this.state.passwordError ? "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character." : "*Required"}
       required
       />
 

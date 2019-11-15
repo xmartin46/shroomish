@@ -26,18 +26,40 @@ api.post('/heatmap/:name_latin/:latlng', authMdlw.checkLoggedIn, mushroomCtrl.po
 
 // Listener user
 //api.post('/login/', userCtrl.logIn)
-api.post('/login/', passportCtrl.authenticate('local', {
-  /*successRedirect: '/',
+api.post('/login/', function(req, res, next) {
+  passportCtrl.authenticate('local', function(err, user, info) {
+    if (err) {
+      console.log("error")
+      return next(err);
+    }
+    console.log("user: ", user)
+    if (!user) {
+      console.log("no user ", info)
+      return res.end(info.message)
+      //return res.redirect('/api/login');
+    }
+
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/api/users/');
+    });
+  })(req, res, next);
+})
+
+
+/*api.post('/login/', passportCtrl.authenticate('local', {
+  successRedirect: '/',
   failureRedirect: '/login',
-  failureFlash: true*/
+  failureFlash: true
 }), function(req, res, info) { // Fa falta si poso lo de successRedirect?
   // console.log("INSIDE!!!!!! (index.js from routes)")
   // console.log(req.user)
   // console.log(req.session.passport.user)
+  console.log("info: ", info)
   res.redirect('/api/users') // De moment xD
 }
 
-)
+)*/
 api.post('/signup/', userCtrl.signUp)
 api.get('/users/', userCtrl.getUsers)
 api.get('/users/:userName', userCtrl.getUsersByName)
