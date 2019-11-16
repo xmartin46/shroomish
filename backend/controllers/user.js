@@ -55,7 +55,7 @@ function signUp(req, res) {
   const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`)
 
   config.db.query('INSERT INTO user_account(name, email) VALUES ($1, $2) RETURNING id', [username, email], (err, result) => {
-    if (err) return res.status(500).send( { message: err } )
+    if (err) return res.status(250).send( { message: err } )
 
     if (result.rows.length < 1) res.status(500).send( { message: "Server error (Not inserted)" } )
     if (result.rows.length > 1) res.status(500).send( { message: "Server error (More than one selected/inserted)" } )
@@ -75,7 +75,7 @@ function signUp(req, res) {
           }
 
           console.log(user)
-	  
+
 	  res.redirect('/api/users')
           /*req.login(user, (err) => {
             if (err) throw err

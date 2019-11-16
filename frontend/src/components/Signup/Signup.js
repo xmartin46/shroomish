@@ -200,10 +200,18 @@ class Signup extends Component {
         }
       })
       .then(response => {
-        this.props.history.go(-1)
+        if (response.data.message != null) {
+          if (response.data.message.detail.includes("Key (name)")) {
+            this.setState({nameError: true})
+          } else if (response.data.message.detail.includes("Key (email)")) {
+            this.setState({emailError: true})
+          }
+        } else {
+            this.props.history.go(-1)
+        }
       })
       .catch(error => {
-        console.log("Error: ", error)
+        console.log("Error: ", error.message)
       });
     }
 
@@ -224,7 +232,7 @@ class Signup extends Component {
       margin="dense"
       variant="outlined"
       style = {{margin:"auto", width:"100%"}}
-      helperText={this.state.nameError ? "Empty username." : "*Required"}
+      helperText={this.state.nameError ? "Empty username or this username has already been taken." : "*Required"}
       required
       />
 
@@ -239,7 +247,7 @@ class Signup extends Component {
       margin="dense"
       variant="outlined"
       style = {{margin:"auto", width:"100%"}}
-      helperText={this.state.emailError ? "Invalid email." : "*Required"}
+      helperText={this.state.emailError ? "Invalid email or this email has already been taken." : "*Required"}
       required
       />
       </div>
@@ -262,7 +270,7 @@ class Signup extends Component {
       value={this.state.password2}
       onChange={this.handleChange}
       style = {{marginTop:"3vh", width:"100%"}}
-      helperText={this.state.passwordsMatchError ? "Password do not match." : "*Required"}
+      helperText={this.state.passwordsMatchError ? "Passwords do not match." : "*Required"}
       required
       />
       <div id="button" style = {{marginTop:"10px"}} onClick={this.handleSubmit}>
