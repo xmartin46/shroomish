@@ -54,7 +54,7 @@
 }
 .hvrbox:hover .hvrbox-layer_top,
 .hvrbox.active .hvrbox-layer_top {
-	opacity: 0.1;
+	opacity: 0;
 }
 .hvrbox .hvrbox-text {
 	text-align: center;
@@ -82,4 +82,7 @@
 .hvrbox:hover .hvrbox-layer_top,
 .hvrbox.active .hvrbox-layer_top .git{
   opacity:1;
+}
+.div1{
+  text-align: center;
 }
