@@ -39,14 +39,17 @@ pip install -r requirements.txt
 ```
 
 To get information from Mushroom World:
-​```bash
+```bash
+
 cd scraper
 scrapy crawl mushroom_scraper
+
 ```
 Also, in order to increase our dataset (139 classes of mushrooms) we will use google images to scrape more images (this must be done afterwards the Mushroom World scraping).
 
 To get images from Google Images:
-​```bash
+
+```bash
 python google_images.py
 ```
 You will find a folder called downloads with subfolders(one for each class) with the images inside. Also there will be a dataset folder with all the images merged with the class in their name.
